@@ -1,0 +1,31 @@
+---
+title: 'Fitness Tracker Modeling: ML'
+author: Mark Edney
+date: '2022-01-29'
+slug: []
+categories:
+  - Project
+tags:
+  - ML
+  - R
+  - GGPlot
+draft: yes
+description: ''
+archives:
+  - 2022/01
+---
+
+The final project for the Machine Learning course for Johns Hopkins University
+Data Science Specialization. The project looks at the data collected for different
+smart fitness trackers. The project uses machine learning to classify the level of
+activity based on a wide variety of variables.
+
+The individual steps are outlined in a paper published on RPubs [here](https://rpubs.com/m2edney/ML_final). 
+It outlines the use of the following models:
+
+* Random forest
+* Generalized Boosted
+* Linear Discriminant
+* Combined
+
+[![ML Project](images/Machine Learning Project.png)](https://rpubs.com/m2edney/ML_final)
