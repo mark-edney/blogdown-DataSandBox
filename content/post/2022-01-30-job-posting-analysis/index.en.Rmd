@@ -1,0 +1,82 @@
+---
+title: Job posting analysis
+author: Mark Edney
+date: '2022-01-30'
+slug: []
+categories:
+  - Project
+tags:
+  - R
+draft: yes
+runtime: shiny
+description: 'A project used to study the occurance of keywords in a job posting.'
+archives:
+  - 2022/01
+---
+
+Recently there was a post on medium about the use of Natural Language Processing (NLP) 
+to study a job posting for keywords. I found that this article was very similar to 
+R shiny App that I created a while ago. The original article can be found
+[here](https://medium.com/data-marketing-philosophy/use-python-and-nlp-to-boost-your-resume-e4691a58bcc9).
+
+```{r Inialization}
+library(shiny)
+library(wordcloud2)
+library(tidyverse)
+library(XML)
+library(rvest)
+library(tidytext)
+library(stopwords)
+```
+
+```{r Shiny}
+shinyApp(
+        ui = fluidPage(
+                # Application title
+                titlePanel("Job Posting Word Cloud"),
+
+                # Sidebar with a slider input for number of bins
+                sidebarLayout(
+                        sidebarPanel(
+                                textInput("url", "input URL", value = "https://www.google.com/")
+                                ),
+                        # Show a plot of the generated distribution
+                        mainPanel(
+                                h4("Word Cloud"),
+                                wordcloud2Output("plot", width = "100%"),
+                                h4("Keywords"),
+                                textOutput("keys2"),
+                                wordcloud2Output("plotkey", width = "100%")
+                                )
+                        )
+                )
+        
+        server = function(input, output) {
+                Keywords <- readRDS("~/R/Resumes/Word_Cloud/Keywords.RDS")
+                data <- reactive({
+                        url <- input$url
+                        
+                        data <- read_html(url, options = "NOBLANKS") %>% html_nodes("p") %>%
+                        html_text() %>% data.frame(text = .) %>% unnest_tokens(words, text)%>%
+                        count(words) %>% filter(!words %in% stop_words$word) %>% arrange(desc(n)) %>%
+                        top_n(15)
+                        })
+                
+                keys <- reactive({
+                        data <- data()
+                        data[data %in% Ketwords]
+                        })
+                
+                output$plot <- renderWordcloud2({
+                        wordcloud2(data())
+                        })
+                
+                output$keys2 <- renderText({
+                        keys()
+                        })
+                
+                output$plotkey <- renderWordcloud2({
+                        wordcloud2(keys())
+                        })
+)
+```

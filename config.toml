@@ -11,10 +11,10 @@ enableRobotsTXT = true
 #hasCJKLanguage = true
 
 # If you're using Google Analytics, you can enable this feature.
-#googleAnalytics = "G-1234567890"
+googleAnalytics = "G-E43VRHY9MD"
 
 # Disqus Comment System
-#disqusShortname = ""
+disqusShortname = "data-sandbox"
 
 [params]
 # Base color of the website.

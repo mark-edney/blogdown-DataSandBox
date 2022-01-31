@@ -9,6 +9,7 @@ tags:
   - ML
   - R
 draft: no
+description: 'An analysis of Data collected by Fitness Trackers'
 image: "img/MachineLearningProject.png"
 archives:
   - 2022/01
