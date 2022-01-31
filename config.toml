@@ -1,4 +1,4 @@
-baseURL = "https://example.com"
+baseURL = "https://edney.netlify.app"
 title = "The Data Sandbox"
 author = "Mark Edney"
 languageCode = "en"
@@ -42,7 +42,7 @@ darkmode = "dark"
     thumbnail = true
 
     # Disable the "NO IMAGE" image.
-    noimage = true
+    noimage = false
 
     # See the Tailwind CSS documentation to set it up.
     # Recommended settings are h-32 to h-48.
