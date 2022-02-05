@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2022/01 on The Data Sandbox</title>
+    <link>https://datasandbox.netlify.app/archives/2022/01/</link>
+    <description>Recent content in 2022/01 on The Data Sandbox</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language><atom:link href="https://datasandbox.netlify.app/archives/2022/01/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fitness Tracker Modeling: ML</title>
+      <link>https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/</link>
+      <pubDate>Sat, 29 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/</guid>
+      <description>The original paper was written on 12/18/2020
+Executive SummaryThis report analyzes collected data on different users preforming barbell liftsperformed at different levels of quality. A machine learning algorithm was usedto create a model to determine the users rating based on data collected from multipleaccelerometers. More information on the project can be found here.
+AnalysisInitializationThe following code was used to initialize the required r libraries as well as downloadingthe required data and store it into memory.</description>
+    </item>
+    
+  </channel>
+</rss>

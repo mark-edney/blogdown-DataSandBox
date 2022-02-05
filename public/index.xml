@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>The Data Sandbox</title>
+    <link>https://datasandbox.netlify.app/</link>
+    <description>Recent content on The Data Sandbox</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 29 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About</title>
+      <link>https://datasandbox.netlify.app/about/</link>
+      <pubDate>Sat, 29 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/about/</guid>
+      <description>The Data Sandbox is a collection of Data Science projects and dicussions on Data Science topics. These projects are based on R or Python code. The Sandbox was created in January 2022.</description>
+    </item>
+    
+    <item>
+      <title>Fitness Tracker Modeling: ML</title>
+      <link>https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/</link>
+      <pubDate>Sat, 29 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/</guid>
+      <description>The original paper was written on 12/18/2020
+Executive SummaryThis report analyzes collected data on different users preforming barbell liftsperformed at different levels of quality. A machine learning algorithm was usedto create a model to determine the users rating based on data collected from multipleaccelerometers. More information on the project can be found here.
+AnalysisInitializationThe following code was used to initialize the required r libraries as well as downloadingthe required data and store it into memory.</description>
+    </item>
+    
+    <item>
+      <title>Contact</title>
+      <link>https://datasandbox.netlify.app/contact/</link>
+      <pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/contact/</guid>
+      <description>To contact us, please fill out the form below.
+</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://datasandbox.netlify.app/archives/</link>
+      <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/archives/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

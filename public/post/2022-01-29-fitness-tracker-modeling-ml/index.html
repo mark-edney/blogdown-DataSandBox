@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+<html lang="en" class="dark">
+<head>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E43VRHY9MD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E43VRHY9MD');
+</script>
+
+<title>The Data Sandbox | Fitness Tracker Modeling: ML</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <link rel="apple-touch-icon" sizes="180x180" href='/favicon/apple-touch-icon.png'>
+    <link rel="icon" type="image/png" sizes="32x32" href='/favicon/favicon-32x32.png'>
+    <link rel="icon" type="image/png" sizes="16x16" href='/favicon/favicon-16x16.png'>
+    <link rel="manifest" href='/favicon/site.webmanifest' />
+    <link rel="mask-icon" href=' /favicon/safari-pinned-tab.svg' color="#5bbad5" />
+    <link rel="shortcut icon" href='/favicon/favicon.ico' />
+    <meta name="theme-color" content="#ffffff">
+    <meta property="og:title" content="The Data Sandbox | Fitness Tracker Modeling: ML" />
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.min.8e7bcdffab6bbed366372e694f634ed1ccdeae445b32dfeaf0395832323641f0.css" />
+    
+    <link href=' /css/blonde.min.css' rel="stylesheet" type="text/css" media="print"
+        onload="this.media=' all'">
+    
+
+
+
+<meta name="description" content="An analysis of Data collected by Fitness Trackers">
+<meta property="og:site_name" content="The Data Sandbox">
+<meta property="og:description" content="An analysis of Data collected by Fitness Trackers">
+<meta property="og:url" content="https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="">
+
+<link rel="canonical" href="https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/">
+
+<meta name="twitter:description" content="An analysis of Data collected by Fitness Trackers">
+<meta property="article:published_time" content="2022-01-29T00:00:00&#43;00:00">
+<meta property="article:updated_time" content="2022-01-29T00:00:00&#43;00:00">
+
+
+
+
+
+    
+<meta property="og:image" content="https://datasandbox.netlify.app/img/MachineLearningProject.png">
+<meta property="og:image:url" content="https://datasandbox.netlify.app/img/MachineLearningProject.png">
+    
+
+    
+    <link rel="stylesheet" href='/css/custom.css'>
+    <i class="dark hidden"></i>
+</head><body class="font-sans">
+    <div class="min-h-screen flex flex-col bg-gray-100 dark:bg-warmgray-800"><div class="bg-gray-800">
+    <div class="container max-w-screen-xl mr-auto ml-auto">
+        <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6">
+            <div class="flex items-center flex-no-shrink bg-gray-800 text-white mr-6">
+                <a href="https://datasandbox.netlify.app/"><span class="font-semibold text-2xl tracking-tight">The Data Sandbox</span></a>
+            </div>
+            <div class="flex md:hidden">
+                <div class="py-2">
+                    <button onclick="toggleDarkMode()" class="focus:outline-none mr-1" aria-label="Darkmode Toggle Button"><i id="icon"
+                            class="icon-moon inline-flex align-middle leading-normal text-lg text-white"></i></button>
+                    <span class="text-white">|</span>
+                </div>
+                <button id="hamburgerbtn" class="flex items-center px-3 py-1 text-white hover:opacity-50" aria-label="Hamburger Button">
+                    <span class="icon-menu text-2xl"></span>
+                </button>
+            </div>
+            <div class="hidden w-full md:flex md:flex-row sm:items-center md:w-auto" id="mobileMenu">
+                <div class="text-sm lg:flex-grow">
+                </div>
+                <div class="navmenu">
+                    
+                    <a href="/"
+                        class="no-underline duration-200 block mt-4 sm:inline-block sm:mt-0 text-white hover:opacity-50 mr-4">
+                        Home
+                    </a>
+                    
+                    <a href="/about/"
+                        class="no-underline duration-200 block mt-4 sm:inline-block sm:mt-0 text-white hover:opacity-50 mr-4">
+                        About
+                    </a>
+                    
+                    <a href="/contact/"
+                        class="no-underline duration-200 block mt-4 sm:inline-block sm:mt-0 text-white hover:opacity-50 mr-4">
+                        Contact
+                    </a>
+                    
+                </div>
+                <div class="text-white invisible md:visible">
+                    <span>|</span>
+                    <button onclick="toggleDarkMode()" class="focus:outline-none" aria-label="Darkmode Toggle Button"><i id="icon2"
+                            class="icon-moon hover:opacity-50 duration-200 inline-flex align-middle leading-normal text-lg ml-2"></i></button>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<style>
+    .active {
+        display: block;
+    }
+</style>
+
+<script>
+    let hamburger = document.getElementById('hamburgerbtn');
+
+    let mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', function () {
+        mobileMenu.classList.toggle('active');
+    });
+</script>
+<div class="container max-w-screen-xl mx-auto mt-4 flex-grow px-5 lg:px-0" id="content">
+            <div class="lg:mx-5">
+<div class="grid grid-cols-3 gap-4">
+    
+    <div class="col-span-3 lg:col-span-2 dark:text-white">
+    
+        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
+            <h1 class="title text-4xl">Fitness Tracker Modeling: ML</h1>
+            <hr class="my-2">
+            <aside id="meta">
+                <div>
+                    <section>
+                        <h4 id="date"><span class="icon-access_time mr-2"></span>2022/01/29 </h4>
+                    </section>
+                    
+                    <div id="tags">
+                        <span class="icon-local_offer mr-1"></span>
+                        
+                        <a href="https://datasandbox.netlify.app/tags/ggplot">GGPlot</a> |
+                        
+                        <a href="https://datasandbox.netlify.app/tags/ml">ML</a> |
+                        
+                        <a href="https://datasandbox.netlify.app/tags/r">R</a> |
+                        
+                    </div>
+                    
+                </div>
+            </aside>
+            <hr class="my-2">
+            
+            <img class="py-4" src="https://datasandbox.netlify.app/img/MachineLearningProject.png">
+            
+            <div class="content mt-5">
+<script src="https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/index.en_files/header-attrs/header-attrs.js"></script>
+
+
+<blockquote>
+<p>The original paper was written on 12/18/2020</p>
+</blockquote>
+<div id="executive-summary" class="section level1">
+<h1>Executive Summary</h1>
+<p>This report analyzes collected data on different users preforming barbell lifts
+performed at different levels of quality. A machine learning algorithm was used
+to create a model to determine the users rating based on data collected from multiple
+accelerometers. More information on the project can be found <a href="http://web.archive.org/web/20161224072740/http:/groupware.les.inf.puc-rio.br/har">here</a>.</p>
+</div>
+<div id="analysis" class="section level1">
+<h1>Analysis</h1>
+<div id="initialization" class="section level2">
+<h2>Initialization</h2>
+<p>The following code was used to initialize the required r libraries as well as downloading
+the required data and store it into memory. There are some of the columns off the
+data that were not required for modeling which were excluded (ex. user names).</p>
+<pre class="r"><code>library(caret)
+library(gbm)
+library(dplyr)
+library(randomForest)
+library(ggplot2)
+set.seed(90210)
+Ntree &lt;- 200
+
+download.file(&quot;https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv&quot;, &quot;training.csv&quot;)
+download.file(&quot;https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv&quot;, &quot;testing.csv&quot;)
+train &lt;- read.csv2(&quot;training.csv&quot;, sep = &quot;,&quot;)[,-c(1:7)]
+test &lt;- read.csv2(&quot;testing.csv&quot;, sep = &quot;,&quot;)[,-c(1:7)]</code></pre>
+</div>
+<div id="reducing-predictors" class="section level2">
+<h2>Reducing predictors</h2>
+<p>The data contains way too many predictors (153 in total) to produce accurate and simple models.
+Some trimming is required. The first trim is performed with the near zero variance function
+from the caret library which finds the predictors that exhibit near zero variation.
+These predictors would add little benefit to include in models.</p>
+<pre class="r"><code>nz &lt;- nearZeroVar(train)
+train &lt;- train[,-nz]
+test &lt;- test[-nz]</code></pre>
+<p>From this step, the number of predictors is reduced to 94. There remains
+a large number of NA values in the data. These values are examined in the next chunk
+of code.</p>
+<pre class="r"><code>maxi &lt;- length(train) - 1
+valna &lt;- 1:maxi
+
+for (i in 1:maxi) {
+        train[,i] &lt;- as.numeric(train[,i])
+        test[,i] &lt;- as.numeric(test[,i])
+        valna[i] &lt;- mean(is.na(train[,i]))
+}
+
+table(valna)</code></pre>
+<pre><code>## valna
+##                 0 0.979308938946081 
+##                52                41</code></pre>
+<p>The code shows that there are 52 predictors that have no missing
+data and 41 predictors that are mostly missing values.
+These predictors would add little value to the modeling and are removed with the
+following code</p>
+<pre class="r"><code>train &lt;- train[, valna == 0]
+test &lt;- test[, valna == 0]</code></pre>
+<p>The training was then divided to create a valdiation set which will be used for
+cross validation. Note that the random forest algorithm has built in cross validation
+with the “out of bag error”. About 1/3 of the data is used in a random forest.</p>
+<pre class="r"><code>Valid &lt;- createDataPartition(train$classe, p = 0.3)[[1]]
+valid &lt;- train[Valid,]
+train &lt;- train[-Valid,]</code></pre>
+<p>The next step is to utilize the variable of importance function in the caret library
+to reduce the number of predictors even further. The train data is still very large
+but by making a sample set from the training data and modeling from that we can get a
+reasonable approximation of the variables of importance.</p>
+<pre class="r"><code>strain &lt;- rbind(sample_n(train[train$classe == &quot;A&quot;,],round(mean(train$classe == &quot;A&quot;)*200,0)),
+                sample_n(train[train$classe == &quot;B&quot;,],round(mean(train$classe == &quot;B&quot;)*200,0)),
+                sample_n(train[train$classe == &quot;C&quot;,],round(mean(train$classe == &quot;C&quot;)*200,0)),
+                sample_n(train[train$classe == &quot;D&quot;,],round(mean(train$classe == &quot;D&quot;)*200,0)),
+                sample_n(train[train$classe == &quot;E&quot;,],round(mean(train$classe == &quot;E&quot;)*200,0))
+)</code></pre>
+<p>The sample set was set to ensure an accurate representation of the ‘classe’ variable
+in the training data. Two models were completed and their variables of importance
+were added together.</p>
+<pre class="r"><code>mdl1 &lt;- train(classe~., data = strain, method = &quot;rf&quot;, ntree = Ntree)
+mdl2 &lt;- train(classe~., data = strain, method = &quot;gbm&quot;, verbose = FALSE)
+var &lt;- varImp(mdl1)$importance &gt; 50 | varImp(mdl2)$importance &gt; 50
+varorder &lt;- order(varImp(mdl1)$importance, decreasing = TRUE)
+Varimp &lt;- row.names(varImp(mdl1)$importance)[varorder[1:2]]</code></pre>
+<p>A value of 50 was used for a cut-off value. The total number of predictors has been
+reduced to 4.</p>
+<pre class="r"><code>valid &lt;- valid[,var]
+train &lt;- train[,var]
+test &lt;- test[,var]</code></pre>
+</div>
+<div id="modeling" class="section level2">
+<h2>Modeling</h2>
+<p>With the reduced predictors, the models can now be trained. Since these model will look
+at the entire training data set, it will require a lot of time. The models include:<br />
+- Random forest<br />
+- Generalized Boosted<br />
+- Linear Discriminant<br />
+- Combined<br />
+The randomForest function is used as it is more efficient than the train function.
+The data method is also more efficient then using the formula method.</p>
+<pre class="r"><code>mdl11 &lt;- randomForest(x = train[,1:(ncol(train) - 1)], y = as.factor(train[,ncol(train)]), ntree = Ntree, proximity = TRUE)
+mdl21 &lt;- train(classe~., data = train, method = &quot;gbm&quot;, verbose = FALSE)
+mdl31 &lt;- train(classe~., data = train, method = &quot;lda&quot;)</code></pre>
+<p>The following code constructs the combined model</p>
+<pre class="r"><code>pmdl11 &lt;- predict(mdl11, valid)
+pmdl21 &lt;- predict(mdl21, valid)
+pmdl31 &lt;- predict(mdl31, valid)
+join &lt;- data.frame(pmdl11, pmdl21, pmdl31, classe = valid$classe)
+jmdl &lt;- randomForest(x = join[,1:3], y = as.factor(join$classe), ntree = Ntree)</code></pre>
+</div>
+<div id="model-evaluation" class="section level2">
+<h2>Model Evaluation</h2>
+<p>The new models will need to be examined against the validation data set. The out of
+bag error for the random forest models were not used as the validation data provides
+a uniform comparison for all models. The following function was used to test the models:</p>
+<pre class="r"><code>Exacc &lt;- function(mdl, test){
+        mean(predict(mdl,test) == test$classe)
+}</code></pre>
+<p>The model’s accuracy are summarized in the following dataframe when they are used
+to predict the results in the validation set:</p>
+<pre><code>##   Model  accuracy
+## 1 mdl11 0.8955680
+## 2 mdl21 0.7994566
+## 3 mdl31 0.3625403
+## 4 joint 0.8920020</code></pre>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>From the results from the model testing, it is clear that the random forest and the
+combined are the most accurate models for the validation set. The combined model
+has approxiametly the same level of accuracy as the random forest meaning it is the most heavily
+weighted model. It also means that the inclusion of the boosted and linear discriminant
+models do not contribute to its accuracy. For simplification, the random forest
+model is the best model.</p>
+</div>
+<div id="plot" class="section level1">
+<h1>Plot</h1>
+<p>The centers of the model can be found from the proximity data. The proximity data
+is compared to two predictors, the most important predictors. The two most important
+predictors would sometimes vary so the code was changed to be flexible to it.</p>
+<pre class="r"><code>index &lt;- names(train) %in% Varimp
+mdlp &lt;- classCenter(train[index], train$classe, mdl11$proximity)
+mdlp &lt;- as.data.frame(mdlp)
+mdlp$classe &lt;- rownames(mdlp)</code></pre>
+<p>This centers data can be included with the training data. There are distinctly different
+regions based off of the different classe values but the other predictors also contribute to
+model accuracy.</p>
+<pre class="r"><code>index &lt;- names(train) %in% Varimp
+names &lt;- names(train[index])
+
+f &lt;- function(name1, name2){
+        xval &lt;- sym(name1)
+        yval &lt;- sym(name2)
+        ggplot(data = train, aes_string(x = xval, y = yval, col = &quot;classe&quot;)) +
+                geom_point() +
+                geom_point(aes_string(x = xval, y = yval, col = &quot;classe&quot;), size = 10, shape = 4, data = mdlp) +
+                labs(title = &quot;Model centers on two variables of importance&quot;)
+        }
+f(names[1], names[2])</code></pre>
+<p><img src="https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/index.en_files/figure-html/plot-1.png" width="672" /></p>
+</div>
+</div>
+            <aside id="meta">
+                
+                <hr class="py-2">
+                <div id="categories">
+                    <span class="icon-folder text-xl mr-1"></span>
+                    
+                    <span
+                        class="inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-200 justify-center h-8 px-3 text-blue-500 duration-200 hover:text-black dark:bg-warmgray-800"><a
+                            href="https://datasandbox.netlify.app/categories/project">Project</a></span>
+                    
+                </div>
+                
+            </aside>
+            </div>
+        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
+            <div class="grid grid-cols-2">
+                <div class="col-span-1">
+                    
+                </div>
+                
+            </div>
+        </div>
+        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
+            <div class="mb-3">
+                <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "data-sandbox" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="hidden lg:block lg:col-span-1">
+        <div class="mb-3">
+    <form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+        <label>
+            <input class="w-full p-3 focus:outline-none dark:bg-warmgray-900 dark:text-white placeholder-gray-700 dark:placeholder-gray-300" type="search"
+                placeholder="Search..." value="" name="q" aria-label="Search">
+        </label>
+        <input class="hidden" type="submit" value="Search">
+        <input type="hidden" name="sitesearch" value="https://datasandbox.netlify.app/" />
+    </form>
+</div>
+        <div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-3 px-3 dark:text-gray-300">Archives</p>
+    
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/01">2022/01 (1)</a>
+    
+    
+</div>
+        
+<div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Categories</p>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/project">Project</a>
+
+    
+</div>
+
+        
+<div class="bg-white panel mb-3 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-3 pl-3 dark:text-gray-300">Tags</p>
+    <div class="panel-block p-2">
+        <a href="/tags/ggplot">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                ggplot
+            </span></a>
+        <a href="/tags/ml">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                ml
+            </span></a>
+        <a href="/tags/r">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                r
+            </span></a>
+    </div>
+</div>
+
+        
+
+<div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Recent Posts</p>
+    <div class="mx-6">
+        
+        <a href="/post/2022-01-29-fitness-tracker-modeling-ml/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Fitness Tracker Modeling: ML</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/01/29</time>
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+    </div>
+    
+</div>
+
+            </div>
+        </div><footer class="bg-gray-800 text-white p-6">
+    
+    <div class="container max-w-screen-xl mr-auto ml-auto">
+        <p>&copy; 2022 <a href="https://datasandbox.netlify.app/" class="duration-200 hover:opacity-50">The Data Sandbox</a></p>
+        <p>Powered by <a href="https://gohugo.io/" class="duration-200 hover:opacity-50">Hugo</a>, Theme <a
+                href="https://github.com/opera7133/Blonde" class="duration-200 hover:opacity-50">Blonde</a>.</p>
+    </div>
+    <script>
+        var icon = document.getElementById("icon");
+        var icon2 = document.getElementById("icon2");
+        
+        if (document.documentElement.classList.contains("dark") || localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          icon.classList.remove("icon-moon");
+          icon.classList.add("icon-sun");
+          icon2.classList.remove("icon-moon");
+          icon2.classList.add("icon-sun");
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }
+        function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+            icon.classList.remove("icon-sun");
+            icon.classList.add("icon-moon");
+            icon2.classList.remove("icon-sun");
+            icon2.classList.add("icon-moon");
+            document.documentElement.classList.remove('dark')
+            localStorage.theme = 'light'
+        } else {
+            icon.classList.remove("icon-moon");
+            icon.classList.add("icon-sun");
+            icon2.classList.remove("icon-moon");
+            icon2.classList.add("icon-sun");
+            document.documentElement.classList.add('dark')
+            localStorage.theme = 'dark'
+        }
+    }
+    </script>
+</footer>
+</div>
+</body>
+
+</html>
