@@ -10,24 +10,66 @@ tags:
 draft: yes
 runtime: shiny
 description: 'A project used to study the occurance of keywords in a job posting.'
+image: "img/jobsearch.jpg"
 archives:
   - 2022/01
 ---
 
 Recently there was a post on medium about the use of Natural Language Processing (NLP) 
 to study a job posting for keywords. I found that this article was very similar to 
-R shiny App that I created a while ago. The original article can be found
-[here](https://medium.com/data-marketing-philosophy/use-python-and-nlp-to-boost-your-resume-e4691a58bcc9).
+R shiny App that I created a while ago. [^1]
 
-```{r Inialization}
+
+## Introduction
+
+Technology has changed the job application process, making it easier and quicker to
+apply to jobs. As a result, the average job posting will receive around 250 resumes.
+[^2] So how can hiring managers handle spending their time looking through that 
+many resumes for one posting? That's easy, they cheat. 
+
+Hiring Managers no longer look at individual resumes but use automatic software called
+applicant tracking system (ATS). These programs filter resumes by a set of keywords, 
+reducing the amount of resumes to a more manageable amount. So how can a job applicant 
+make sure their resume is looked at? Well, they should cheat.
+
+The medium article I mentioned uses Python and Natural Language Processing (NLP)
+to skim through the job posting to look for the most common words used. This is useful 
+information but not necessarily the keywords used by the ATS software. I propose the 
+use of a R Shiny App to filter a job posting by a list of common keywords.
+
+An R Shiny App is a interactive web based application that runs R code. The syntax 
+for a Shiny App is a little different than R and requires some additional understanding. 
+The product will be a basic, interactive program that can be hosted online. One free
+Shiny App hosting site that I recommend is [shinyapps.io](https://www.shinyapps.io).
+
+## Inialization
+The shiny App will require the following libraries. 
+
+```{r Inialization, warning=FALSE, message=FALSE}
 library(shiny)
 library(wordcloud2)
 library(tidyverse)
 library(XML)
 library(rvest)
 library(tidytext)
-library(stopwords)
 ```
+
+The Shiny App will use a csv files which contains a set of keywords that ATS will 
+look for. This list was found online but I have modified by adding additional 
+keywords as I see fit. The file can be download [here]() from my github site. Here
+is a sample of some of the keywords:
+
+```{r keys, message=FALSE}
+Keywords <- read_csv("Keywords.csv") 
+Keywords$Keys %>% head()
+```
+## App Structure
+
+One issue I found when developing this application was the use of keywords that are
+a combination of multiple words.
+
+
+## Shiny App
 
 ```{r Shiny}
 shinyApp(
@@ -42,41 +84,46 @@ shinyApp(
                                 ),
                         # Show a plot of the generated distribution
                         mainPanel(
-                                h4("Word Cloud"),
-                                wordcloud2Output("plot", width = "100%"),
-                                h4("Keywords"),
-                                textOutput("keys2"),
-                                wordcloud2Output("plotkey", width = "100%")
+                                h4("Key-Word Cloud"),
+                                wordcloud2Output("plot")
                                 )
                         )
-                )
+                ),
         
-        server = function(input, output) {
-                Keywords <- readRDS("~/R/Resumes/Word_Cloud/Keywords.RDS")
-                data <- reactive({
-                        url <- input$url
-                        
-                        data <- read_html(url, options = "NOBLANKS") %>% html_nodes("p") %>%
-                        html_text() %>% data.frame(text = .) %>% unnest_tokens(words, text)%>%
-                        count(words) %>% filter(!words %in% stop_words$word) %>% arrange(desc(n)) %>%
-                        top_n(15)
-                        })
+        server = function(input, output){
+                Keywords <- read_csv("Keywords.csv")
+                Keywords$Keys <- str_to_lower(Keywords$Keys) 
+                indx <- Keywords$Keys %>% str_count(" ")
                 
-                keys <- reactive({
-                        data <- data()
-                        data[data %in% Ketwords]
+                data <- reactive({
+                url <- input$url
+                data <- read_html(url, options = "NOBLANKS") %>%
+                        html_nodes("p") %>%
+                        html_text() %>%
+                        data.frame(text = .)
+                rbind(data %>%
+                              unnest_tokens(word, text, token = "ngrams", n= 1) %>%
+                              count(word, name = 'freq', sort = TRUE) %>%
+                              filter(word %in% Keywords$Keys[indx == 0]),
+                      data %>%
+                              unnest_tokens(word, text, token = "ngrams", n= 2) %>%
+                              count(word, name = 'freq', sort = TRUE) %>%
+                              filter(word %in% Keywords$Keys[indx == 1]),
+                      data %>%
+                              unnest_tokens(word, text, token = "ngrams", n= 3) %>%
+                              count(word, name = 'freq', sort = TRUE) %>%
+                              filter(word %in% Keywords$Keys[indx == 2]))
                         })
                 
                 output$plot <- renderWordcloud2({
                         wordcloud2(data())
                         })
-                
-                output$keys2 <- renderText({
-                        keys()
-                        })
-                
-                output$plotkey <- renderWordcloud2({
-                        wordcloud2(keys())
-                        })
+        },
+
+  options = list(height = 500)
 )
 ```
+
+[^1]: [use-python-and-nlp-to-boost-your-resume](https://medium.com/data-marketing-philosophy/use-python-and-nlp-to-boost-your-resume-e4691a58bcc9)
+[^2]:[Resume Screening: A How-To Guide For Recruiters](https://ideal.com/resume-screening/)
+]

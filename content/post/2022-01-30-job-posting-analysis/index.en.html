@@ -8,7 +8,9 @@ categories:
 tags:
   - R
 draft: yes
+runtime: shiny
 description: 'A project used to study the occurance of keywords in a job posting.'
+image: "img/jobsearch.jpg"
 archives:
   - 2022/01
 ---
@@ -18,5 +20,108 @@ archives:
 
 <p>Recently there was a post on medium about the use of Natural Language Processing (NLP)
 to study a job posting for keywords. I found that this article was very similar to
-R shiny App that I created a while ago. The original article can be found
-<a href="https://medium.com/data-marketing-philosophy/use-python-and-nlp-to-boost-your-resume-e4691a58bcc9">here</a>.</p>
+R shiny App that I created a while ago. <a href="#section-fn1" class="footnote-ref" id="section-fnref1"><sup>1</sup></a></p>
+<div id="section-introduction" class="section level2">
+<h2>Introduction</h2>
+<p>Technology has changed the job application process, making it easier and quicker to
+apply to jobs. As a result, the average job posting will receive around 250 resumes.
+<a href="#section-fn2" class="footnote-ref" id="section-fnref2"><sup>2</sup></a> So how can hiring managers handle spending their time looking through that
+many resumes for one posting? That’s easy, they cheat.</p>
+<p>Hiring Managers no longer look at individual resumes but use automatic software called
+applicant tracking system (ATS). These programs filter resumes by a set of keywords,
+reducing the amount of resumes to a more manageable amount. So how can a job applicant
+make sure their resume is looked at? Well, they should cheat.</p>
+<p>The medium article I mentioned uses Python and Natural Language Processing (NLP)
+to skim through the job posting to look for the most common words used. This is useful
+information but not necessarily the keywords used by the ATS software. I propose the
+use of a R Shiny App to filter a job posting by a list of common keywords.</p>
+<p>An R Shiny App is a interactive web based application that runs R code. The syntax
+for a Shiny App is a little different than R and requires some additional understanding.
+The product will be a basic, interactive program that can be hosted online. One free
+Shiny App hosting site that I recommend is <a href="https://www.shinyapps.io">shinyapps.io</a>.</p>
+</div>
+<div id="section-inialization" class="section level2">
+<h2>Inialization</h2>
+<p>The shiny App will require the following libraries.</p>
+<pre class="r"><code>library(shiny)
+library(wordcloud2)
+library(tidyverse)
+library(XML)
+library(rvest)
+library(tidytext)</code></pre>
+<p>The Shiny App will use a csv files which contains a set of keywords that ATS will
+look for in a resume. This list was found online but I have modified by adding additional
+keywords as I see fit. The file can be download <a href="">here</a> from my github site. Here
+is a sample of some of the keywords:</p>
+<pre class="r"><code>Keywords &lt;- read_csv(&quot;Keywords.csv&quot;) 
+Keywords$Keys %&gt;% head()</code></pre>
+<pre><code>## [1] &quot;.NET&quot;                &quot;account management&quot;  &quot;accounting&quot;         
+## [4] &quot;accounts payable&quot;    &quot;accounts receivable&quot; &quot;acquisition&quot;</code></pre>
+</div>
+<div id="section-app-structure" class="section level2">
+<h2>App Structure</h2>
+<p>One issue I found when developing this application was the use of keywords that are
+a combination of multiple words.</p>
+</div>
+<div id="section-shiny-app" class="section level2">
+<h2>Shiny App</h2>
+<pre class="r"><code>shinyApp(
+        ui = fluidPage(
+                # Application title
+                titlePanel(&quot;Job Posting Word Cloud&quot;),
+
+                # Sidebar with a slider input for number of bins
+                sidebarLayout(
+                        sidebarPanel(
+                                textInput(&quot;url&quot;, &quot;input URL&quot;, value = &quot;https://www.google.com/&quot;)
+                                ),
+                        # Show a plot of the generated distribution
+                        mainPanel(
+                                h4(&quot;Key-Word Cloud&quot;),
+                                wordcloud2Output(&quot;plot&quot;)
+                                )
+                        )
+                ),
+        
+        server = function(input, output){
+                Keywords &lt;- read_csv(&quot;Keywords.csv&quot;)
+                Keywords$Keys &lt;- str_to_lower(Keywords$Keys) 
+                indx &lt;- Keywords$Keys %&gt;% str_count(&quot; &quot;)
+                
+                data &lt;- reactive({
+                url &lt;- input$url
+                data &lt;- read_html(url, options = &quot;NOBLANKS&quot;) %&gt;%
+                        html_nodes(&quot;p&quot;) %&gt;%
+                        html_text() %&gt;%
+                        data.frame(text = .)
+                rbind(data %&gt;%
+                              unnest_tokens(word, text, token = &quot;ngrams&quot;, n= 1) %&gt;%
+                              count(word, name = &#39;freq&#39;, sort = TRUE) %&gt;%
+                              filter(word %in% Keywords$Keys[indx == 0]),
+                      data %&gt;%
+                              unnest_tokens(word, text, token = &quot;ngrams&quot;, n= 2) %&gt;%
+                              count(word, name = &#39;freq&#39;, sort = TRUE) %&gt;%
+                              filter(word %in% Keywords$Keys[indx == 1]),
+                      data %&gt;%
+                              unnest_tokens(word, text, token = &quot;ngrams&quot;, n= 3) %&gt;%
+                              count(word, name = &#39;freq&#39;, sort = TRUE) %&gt;%
+                              filter(word %in% Keywords$Keys[indx == 2]))
+                        })
+                
+                output$plot &lt;- renderWordcloud2({
+                        wordcloud2(data())
+                        })
+        },
+
+  options = list(height = 500)
+)</code></pre>
+<p><iframe data-deferred-src="app673e8eee3f7ad85cb9944303901809dc/?w=&amp;__subapp__=1" width="100%" height="500" class="shiny-frame shiny-frame-deferred"></iframe></p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="section-fn1"><p><a href="https://medium.com/data-marketing-philosophy/use-python-and-nlp-to-boost-your-resume-e4691a58bcc9">use-python-and-nlp-to-boost-your-resume</a><a href="#section-fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="section-fn2"><p><a href="https://ideal.com/resume-screening/">Resume Screening: A How-To Guide For Recruiters</a>
+]<a href="#section-fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
