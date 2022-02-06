@@ -18,7 +18,7 @@ archives:
 <script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
 
 
-<p>Recently there was a post on medium about the use of Natural Language Processing (NLP)
+<p>Recently, there was a post on medium about the use of Natural Language Processing (NLP)
 to study a job posting for keywords. I found that this article was very similar to
 R shiny App that I created a while ago. <a href="#section-fn1" class="footnote-ref" id="section-fnref1"><sup>1</sup></a></p>
 <div id="section-introduction" class="section level2">
@@ -27,16 +27,16 @@ R shiny App that I created a while ago. <a href="#section-fn1" class="footnote-r
 apply to jobs. As a result, the average job posting will receive around 250 resumes.
 <a href="#section-fn2" class="footnote-ref" id="section-fnref2"><sup>2</sup></a> So how can hiring managers handle spending their time looking through that
 many resumes for one posting? That’s easy, they cheat.</p>
-<p>Hiring Managers no longer look at individual resumes but use automatic software called
+<p>Hiring Managers no longer look at individual resumes, but use automatic software called
 applicant tracking system (ATS). These programs filter resumes by a set of keywords,
 reducing the amount of resumes to a more manageable amount. So how can a job applicant
 make sure their resume is looked at? Well, they should cheat.</p>
 <p>The medium article I mentioned uses Python and Natural Language Processing (NLP)
 to skim through the job posting to look for the most common words used. This is useful
-information but not necessarily the keywords used by the ATS software. I propose the
-use of a R Shiny App to filter a job posting by a list of common keywords.</p>
-<p>An R Shiny App is a interactive web based application that runs R code. The syntax
-for a Shiny App is a little different than R and requires some additional understanding.
+information, but not necessarily the keywords used by the ATS software. I propose the
+use of an R Shiny App to filter a job posting by a list of common keywords.</p>
+<p>An R Shiny App is an interactive web based application that runs R code. The syntax
+for a Shiny App is a little different from R and requires some additional understanding.
 The product will be a basic, interactive program that can be hosted online. One free
 Shiny App hosting site that I recommend is <a href="https://www.shinyapps.io">shinyapps.io</a>.</p>
 </div>
@@ -50,9 +50,9 @@ library(XML)
 library(rvest)
 library(tidytext)</code></pre>
 <p>The Shiny App will use a csv files which contains a set of keywords that ATS will
-look for. This list was found online but I have modified by adding additional
-keywords as I see fit. The file can be download <a href="https://github.com/mark-edney/Resumes/blob/master/Word_Cloud/Keywords.csv">here</a> from my github site. Here
-is a sample of some of the keywords:</p>
+look for. This list was found online, but I have modified by adding additional
+keywords as I see fit. The file can be downloaded <a href="https://github.com/mark-edney/Resumes/blob/master/Word_Cloud/Keywords.csv">here</a> from my GitHub site. Here
+is a sample of some keywords:</p>
 <pre class="r"><code>Keywords &lt;- read_csv(&quot;Keywords.csv&quot;) 
 Keywords$Keys %&gt;% head()</code></pre>
 <pre><code>## [1] &quot;.NET&quot;                &quot;account management&quot;  &quot;accounting&quot;         
@@ -61,25 +61,25 @@ Keywords$Keys %&gt;% head()</code></pre>
 <div id="section-app-structure" class="section level2">
 <h2>App Structure</h2>
 <p>One issue I found when developing this application was the use of keywords that are
-a combination of multiple words. This creates some complications as a simple search
+a combination of multiple words. This creates some complications, as a simple search
 of keywords would use only the first word and lose the context.</p>
 <p>This challenge was met by breaking the website down into ngrams. An over simplification
-of an ngram is a group of n number of words. Wikipedia has a very good page that
+of a ngram is a group of n number of words. Wikipedia has a very good page that
 better explains ngrams.<a href="#section-fn3" class="footnote-ref" id="section-fnref3"><sup>3</sup></a> The website can then be split into ngrams of different
 lengths and the keywords searched for.</p>
-<p>As an example, the phrase:</p>
+<p>As a example, the phrase:</p>
 <blockquote>
 <p>The quick brown fox</p>
 </blockquote>
-<p>for an ngram of length 1 would return:</p>
+<p>for a ngram of length 1 would return:</p>
 <blockquote>
 <p>(The) (quick) (brown) (fox)</p>
 </blockquote>
-<p>for an ngram of length 2 would return:</p>
+<p>for a ngram of length 2 would return:</p>
 <blockquote>
 <p>(The quick) (quick brown) (brown fox)</p>
 </blockquote>
-<p>and for an ngram of length 3 would return:</p>
+<p>and for a ngram of length 3 would return:</p>
 <blockquote>
 <p>(The quick brown) (quick brown fox)</p>
 </blockquote>

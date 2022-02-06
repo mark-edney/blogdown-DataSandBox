@@ -15,7 +15,7 @@ archives:
   - 2022/01
 ---
 
-Recently there was a post on medium about the use of Natural Language Processing (NLP) 
+Recently, there was a post on medium about the use of Natural Language Processing (NLP) 
 to study a job posting for keywords. I found that this article was very similar to 
 R shiny App that I created a while ago. [^1]
 
@@ -27,18 +27,18 @@ apply to jobs. As a result, the average job posting will receive around 250 resu
 [^2] So how can hiring managers handle spending their time looking through that 
 many resumes for one posting? That's easy, they cheat. 
 
-Hiring Managers no longer look at individual resumes but use automatic software called
+Hiring Managers no longer look at individual resumes, but use automatic software called
 applicant tracking system (ATS). These programs filter resumes by a set of keywords, 
 reducing the amount of resumes to a more manageable amount. So how can a job applicant 
 make sure their resume is looked at? Well, they should cheat.
 
 The medium article I mentioned uses Python and Natural Language Processing (NLP)
 to skim through the job posting to look for the most common words used. This is useful 
-information but not necessarily the keywords used by the ATS software. I propose the 
-use of a R Shiny App to filter a job posting by a list of common keywords.
+information, but not necessarily the keywords used by the ATS software. I propose the 
+use of an R Shiny App to filter a job posting by a list of common keywords.
 
-An R Shiny App is a interactive web based application that runs R code. The syntax 
-for a Shiny App is a little different than R and requires some additional understanding. 
+An R Shiny App is an interactive web based application that runs R code. The syntax 
+for a Shiny App is a little different from R and requires some additional understanding. 
 The product will be a basic, interactive program that can be hosted online. One free
 Shiny App hosting site that I recommend is [shinyapps.io](https://www.shinyapps.io).
 
@@ -55,9 +55,9 @@ library(tidytext)
 ```
 
 The Shiny App will use a csv files which contains a set of keywords that ATS will 
-look for. This list was found online but I have modified by adding additional 
-keywords as I see fit. The file can be download [here](https://github.com/mark-edney/Resumes/blob/master/Word_Cloud/Keywords.csv) from my github site. Here
-is a sample of some of the keywords:
+look for. This list was found online, but I have modified by adding additional 
+keywords as I see fit. The file can be downloaded [here](https://github.com/mark-edney/Resumes/blob/master/Word_Cloud/Keywords.csv) from my GitHub site. Here
+is a sample of some keywords:
 
 ```{r keys, message=FALSE}
 Keywords <- read_csv("Keywords.csv") 
@@ -66,27 +66,27 @@ Keywords$Keys %>% head()
 ## App Structure
 
 One issue I found when developing this application was the use of keywords that are
-a combination of multiple words. This creates some complications as a simple search
+a combination of multiple words. This creates some complications, as a simple search
 of keywords would use only the first word and lose the context. 
 
 This challenge was met by breaking the website down into ngrams. An over simplification 
-of an ngram is a group of n number of words. Wikipedia has a very good page that
+of a ngram is a group of n number of words. Wikipedia has a very good page that
 better explains ngrams.[^3] The website can then be split into ngrams of different
 lengths and the keywords searched for. 
 
-As an example, the phrase:
+As a example, the phrase:
 
 > The quick brown fox
 
-for an ngram of length 1 would return:
+for a ngram of length 1 would return:
 
 > (The) (quick) (brown) (fox)
 
-for an ngram of length 2 would return:
+for a ngram of length 2 would return:
 
 > (The quick) (quick brown) (brown fox)
 
-and for an ngram of length 3 would return:
+and for a ngram of length 3 would return:
 
 > (The quick brown) (quick brown fox)
 
