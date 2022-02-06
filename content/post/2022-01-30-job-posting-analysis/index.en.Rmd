@@ -126,4 +126,3 @@ shinyApp(
 
 [^1]: [use-python-and-nlp-to-boost-your-resume](https://medium.com/data-marketing-philosophy/use-python-and-nlp-to-boost-your-resume-e4691a58bcc9)
 [^2]:[Resume Screening: A How-To Guide For Recruiters](https://ideal.com/resume-screening/)
-]

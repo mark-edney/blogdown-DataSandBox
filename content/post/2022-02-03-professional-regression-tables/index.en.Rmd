@@ -9,6 +9,7 @@ tags:
   - R
 draft: yes
 description: ''
+image: "img/data.jpg"
 archives:
   - 2022/02
 ---
