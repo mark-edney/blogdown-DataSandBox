@@ -93,7 +93,7 @@ and for an ngram of length 3 would return:
 
 ## Shiny App
 
-```{r Shiny}
+```{r Shiny, eval=FALSE}
 shinyApp(
 #This is the standard format for a shiny app
         
@@ -162,6 +162,7 @@ shinyApp(
   options = list(height = 500)
 )
 ```
+
 
 [^1]:[use-python-and-nlp-to-boost-your-resume](https://medium.com/data-marketing-philosophy/use-python-and-nlp-to-boost-your-resume-e4691a58bcc9)
 [^2]:[Resume Screening: A How-To Guide For Recruiters](https://ideal.com/resume-screening/)
