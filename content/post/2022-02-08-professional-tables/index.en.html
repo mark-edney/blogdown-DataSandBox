@@ -1,5 +1,5 @@
 ---
-title: Professional Tables
+title: Professional Tables with Stargazer
 author: Mark Edney
 date: '2022-02-08'
 slug: []
@@ -7,7 +7,8 @@ categories:
   - How-to
 tags:
   - R
-draft: yes
+draft: no
+image: "img/data.jpg"
 description: 'How to create better looking tables in R'
 archives:
   - 2022/02
@@ -49,7 +50,7 @@ mdl2 &lt;- glm(CO2$uptake ~ CO2$Plant, family = Gamma)
 stargazer(mdl, mdl2,  title = &quot;CO2 Uptake of plants model&quot;)</code></pre>
 <pre><code>## 
 ## % Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
-## % Date and time: Tue, Feb 08, 2022 - 11:46:17 AM
+## % Date and time: Fri, Feb 11, 2022 - 8:36:57 AM
 ## \begin{table}[!htbp] \centering 
 ##   \caption{CO2 Uptake of plants model} 
 ##   \label{} 
@@ -114,7 +115,7 @@ stargazer(mdl, mdl2,  title = &quot;CO2 Uptake of plants model&quot;)</code></pr
 <pre class="r"><code>stargazer(CO2)</code></pre>
 <pre><code>## 
 ## % Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
-## % Date and time: Tue, Feb 08, 2022 - 11:46:17 AM
+## % Date and time: Fri, Feb 11, 2022 - 8:36:58 AM
 ## \begin{table}[!htbp] \centering 
 ##   \caption{} 
 ##   \label{} 
@@ -138,6 +139,9 @@ from such a pdf file.</p>
 It is important to note that when displaying a dataframe in stargazer, the function
 will default to a summary of results. This performance can be undone will the summary = FALSE
 as a parameter of the function.</p>
+<p>With some basic understanding of the La-Tex language, you can understand what stargazer
+is providing. Its nothing fancy that you couldn’t write yourself. It is the convenience
+at which you can create these tables that makes it important.</p>
 </div>
 <div id="extra-parameters" class="section level2">
 <h2>Extra Parameters</h2>

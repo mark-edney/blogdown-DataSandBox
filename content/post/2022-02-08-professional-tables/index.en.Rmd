@@ -54,6 +54,10 @@ It is important to note that when displaying a dataframe in stargazer, the funct
 will default to a summary of results. This performance can be undone will the summary = FALSE 
 as a parameter of the function.
 
+With some basic understanding of the La-Tex language, you can understand what stargazer
+is providing. Its nothing fancy that you couldn't write yourself. It is the convenience
+at which you can create these tables that makes it important. 
+
 ## Extra Parameters
 
 There are some additional parameters to the function that are useful for different 
