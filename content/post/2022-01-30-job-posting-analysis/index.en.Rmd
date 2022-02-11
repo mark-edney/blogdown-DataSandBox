@@ -126,9 +126,7 @@ shinyApp(
 #The input variable is how the server side receives data from the ui side
                 url <- input$url
 #The text is read from the url provide by the user
-                data <- read_html(url, options = "NOBLANKS") %>%
-                        html_nodes("p") %>%
-                        html_text() %>%
+                data <- text %>%
                         data.frame(text = .)
 #Since there are ngrams of length 1-3, there a three search's that are concatenated together
                 rbind(data %>%

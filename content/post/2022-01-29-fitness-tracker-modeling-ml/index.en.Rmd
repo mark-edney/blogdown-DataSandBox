@@ -31,7 +31,7 @@ accelerometers. More information on the project can be found [here](http://web.a
 
 ## Initialization
 
-The following code was used to initialize the required r libraries, as well as downloading the required data and store it into memory. There are some columns of the data that were not required for modelling which were excluded (ex. usernames).
+The following code was used to initialize the required R libraries, as well as downloading the required data and store it into memory. There are some columns of the data that were not required for modelling which were excluded (ex. usernames).
 
 ```{r Inialization}
 

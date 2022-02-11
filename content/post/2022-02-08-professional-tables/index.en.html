@@ -1,0 +1,156 @@
+---
+title: Professional Tables
+author: Mark Edney
+date: '2022-02-08'
+slug: []
+categories:
+  - How-to
+tags:
+  - R
+draft: yes
+description: 'How to create better looking tables in R'
+archives:
+  - 2022/02
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+
+
+<blockquote>
+<p>This post was inspired by the following <a href="https://www.youtube.com/watch?v=YQ2Dd3CSa0U&amp;list=WL&amp;index=55">youtube video</a>.</p>
+</blockquote>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>Tables from regression models or just plain data in R are poorly organized. The have
+little formatting and are unfit for publishing. This point is illustrated with the
+CO2 dataset. This dataset looks at the CO2 uptake of six different types of grass.</p>
+<pre class="r"><code>data(co2)
+mdl  &lt;- lm(CO2$uptake ~ CO2$Plant)
+mdl</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = CO2$uptake ~ CO2$Plant)
+## 
+## Coefficients:
+##  (Intercept)   CO2$Plant.L   CO2$Plant.Q   CO2$Plant.C   CO2$Plant^4  
+##     27.21310     -22.94230      -4.61669       4.66802       2.33920  
+##  CO2$Plant^5   CO2$Plant^6   CO2$Plant^7   CO2$Plant^8   CO2$Plant^9  
+##      4.31450      -0.03902      -2.03649      -3.27825      -9.06702  
+## CO2$Plant^10  CO2$Plant^11  
+##      0.54631       1.91215</code></pre>
+</div>
+<div id="stargazer" class="section level2">
+<h2>Stargazer</h2>
+<p>The solution is to use the Stargazer library. The stargazer library contains the
+stargazer function which does a lot of work for the user to create tables in Latex
+format. It can even compare multiple models in the same table.</p>
+<pre class="r"><code>library(stargazer)
+mdl2 &lt;- glm(CO2$uptake ~ CO2$Plant, family = Gamma)
+stargazer(mdl, mdl2,  title = &quot;CO2 Uptake of plants model&quot;)</code></pre>
+<pre><code>## 
+## % Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+## % Date and time: Tue, Feb 08, 2022 - 11:46:17 AM
+## \begin{table}[!htbp] \centering 
+##   \caption{CO2 Uptake of plants model} 
+##   \label{} 
+## \begin{tabular}{@{\extracolsep{5pt}}lcc} 
+## \\[-1.8ex]\hline 
+## \hline \\[-1.8ex] 
+##  &amp; \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+## \cline{2-3} 
+## \\[-1.8ex] &amp; \multicolumn{2}{c}{uptake} \\ 
+## \\[-1.8ex] &amp; \textit{OLS} &amp; \textit{gamma} \\ 
+## \\[-1.8ex] &amp; (1) &amp; (2)\\ 
+## \hline \\[-1.8ex] 
+##  Plant.L &amp; $-$22.942$^{***}$ &amp; 0.041$^{***}$ \\ 
+##   &amp; (3.100) &amp; (0.005) \\ 
+##   &amp; &amp; \\ 
+##  Plant.Q &amp; $-$4.617 &amp; 0.012$^{***}$ \\ 
+##   &amp; (3.100) &amp; (0.004) \\ 
+##   &amp; &amp; \\ 
+##  Plant.C &amp; 4.668 &amp; $-$0.010$^{**}$ \\ 
+##   &amp; (3.100) &amp; (0.005) \\ 
+##   &amp; &amp; \\ 
+##  Plant$\hat{\mkern6mu}$4 &amp; 2.339 &amp; $-$0.013$^{***}$ \\ 
+##   &amp; (3.100) &amp; (0.005) \\ 
+##   &amp; &amp; \\ 
+##  Plant$\hat{\mkern6mu}$5 &amp; 4.314 &amp; $-$0.011$^{**}$ \\ 
+##   &amp; (3.100) &amp; (0.004) \\ 
+##   &amp; &amp; \\ 
+##  Plant$\hat{\mkern6mu}$6 &amp; $-$0.039 &amp; 0.001 \\ 
+##   &amp; (3.100) &amp; (0.004) \\ 
+##   &amp; &amp; \\ 
+##  Plant$\hat{\mkern6mu}$7 &amp; $-$2.036 &amp; 0.011$^{**}$ \\ 
+##   &amp; (3.100) &amp; (0.005) \\ 
+##   &amp; &amp; \\ 
+##  Plant$\hat{\mkern6mu}$8 &amp; $-$3.278 &amp; 0.016$^{***}$ \\ 
+##   &amp; (3.100) &amp; (0.005) \\ 
+##   &amp; &amp; \\ 
+##  Plant$\hat{\mkern6mu}$9 &amp; $-$9.067$^{***}$ &amp; 0.019$^{***}$ \\ 
+##   &amp; (3.100) &amp; (0.005) \\ 
+##   &amp; &amp; \\ 
+##  Plant$\hat{\mkern6mu}$10 &amp; 0.546 &amp; 0.004 \\ 
+##   &amp; (3.100) &amp; (0.004) \\ 
+##   &amp; &amp; \\ 
+##  Plant$\hat{\mkern6mu}$11 &amp; 1.912 &amp; $-$0.001 \\ 
+##   &amp; (3.100) &amp; (0.004) \\ 
+##   &amp; &amp; \\ 
+##  Constant &amp; 27.213$^{***}$ &amp; 0.041$^{***}$ \\ 
+##   &amp; (0.895) &amp; (0.001) \\ 
+##   &amp; &amp; \\ 
+## \hline \\[-1.8ex] 
+## Observations &amp; 84 &amp; 84 \\ 
+## R$^{2}$ &amp; 0.501 &amp;  \\ 
+## Adjusted R$^{2}$ &amp; 0.425 &amp;  \\ 
+## Log Likelihood &amp;  &amp; $-$290.414 \\ 
+## Akaike Inf. Crit. &amp;  &amp; 604.827 \\ 
+## Residual Std. Error &amp; 8.203 (df = 72) &amp;  \\ 
+## F Statistic &amp; 6.569$^{***}$ (df = 11; 72) &amp;  \\ 
+## \hline 
+## \hline \\[-1.8ex] 
+## \textit{Note:}  &amp; \multicolumn{2}{r}{$^{*}$p$&lt;$0.1; $^{**}$p$&lt;$0.05; $^{***}$p$&lt;$0.01} \\ 
+## \end{tabular} 
+## \end{table}</code></pre>
+<pre class="r"><code>stargazer(CO2)</code></pre>
+<pre><code>## 
+## % Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+## % Date and time: Tue, Feb 08, 2022 - 11:46:17 AM
+## \begin{table}[!htbp] \centering 
+##   \caption{} 
+##   \label{} 
+## \begin{tabular}{@{\extracolsep{5pt}}lccccccc} 
+## \\[-1.8ex]\hline 
+## \hline \\[-1.8ex] 
+## Statistic &amp; \multicolumn{1}{c}{N} &amp; \multicolumn{1}{c}{Mean} &amp; \multicolumn{1}{c}{St. Dev.} &amp; \multicolumn{1}{c}{Min} &amp; \multicolumn{1}{c}{Pctl(25)} &amp; \multicolumn{1}{c}{Pctl(75)} &amp; \multicolumn{1}{c}{Max} \\ 
+## \hline \\[-1.8ex] 
+## conc &amp; 84 &amp; 435.000 &amp; 295.924 &amp; 95 &amp; 175 &amp; 675 &amp; 1,000 \\ 
+## uptake &amp; 84 &amp; 27.213 &amp; 10.814 &amp; 8 &amp; 17.9 &amp; 37.1 &amp; 46 \\ 
+## \hline \\[-1.8ex] 
+## \end{tabular} 
+## \end{table}</code></pre>
+<p>The stargazer function will return a latex table by default which requires a latex
+compiler. This post is written in R markdown and knitted to a html without a latex
+compiler so I can not demonstrate it natively. You can however knit a RMD file to
+a pdf which will utilize a latex compiler. I’ve copied these images of the tables
+from such a pdf file.</p>
+<p><img src="images/latex-tb1.png" alt="Model Table" />
+<img src="images/latex-tb2.png" alt="Data Table" />
+It is important to note that when displaying a dataframe in stargazer, the function
+will default to a summary of results. This performance can be undone will the summary = FALSE
+as a parameter of the function.</p>
+</div>
+<div id="extra-parameters" class="section level2">
+<h2>Extra Parameters</h2>
+<p>There are some additional parameters to the function that are useful for different
+applications.</p>
+<ol style="list-style-type: decimal">
+<li>title - creates a title for your table</li>
+<li>dep.var.labels - accepts a list if you would like to rename your variables to make
+them easier to read</li>
+<li>covariate.labels - likewise for renaming covariates</li>
+<li>omit.stat - accepts a list of stats that you don’t want in your table</li>
+<li>type- this parameter will change the output format, the options include: “text”
+as plain text, “html” and “latex”</li>
+<li>order - lets you reorganize the order of covariates</li>
+</ol>
+</div>
