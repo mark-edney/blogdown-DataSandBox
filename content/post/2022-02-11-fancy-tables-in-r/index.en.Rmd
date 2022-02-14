@@ -1,0 +1,24 @@
+---
+title: Fancy Tables in R
+author: Mark Edney
+date: '2022-02-11'
+slug: []
+categories:
+  - How-to
+tags:
+  - R
+draft: yes
+description: 'Creating fancy tables with the GT library'
+image: 'img/fancy_tables.jpg'
+archives:
+  - 2022/02
+---
+> Photo by [Juan Gomez](https://unsplash.com/@nosoylasonia?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on <a href="">[Unsplash](https://unsplash.com/s/photos/tables?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+
+  
+  
+```{r Inialization}
+
+library(gt)
+Data <- data(ChickWeight)
+```
