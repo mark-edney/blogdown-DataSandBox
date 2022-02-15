@@ -7,7 +7,7 @@ categories:
   - How-to
 tags:
   - R
-draft: yes
+draft: no
 description: 'Creating fancy tables with the GT library'
 image: 'img/fancy_tables.jpg'
 archives:
@@ -36,7 +36,7 @@ The dataframe or tibble is passed into the GT function which can be passed into 
 ChickWeight %>% head() %>% gt()
 ```
 The result is a simple a clean table the displays the required data. There is a set structure for the GT objects which is outlined in the following diagram:
-![GT tables](images/gt_parts_of_a_table.svg)
+![GT table structure](images/gt_parts_of_a_table.svg)
 
 ## Function Chaining
 
@@ -57,8 +57,23 @@ ChickWeight %>%
                   locations = cells_body(
                           columns = weight,
                           rows = weight > 50
-                  ))
+                  )) %>%
+        summary_rows(columns = c(weight,Time),
+                           fns = list(
+                                   avg = ~mean(., na.rm = TRUE),
+                                   total = ~sum(., na.rm = TRUE),
+                                   s.d. = ~sd(., na.rm = TRUE))
+                           )
 ```
 
 ## Helper functions
-From the previous code includes smaller helper functions with the element functions. 
+
+The previous code includes smaller helper functions within the element functions. These functions (ex. cells_body) provide targeting information for locations or conditioning. There is a learning curve for these functions, I would recommend looking them up as you work on your table rather than trying to learn them all. The everything() function seems be of particular usefulness as it allows you to use all values such as all columns. 
+
+## Additional notes
+
+The summary_rows function can create summary rows for each grouping if the grouping is defined in the function or if the data is grouped itself. You can than use the grand_summary_rows function to create a grand summary. 
+
+It is always good practice to pass the na.rm = TRUE for your summary functions. Without it, you can create undesirable results. 
+
+A useful resource for learning the GT library is a article on R studio found [here](https://gt.rstudio.com/articles/intro-creating-gt-tables.html). It goes through more in depth on the topics that I have skimmed over. 
