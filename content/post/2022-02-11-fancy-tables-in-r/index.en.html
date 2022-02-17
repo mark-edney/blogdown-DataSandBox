@@ -22,6 +22,7 @@ archives:
 </blockquote>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
+<<<<<<< Updated upstream
 <p>As a continuation from my previous post exploring the use of the Stargazer library to create better looking tables, I thought I would look into the GT library. The GT library takes a different approach by creating an object class with the GT function. It is still able to create great looking tables in html or latex, but also adds support for RTF.</p>
 </div>
 <div id="gt-library-intuition" class="section level2">
@@ -33,11 +34,28 @@ data(&quot;ChickWeight&quot;)</code></pre>
 <p>The dataframe or tibble is passed into the GT function, which can be passed into additional modifier functions. This is better outlined and easier understood using the piping operator from the magrittr library, which is also included in the tidyverse library. The piping operator is incredibly useful and common.</p>
 <pre class="r"><code>ChickWeight %&gt;% head() %&gt;% gt()</code></pre>
 <div id="jailkxaqig" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+=======
+<p>As a continuation from my previous post exploring the use of the Stargazer library to create better looking tables, I though I would look into the GT library. The GT library takes a different approach by creating an object class with the GT function. It is still able to create great looking tables in html or latex but also adds support for RTF.</p>
+</div>
+<div id="gt-library-intuitation" class="section level2">
+<h2>GT Library Intuitation</h2>
+<p>The use of the GT library is pretty simple and starts with the creation of a GT object. For this example I will use the ChickenWeight database that looks at the weights of different chickens.</p>
+<pre class="r"><code>library(gt)
+library(tidyverse)
+data(&quot;ChickWeight&quot;)</code></pre>
+<p>The dataframe or tibble is passed into the GT function which can be passed into additional modifier functions. This is better outlined and easier understood using the piping operator from the magrittr library which is also included in the tidyverse library. The piping operator is incredibly useful and common.</p>
+<pre class="r"><code>ChickWeight %&gt;% head() %&gt;% gt()</code></pre>
+<div id="aslzhcgdaw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+>>>>>>> Stashed changes
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_table {
+=======
+#aslzhcgdaw .gt_table {
+>>>>>>> Stashed changes
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -62,7 +80,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-left-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_heading {
+=======
+#aslzhcgdaw .gt_heading {
+>>>>>>> Stashed changes
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -74,7 +96,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-right-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_title {
+=======
+#aslzhcgdaw .gt_title {
+>>>>>>> Stashed changes
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -84,7 +110,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-bottom-width: 0;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_subtitle {
+=======
+#aslzhcgdaw .gt_subtitle {
+>>>>>>> Stashed changes
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -94,13 +124,21 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-top-width: 0;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_bottom_border {
+=======
+#aslzhcgdaw .gt_bottom_border {
+>>>>>>> Stashed changes
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_col_headings {
+=======
+#aslzhcgdaw .gt_col_headings {
+>>>>>>> Stashed changes
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -115,7 +153,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-right-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_col_heading {
+=======
+#aslzhcgdaw .gt_col_heading {
+>>>>>>> Stashed changes
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -135,7 +177,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   overflow-x: hidden;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_column_spanner_outer {
+=======
+#aslzhcgdaw .gt_column_spanner_outer {
+>>>>>>> Stashed changes
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -147,6 +193,7 @@ data(&quot;ChickWeight&quot;)</code></pre>
   padding-right: 4px;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
@@ -156,6 +203,17 @@ data(&quot;ChickWeight&quot;)</code></pre>
 }
 
 #jailkxaqig .gt_column_spanner {
+=======
+#aslzhcgdaw .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#aslzhcgdaw .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#aslzhcgdaw .gt_column_spanner {
+>>>>>>> Stashed changes
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -167,7 +225,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   width: 100%;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_group_heading {
+=======
+#aslzhcgdaw .gt_group_heading {
+>>>>>>> Stashed changes
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -189,7 +251,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   vertical-align: middle;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_empty_group_heading {
+=======
+#aslzhcgdaw .gt_empty_group_heading {
+>>>>>>> Stashed changes
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -204,6 +270,7 @@ data(&quot;ChickWeight&quot;)</code></pre>
   vertical-align: middle;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_from_md > :first-child {
   margin-top: 0;
 }
@@ -213,6 +280,17 @@ data(&quot;ChickWeight&quot;)</code></pre>
 }
 
 #jailkxaqig .gt_row {
+=======
+#aslzhcgdaw .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#aslzhcgdaw .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#aslzhcgdaw .gt_row {
+>>>>>>> Stashed changes
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -231,7 +309,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   overflow-x: hidden;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_stub {
+=======
+#aslzhcgdaw .gt_stub {
+>>>>>>> Stashed changes
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -243,7 +325,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   padding-left: 12px;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_summary_row {
+=======
+#aslzhcgdaw .gt_summary_row {
+>>>>>>> Stashed changes
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -253,7 +339,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   padding-right: 5px;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_first_summary_row {
+=======
+#aslzhcgdaw .gt_first_summary_row {
+>>>>>>> Stashed changes
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -263,7 +353,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-top-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_grand_summary_row {
+=======
+#aslzhcgdaw .gt_grand_summary_row {
+>>>>>>> Stashed changes
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -273,7 +367,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   padding-right: 5px;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_first_grand_summary_row {
+=======
+#aslzhcgdaw .gt_first_grand_summary_row {
+>>>>>>> Stashed changes
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -283,11 +381,19 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-top-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
 #jailkxaqig .gt_table_body {
+=======
+#aslzhcgdaw .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#aslzhcgdaw .gt_table_body {
+>>>>>>> Stashed changes
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -296,7 +402,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_footnotes {
+=======
+#aslzhcgdaw .gt_footnotes {
+>>>>>>> Stashed changes
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -310,13 +420,21 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-right-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_footnote {
+=======
+#aslzhcgdaw .gt_footnote {
+>>>>>>> Stashed changes
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_sourcenotes {
+=======
+#aslzhcgdaw .gt_sourcenotes {
+>>>>>>> Stashed changes
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -330,11 +448,16 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-right-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_sourcenote {
+=======
+#aslzhcgdaw .gt_sourcenote {
+>>>>>>> Stashed changes
   font-size: 90%;
   padding: 4px;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_left {
   text-align: left;
 }
@@ -344,10 +467,22 @@ data(&quot;ChickWeight&quot;)</code></pre>
 }
 
 #jailkxaqig .gt_right {
+=======
+#aslzhcgdaw .gt_left {
+  text-align: left;
+}
+
+#aslzhcgdaw .gt_center {
+  text-align: center;
+}
+
+#aslzhcgdaw .gt_right {
+>>>>>>> Stashed changes
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
+<<<<<<< Updated upstream
 #jailkxaqig .gt_font_normal {
   font-weight: normal;
 }
@@ -365,6 +500,25 @@ data(&quot;ChickWeight&quot;)</code></pre>
 }
 
 #jailkxaqig .gt_footnote_marks {
+=======
+#aslzhcgdaw .gt_font_normal {
+  font-weight: normal;
+}
+
+#aslzhcgdaw .gt_font_bold {
+  font-weight: bold;
+}
+
+#aslzhcgdaw .gt_font_italic {
+  font-style: italic;
+}
+
+#aslzhcgdaw .gt_super {
+  font-size: 65%;
+}
+
+#aslzhcgdaw .gt_footnote_marks {
+>>>>>>> Stashed changes
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -410,12 +564,21 @@ data(&quot;ChickWeight&quot;)</code></pre>
   
 </table>
 </div>
+<<<<<<< Updated upstream
 <p>The result is a simple a clean table the displays the required data. There is a set structure for the GT objects, which is outlined in the following diagram:
 <img src="images/gt_parts_of_a_table.svg" alt="GT table structure" /></p>
 </div>
 <div id="function-chaining" class="section level2">
 <h2>Function Chaining</h2>
 <p>As previously mentioned, by chaining GT functions together, we can add elements to the table. These elements can include titles, footnotes, source notes and conditional formatting similar to what you would use in an Excel table.</p>
+=======
+<p>The result is a simple a clean table the displays the required data. There is a set structure for the GT objects which is outlined in the following diagram:
+<img src="images/gt_parts_of_a_table.svg" alt="GT tables" /></p>
+</div>
+<div id="function-chaining" class="section level2">
+<h2>Function Chaining</h2>
+<p>As previously mentioned, by chaining GT functions together we can add elements to the table. These elements can include titles, foot notes, source notes and conditional formatting similar to what you would use in an excel table.</p>
+>>>>>>> Stashed changes
 <pre class="r"><code>ChickWeight %&gt;%
         head() %&gt;%
         gt() %&gt;%
@@ -430,6 +593,7 @@ data(&quot;ChickWeight&quot;)</code></pre>
                   locations = cells_body(
                           columns = weight,
                           rows = weight &gt; 50
+<<<<<<< Updated upstream
                   )) %&gt;%
         summary_rows(columns = c(weight,Time),
                            fns = list(
@@ -438,11 +602,19 @@ data(&quot;ChickWeight&quot;)</code></pre>
                                    s.d. = ~sd(., na.rm = TRUE))
                            )</code></pre>
 <div id="tvowusaooa" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+=======
+                  ))</code></pre>
+<div id="iuthiwmvju" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+>>>>>>> Stashed changes
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_table {
+=======
+#iuthiwmvju .gt_table {
+>>>>>>> Stashed changes
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -467,7 +639,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-left-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_heading {
+=======
+#iuthiwmvju .gt_heading {
+>>>>>>> Stashed changes
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -479,7 +655,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-right-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_title {
+=======
+#iuthiwmvju .gt_title {
+>>>>>>> Stashed changes
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -489,7 +669,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-bottom-width: 0;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_subtitle {
+=======
+#iuthiwmvju .gt_subtitle {
+>>>>>>> Stashed changes
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -499,13 +683,21 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-top-width: 0;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_bottom_border {
+=======
+#iuthiwmvju .gt_bottom_border {
+>>>>>>> Stashed changes
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_col_headings {
+=======
+#iuthiwmvju .gt_col_headings {
+>>>>>>> Stashed changes
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -520,7 +712,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-right-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_col_heading {
+=======
+#iuthiwmvju .gt_col_heading {
+>>>>>>> Stashed changes
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -540,7 +736,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   overflow-x: hidden;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_column_spanner_outer {
+=======
+#iuthiwmvju .gt_column_spanner_outer {
+>>>>>>> Stashed changes
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -552,6 +752,7 @@ data(&quot;ChickWeight&quot;)</code></pre>
   padding-right: 4px;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
@@ -561,6 +762,17 @@ data(&quot;ChickWeight&quot;)</code></pre>
 }
 
 #tvowusaooa .gt_column_spanner {
+=======
+#iuthiwmvju .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#iuthiwmvju .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#iuthiwmvju .gt_column_spanner {
+>>>>>>> Stashed changes
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -572,7 +784,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   width: 100%;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_group_heading {
+=======
+#iuthiwmvju .gt_group_heading {
+>>>>>>> Stashed changes
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -594,7 +810,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   vertical-align: middle;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_empty_group_heading {
+=======
+#iuthiwmvju .gt_empty_group_heading {
+>>>>>>> Stashed changes
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -609,6 +829,7 @@ data(&quot;ChickWeight&quot;)</code></pre>
   vertical-align: middle;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_from_md > :first-child {
   margin-top: 0;
 }
@@ -618,6 +839,17 @@ data(&quot;ChickWeight&quot;)</code></pre>
 }
 
 #tvowusaooa .gt_row {
+=======
+#iuthiwmvju .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#iuthiwmvju .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#iuthiwmvju .gt_row {
+>>>>>>> Stashed changes
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -636,7 +868,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   overflow-x: hidden;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_stub {
+=======
+#iuthiwmvju .gt_stub {
+>>>>>>> Stashed changes
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -648,7 +884,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   padding-left: 12px;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_summary_row {
+=======
+#iuthiwmvju .gt_summary_row {
+>>>>>>> Stashed changes
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -658,7 +898,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   padding-right: 5px;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_first_summary_row {
+=======
+#iuthiwmvju .gt_first_summary_row {
+>>>>>>> Stashed changes
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -668,7 +912,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-top-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_grand_summary_row {
+=======
+#iuthiwmvju .gt_grand_summary_row {
+>>>>>>> Stashed changes
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -678,7 +926,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   padding-right: 5px;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_first_grand_summary_row {
+=======
+#iuthiwmvju .gt_first_grand_summary_row {
+>>>>>>> Stashed changes
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -688,11 +940,19 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-top-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
 #tvowusaooa .gt_table_body {
+=======
+#iuthiwmvju .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#iuthiwmvju .gt_table_body {
+>>>>>>> Stashed changes
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -701,7 +961,11 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_footnotes {
+=======
+#iuthiwmvju .gt_footnotes {
+>>>>>>> Stashed changes
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -715,13 +979,21 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-right-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_footnote {
+=======
+#iuthiwmvju .gt_footnote {
+>>>>>>> Stashed changes
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_sourcenotes {
+=======
+#iuthiwmvju .gt_sourcenotes {
+>>>>>>> Stashed changes
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -735,11 +1007,16 @@ data(&quot;ChickWeight&quot;)</code></pre>
   border-right-color: #D3D3D3;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_sourcenote {
+=======
+#iuthiwmvju .gt_sourcenote {
+>>>>>>> Stashed changes
   font-size: 90%;
   padding: 4px;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_left {
   text-align: left;
 }
@@ -749,10 +1026,22 @@ data(&quot;ChickWeight&quot;)</code></pre>
 }
 
 #tvowusaooa .gt_right {
+=======
+#iuthiwmvju .gt_left {
+  text-align: left;
+}
+
+#iuthiwmvju .gt_center {
+  text-align: center;
+}
+
+#iuthiwmvju .gt_right {
+>>>>>>> Stashed changes
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
+<<<<<<< Updated upstream
 #tvowusaooa .gt_font_normal {
   font-weight: normal;
 }
@@ -770,6 +1059,25 @@ data(&quot;ChickWeight&quot;)</code></pre>
 }
 
 #tvowusaooa .gt_footnote_marks {
+=======
+#iuthiwmvju .gt_font_normal {
+  font-weight: normal;
+}
+
+#iuthiwmvju .gt_font_bold {
+  font-weight: bold;
+}
+
+#iuthiwmvju .gt_font_italic {
+  font-style: italic;
+}
+
+#iuthiwmvju .gt_super {
+  font-size: 65%;
+}
+
+#iuthiwmvju .gt_footnote_marks {
+>>>>>>> Stashed changes
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -778,15 +1086,25 @@ data(&quot;ChickWeight&quot;)</code></pre>
 <table class="gt_table">
   <thead class="gt_header">
     <tr>
+<<<<<<< Updated upstream
       <th colspan="5" class="gt_heading gt_title gt_font_normal" style>Chicken Weight data</th>
     </tr>
     <tr>
       <th colspan="5" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>remember to weight your chickens!</th>
+=======
+      <th colspan="4" class="gt_heading gt_title gt_font_normal" style>Chicken Weight data</th>
+    </tr>
+    <tr>
+      <th colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>remember to weight your chickens!</th>
+>>>>>>> Stashed changes
     </tr>
   </thead>
   <thead class="gt_col_headings">
     <tr>
+<<<<<<< Updated upstream
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"></th>
+=======
+>>>>>>> Stashed changes
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">weight</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Time<sup class="gt_footnote_marks">1</sup></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Chick</th>
@@ -794,6 +1112,7 @@ data(&quot;ChickWeight&quot;)</code></pre>
     </tr>
   </thead>
   <tbody class="gt_table_body">
+<<<<<<< Updated upstream
     <tr><td class="gt_row gt_left gt_stub"></td>
 <td class="gt_row gt_right">42</td>
 <td class="gt_row gt_right">0</td>
@@ -849,11 +1168,45 @@ data(&quot;ChickWeight&quot;)</code></pre>
   <tfoot class="gt_sourcenotes">
     <tr>
       <td class="gt_sourcenote" colspan="5">From ChickenWeight Database</td>
+=======
+    <tr><td class="gt_row gt_right">42</td>
+<td class="gt_row gt_right">0</td>
+<td class="gt_row gt_center">1</td>
+<td class="gt_row gt_center">1</td></tr>
+    <tr><td class="gt_row gt_right" style="background-color: #FF0000;">51</td>
+<td class="gt_row gt_right">2</td>
+<td class="gt_row gt_center">1</td>
+<td class="gt_row gt_center">1</td></tr>
+    <tr><td class="gt_row gt_right" style="background-color: #FF0000;">59</td>
+<td class="gt_row gt_right">4</td>
+<td class="gt_row gt_center">1</td>
+<td class="gt_row gt_center">1</td></tr>
+    <tr><td class="gt_row gt_right" style="background-color: #FF0000;">64</td>
+<td class="gt_row gt_right">6</td>
+<td class="gt_row gt_center">1</td>
+<td class="gt_row gt_center">1</td></tr>
+    <tr><td class="gt_row gt_right" style="background-color: #FF0000;">76</td>
+<td class="gt_row gt_right">8</td>
+<td class="gt_row gt_center">1</td>
+<td class="gt_row gt_center">1</td></tr>
+    <tr><td class="gt_row gt_right" style="background-color: #FF0000;">93</td>
+<td class="gt_row gt_right">10</td>
+<td class="gt_row gt_center">1</td>
+<td class="gt_row gt_center">1</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="4">From ChickenWeight Database</td>
+>>>>>>> Stashed changes
     </tr>
   </tfoot>
   <tfoot>
     <tr class="gt_footnotes">
+<<<<<<< Updated upstream
       <td colspan="5">
+=======
+      <td colspan="4">
+>>>>>>> Stashed changes
         <p class="gt_footnote">
           <sup class="gt_footnote_marks">
             <em>1</em>
@@ -870,6 +1223,7 @@ data(&quot;ChickWeight&quot;)</code></pre>
 </div>
 <div id="helper-functions" class="section level2">
 <h2>Helper functions</h2>
+<<<<<<< Updated upstream
 <p>The previous code includes smaller helper functions within the element functions. These functions (ex. cells_body) provide targeting information for locations or conditioning. There is a learning curve for these functions, I would recommend looking them up as you work on your table rather than trying to learn them all. The everything() function seems to be of particular usefulness, as it allows you to use all values, such as all columns.</p>
 </div>
 <div id="additional-notes" class="section level2">
@@ -877,4 +1231,7 @@ data(&quot;ChickWeight&quot;)</code></pre>
 <p>The summary_rows function can create summary rows for each grouping if the grouping is defined in the function or if the data is grouped itself. You can then use the grand_summary_rows function to create a grand summary.</p>
 <p>It is always good practice to pass the na.rm = TRUE for your summary functions. Without it, you can create undesirable results.</p>
 <p>A useful resource for learning the GT library is an article on R studio found <a href="https://gt.rstudio.com/articles/intro-creating-gt-tables.html">here</a>. It goes through more in depth on the topics that I have skimmed over.</p>
+=======
+<p>From the previous code includes smaller helper functions with the element functions.</p>
+>>>>>>> Stashed changes
 </div>

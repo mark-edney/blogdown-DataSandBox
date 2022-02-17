@@ -1,0 +1,75 @@
+---
+title: 'Speed cameras in Toronto'
+author: Mark Edney
+date: '2022-02-16'
+slug: []
+categories:
+  - Project
+tags:
+  - R
+  - Leaflet
+draft: yes
+description: ''
+archives:
+  - 2022/02
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index.en_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="{{< blogdown/postref >}}index.en_files/pymjs/pym.v1.js"></script>
+<script src="{{< blogdown/postref >}}index.en_files/widgetframe-binding/widgetframe.js"></script>
+
+
+<blockquote>
+<p>This project was originally written on 02/01/2021 as part of the Data Products
+course for the Data Science Specialization from Johns Hopkins University on Coursera</p>
+</blockquote>
+<div id="objective" class="section level2">
+<h2>Objective</h2>
+<p>This report plots the speed cameras in the Greater Toronto Area from the data provided
+by Open Toronto which can be found <a href="https://open.toronto.ca/dataset/automated-speed-enforcement-locations/">here</a>.</p>
+</div>
+<div id="inialization" class="section level2">
+<h2>Inialization</h2>
+<p>The following code is used to initialize the required libraries.</p>
+<pre class="r"><code>install.packages(&quot;opendatatoronto&quot;, repos = &quot;http://cran.us.r-project.org&quot;, dependencies = TRUE)</code></pre>
+<pre><code>## package &#39;opendatatoronto&#39; successfully unpacked and MD5 sums checked
+## 
+## The downloaded binary packages are in
+##  C:\Users\Mark\AppData\Local\Temp\RtmpAl6InX\downloaded_packages</code></pre>
+<pre class="r"><code>library(opendatatoronto)
+library(dplyr)
+library(leaflet)
+library(widgetframe)</code></pre>
+<p>The following code is provided by the Open Toronto site to download the dataset.</p>
+<pre class="r"><code># get package
+package &lt;- show_package(&quot;a154790c-4a8a-4d09-ab6b-535ddb646770&quot;)
+
+# get all resources for this package
+resources &lt;- list_package_resources(&quot;a154790c-4a8a-4d09-ab6b-535ddb646770&quot;)
+
+# identify datastore resources; by default, Toronto Open Data sets datastore resource format to CSV for non-geospatial and GeoJSON for geospatial resources
+datastore_resources &lt;- filter(resources, tolower(format) %in% c(&#39;csv&#39;, &#39;geojson&#39;))
+
+# load the first datastore resource as a sample
+data &lt;- filter(datastore_resources, row_number()==1) %&gt;% get_resource()</code></pre>
+</div>
+<div id="plotting-the-data" class="section level2">
+<h2>Plotting the Data</h2>
+<p>The geometry in the dataset can be used directly with leaflet and the longitude and
+latitude do not need to be separated.</p>
+<pre class="r"><code>df &lt;- data$geometry</code></pre>
+<p>Custom icons for the speed cameras can be used with the following code:</p>
+<pre class="r"><code>cameraicon &lt;- makeIcon(
+        iconUrl = &quot;https://www.flaticon.com/svg/static/icons/svg/2164/2164608.svg&quot;,
+        iconWidth = 35, iconHeight = 35
+)</code></pre>
+<p>Finally all the data and options can be passed to the leaflet function.</p>
+<pre class="r"><code>df %&gt;%
+        leaflet() %&gt;%
+        addTiles() %&gt;%
+        addMarkers(icon = cameraicon, clusterOptions = markerClusterOptions(), popup = data$location) %&gt;%
+        widgetframe::frameWidget(width = &quot;100%&quot;)</code></pre>
+<div id="htmlwidget-1" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"index.en_files/figure-html//widgets/widget_plotfinal.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+</div>
