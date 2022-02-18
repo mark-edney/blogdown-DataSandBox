@@ -17,9 +17,6 @@ archives:
 ---
 
 <script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
-<script src="{{< blogdown/postref >}}index.en_files/htmlwidgets/htmlwidgets.js"></script>
-<script src="{{< blogdown/postref >}}index.en_files/pymjs/pym.v1.js"></script>
-<script src="{{< blogdown/postref >}}index.en_files/widgetframe-binding/widgetframe.js"></script>
 
 
 <blockquote>
@@ -41,7 +38,7 @@ by Open Toronto which can be found <a href="https://open.toronto.ca/dataset/auto
 <pre><code>## package &#39;opendatatoronto&#39; successfully unpacked and MD5 sums checked
 ## 
 ## The downloaded binary packages are in
-##  C:\Users\Mark\AppData\Local\Temp\Rtmpg3YEXy\downloaded_packages</code></pre>
+##  C:\Users\Mark\AppData\Local\Temp\RtmpmCHal6\downloaded_packages</code></pre>
 <pre class="r"><code>library(opendatatoronto)
 library(dplyr)
 library(leaflet)</code></pre>
@@ -73,7 +70,6 @@ latitude do not need to be separated.</p>
         leaflet() %&gt;%
         addTiles() %&gt;%
         addMarkers(icon = cameraicon, clusterOptions = markerClusterOptions(), popup = data$location)</code></pre>
-<pre><code>## Loading required package: htmlwidgets</code></pre>
-<div id="htmlwidget-1" style="width:90%;height:480px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"index.en_files/figure-html//widgets/widget_final.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<iframe src="../content/post/2022-02-16-/Map.html?showcase=0" width="672" height="400px" data-external="1">
+</iframe>
 </div>

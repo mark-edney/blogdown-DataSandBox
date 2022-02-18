@@ -93,6 +93,6 @@ plt <- df %>%
         addMarkers(icon = cameraicon, clusterOptions = markerClusterOptions(), popup = data$location)
 ```
 ```{r final, echo=FALSE, warning=FALSE}
-library(widgetframe)
-frameWidget(plt, width='90%')
+htmlwidgets::saveWidget(plt, "Map.html")
+knitr::include_app("../content/post/2022-02-16-/Map.html")
 ```
