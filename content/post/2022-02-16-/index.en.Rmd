@@ -29,6 +29,20 @@ by Open Toronto which can be found [here](https://open.toronto.ca/dataset/automa
 
 The following code is used to initialize the required libraries.
 
+```{r, include=FALSE}
+
+# widgetframe supports 3 custom knitr chunk options...
+
+# For all practicle purposes this should always be FALSE 
+knitr::opts_chunk$set(widgetframe_self_contained = FALSE) # default = FALSE
+
+# For all practicle purposes this should always be TRUE 
+knitr::opts_chunk$set(widgetframe_isolate_widgets = TRUE) # default = TRUE
+
+# Only needed in bookdown format/s such as bookdown::gitbook. Otherwise don't set.
+# knitr::opts_chunk$set(widgetframe_widgets_dir = 'widgets' ) 
+```
+
 ```{r packages, warning=FALSE, message=FALSE}
 install.packages("opendatatoronto", repos = "http://cran.us.r-project.org", dependencies = TRUE)
 library(opendatatoronto)
@@ -78,6 +92,7 @@ plt <- df %>%
         addTiles() %>%
         addMarkers(icon = cameraicon, clusterOptions = markerClusterOptions(), popup = data$location)
 ```
-```{r final}
-include_app("https://github.com/mark-edney/blogdown-DataSandBox/blob/main/content/post/2022-02-16-/map.html")
+```{r final, echo=FALSE, warning=FALSE}
+library(widgetframe)
+frameWidget(plt, width='90%')
 ```
