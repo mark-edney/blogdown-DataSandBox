@@ -8,18 +8,20 @@ categories:
 tags:
   - R
   - Leaflet
-draft: yes
+draft: no
 description: ''
+image: 'img/toronto_traffic.jpg'
 archives:
   - 2022/02
+
 ---
 
 <script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
-<script src="{{< blogdown/postref >}}index.en_files/htmlwidgets/htmlwidgets.js"></script>
-<script src="{{< blogdown/postref >}}index.en_files/pymjs/pym.v1.js"></script>
-<script src="{{< blogdown/postref >}}index.en_files/widgetframe-binding/widgetframe.js"></script>
 
 
+<blockquote>
+<p>Photo by <a href="https://unsplash.com/@sepidehgolchin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Sepideh Golchin Rad</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+</blockquote>
 <blockquote>
 <p>This project was originally written on 02/01/2021 as part of the Data Products
 course for the Data Science Specialization from Johns Hopkins University on Coursera</p>
@@ -36,11 +38,10 @@ by Open Toronto which can be found <a href="https://open.toronto.ca/dataset/auto
 <pre><code>## package &#39;opendatatoronto&#39; successfully unpacked and MD5 sums checked
 ## 
 ## The downloaded binary packages are in
-##  C:\Users\Mark\AppData\Local\Temp\RtmpAl6InX\downloaded_packages</code></pre>
+##  C:\Users\Mark\AppData\Local\Temp\RtmpukodY2\downloaded_packages</code></pre>
 <pre class="r"><code>library(opendatatoronto)
 library(dplyr)
-library(leaflet)
-library(widgetframe)</code></pre>
+library(leaflet)</code></pre>
 <p>The following code is provided by the Open Toronto site to download the dataset.</p>
 <pre class="r"><code># get package
 package &lt;- show_package(&quot;a154790c-4a8a-4d09-ab6b-535ddb646770&quot;)
@@ -65,11 +66,9 @@ latitude do not need to be separated.</p>
         iconWidth = 35, iconHeight = 35
 )</code></pre>
 <p>Finally all the data and options can be passed to the leaflet function.</p>
-<pre class="r"><code>df %&gt;%
+<pre class="r"><code>plt &lt;- df %&gt;%
         leaflet() %&gt;%
         addTiles() %&gt;%
-        addMarkers(icon = cameraicon, clusterOptions = markerClusterOptions(), popup = data$location) %&gt;%
-        widgetframe::frameWidget(width = &quot;100%&quot;)</code></pre>
-<div id="htmlwidget-1" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"index.en_files/figure-html//widgets/widget_plotfinal.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+        addMarkers(icon = cameraicon, clusterOptions = markerClusterOptions(), popup = data$location)</code></pre>
+<iframe title="Map" src="map.html"></iframe>
 </div>

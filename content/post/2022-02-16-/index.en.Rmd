@@ -8,11 +8,15 @@ categories:
 tags:
   - R
   - Leaflet
-draft: yes
+draft: no
 description: ''
+image: 'img/toronto_traffic.jpg'
 archives:
   - 2022/02
+
 ---
+>Photo by [Sepideh Golchin Rad](https://unsplash.com/@sepidehgolchin?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+  
 > This project was originally written on 02/01/2021 as part of the Data Products 
 course for the Data Science Specialization from Johns Hopkins University on Coursera
 
@@ -30,7 +34,6 @@ install.packages("opendatatoronto", repos = "http://cran.us.r-project.org", depe
 library(opendatatoronto)
 library(dplyr)
 library(leaflet)
-library(widgetframe)
 ```
 
 The following code is provided by the Open Toronto site to download the dataset.
@@ -70,10 +73,16 @@ Finally all the data and options can be passed to the leaflet function.
 
 ```{r plotfinal}
 
-df %>%
+plt <- df %>%
         leaflet() %>%
         addTiles() %>%
-        addMarkers(icon = cameraicon, clusterOptions = markerClusterOptions(), popup = data$location) %>%
-        widgetframe::frameWidget(width = "100%")
+        addMarkers(icon = cameraicon, clusterOptions = markerClusterOptions(), popup = data$location)
 ```
 
+```{r widget, echo=FALSE, warning=FALSE,message=FALSE,comment=''}
+library(htmltools)
+library(mapview)
+m <- mapshot(plt, url = paste0(getwd(), "/map.html"))
+m <- htmltools::tags$iframe(title = "Map", src = "map.html")
+print(m)
+```
