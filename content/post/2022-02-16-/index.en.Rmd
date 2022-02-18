@@ -79,7 +79,7 @@ plt <- df %>%
         addMarkers(icon = cameraicon, clusterOptions = markerClusterOptions(), popup = data$location)
 ```
 
-```{r widget, echo=FALSE, warning=FALSE,message=FALSE,comment=''}
+```{r widget, echo=FALSE, warning=FALSE,message=FALSE,comment='', results='asis'}
 library(htmltools)
 page <- htmltools::tagList(plt)
 cat(as.character(page))
