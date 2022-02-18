@@ -81,8 +81,6 @@ plt <- df %>%
 
 ```{r widget, echo=FALSE, warning=FALSE,message=FALSE,comment=''}
 library(htmltools)
-library(mapview)
-m <- mapshot(plt, url = paste0(getwd(), "/map.html"))
-m <- htmltools::tags$iframe(title = "Map", src = "map.html")
-print(m)
+page <- htmltools::tagList(plt)
+cat(as.character(page))
 ```
