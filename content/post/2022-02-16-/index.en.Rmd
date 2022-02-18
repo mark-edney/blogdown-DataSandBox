@@ -78,8 +78,6 @@ plt <- df %>%
         addTiles() %>%
         addMarkers(icon = cameraicon, clusterOptions = markerClusterOptions(), popup = data$location)
 ```
-
-```{r widget, echo=FALSE, warning=FALSE,message=FALSE,comment='', results='asis'}
-library(widgetframe)
-frameWidget(plt)
+```{r final}
+include_app("https://github.com/mark-edney/blogdown-DataSandBox/blob/main/content/post/2022-02-16-/map.html")
 ```
