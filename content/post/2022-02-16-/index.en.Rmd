@@ -80,7 +80,6 @@ plt <- df %>%
 ```
 
 ```{r widget, echo=FALSE, warning=FALSE,message=FALSE,comment='', results='asis'}
-library(htmltools)
-page <- htmltools::tagList(plt)
-cat(as.character(page))
+library(widgetframe)
+frameWidget(plt)
 ```
