@@ -23,9 +23,9 @@ course for the Data Science Specialization from Johns Hopkins University on Cour
 ## Objective
 
 This report plots the speed cameras in the Greater Toronto Area from the data provided
-by Open Toronto which can be found [here](https://open.toronto.ca/dataset/automated-speed-enforcement-locations/).
+by Open Toronto, which can be found [here](https://open.toronto.ca/dataset/automated-speed-enforcement-locations/).
 
-## Inialization
+## Initialization
 
 The following code is used to initialize the required libraries.
 
@@ -67,7 +67,7 @@ data <- filter(datastore_resources, row_number()==1) %>% get_resource()
 ```
 ## Plotting the Data
 
-The geometry in the dataset can be used directly with leaflet and the longitude and
+The geometry in the dataset can be used directly with Leaflet, and the longitude and
 latitude do not need to be separated.
 
 ```{r plots}
@@ -83,7 +83,7 @@ cameraicon <- makeIcon(
 )
 ```
 
-Finally all the data and options can be passed to the leaflet function.
+Finally, all the data and options can be passed to the leaflet function.
 
 ```{r plotfinal}
 
