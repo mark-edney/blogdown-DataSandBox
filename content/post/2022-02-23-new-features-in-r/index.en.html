@@ -4,18 +4,22 @@ author: Mark Edney
 date: '2022-02-23'
 slug: []
 categories:
-  - How-to
+  - General
 tags:
   - R
-draft: yes
+draft: no
 description: ''
 archives:
   - 2022/02
+image: "img/new.jpg"
 ---
 
 <script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
 
 
+<blockquote>
+<p>Photo by <a href="https://unsplash.com/@cbpsc1?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Clint Patterson</a> on <a href="https://unsplash.com/s/photos/update?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+</blockquote>
 <p>Recently I had updated my RStudio client and with it came a new update to R. This is an exploration of some of the most interesting changes from R 4.0 to R 4.1.</p>
 <div id="native-pipe-function" class="section level2">
 <h2>Native Pipe Function</h2>
@@ -61,9 +65,9 @@ microbenchmark(sqrt(3),
                5 %&gt;% sqrt())</code></pre>
 <pre><code>## Unit: nanoseconds
 ##          expr  min   lq mean median   uq   max neval
-##       sqrt(3)  100  100  424    200  350 10900   100
-##       sqrt(4)    0  100  368    100  400 12400   100
-##  5 %&gt;% sqrt() 2600 3100 7045   4550 7250 67200   100</code></pre>
+##       sqrt(3)    0    0   42      0  100   200   100
+##       sqrt(4)    0    0   90      0  100  5100   100
+##  5 %&gt;% sqrt() 2000 2100 2433   2100 2200 26200   100</code></pre>
 <p>So when should we use the native vs the magrittr pipe? Well it looks like not all the functionality of the magrittr pipe is carried over so it should still be continued to be used. The native pipe however, provides a good performance boost which makes it a better option for code written in functions and libraries. I think that the major application should be to increase the readability of library and function code.</p>
 </div>
 <div id="lambda-functions" class="section level2">

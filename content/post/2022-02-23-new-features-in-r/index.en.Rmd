@@ -4,14 +4,18 @@ author: Mark Edney
 date: '2022-02-23'
 slug: []
 categories:
-  - How-to
+  - General
 tags:
   - R
-draft: yes
+draft: no
 description: ''
 archives:
   - 2022/02
+image: "img/new.jpg"
 ---
+> Photo by [Clint Patterson](https://unsplash.com/@cbpsc1?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/update?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+  
+
 Recently I had updated my RStudio client and with it came a new update to R. This is an exploration of some of the most interesting changes from R 4.0 to R 4.1.
 
 ## Native Pipe Function

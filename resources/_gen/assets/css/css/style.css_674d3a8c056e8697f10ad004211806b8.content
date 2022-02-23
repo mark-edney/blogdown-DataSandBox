@@ -346,7 +346,7 @@ ol,
 ul,
 li,
 menu {
-  list-style: none;
+  list-style: disc;
   margin: 0;
   padding: 0;
 }
@@ -1250,3 +1250,4 @@ Ensure the default browser behavior of the `hidden` attribute.
     line-height: 2rem;
   }
 }
+
