@@ -37,8 +37,8 @@ morley |&gt;
 ## 3     3  845 
 ## 4     4  820.
 ## 5     5  832.</code></pre>
-<p>From this example, it is apparent that the behavior of the native pipe is the same as the magrittr pipe.</p>
-<p>Some of the differences I have found is that the native pipe requires the brackets for functions while the magrittr pipe will usually accept just the function name.</p>
+<p>From this example, it is apparent that the behaviour of the native pipe is the same as the magrittr pipe.</p>
+<p>Some of the differences I have found is that the native pipe requires the brackets for functions, while the magrittr pipe will usually accept just the function name.</p>
 <pre class="r"><code>2 %&gt;% sqrt()</code></pre>
 <pre><code>## [1] 1.414214</code></pre>
 <pre class="r"><code>2 |&gt; sqrt()</code></pre>
@@ -47,7 +47,7 @@ morley |&gt;
 <pre><code>## [1] 1.414214</code></pre>
 <pre class="r"><code>2 |&gt; sqrt</code></pre>
 <pre><code>## Error: The pipe operator requires a function call as RHS</code></pre>
-<p>One disadvantage of the native pipe is that it doesn’t support the placeholder operator (.) which helps refer to the data in the function. This is a useful function of the magrittr pipe when the data isn’t the first argument in the function such as the lm function.</p>
+<p>One disadvantage of the native pipe is that it doesn’t support the placeholder operator (.) which helps refer to the data in the function. This is a useful function of the magrittr pipe when the data isn’t the first argument in the function, such as the lm function.</p>
 <pre class="r"><code>morley %&gt;% lm(Speed~Run, data = .)</code></pre>
 <pre><code>## 
 ## Call:
@@ -58,21 +58,21 @@ morley |&gt;
 ##    856.0947      -0.3519</code></pre>
 <pre class="r"><code>morley |&gt; lm(Speed~Run, data = .)</code></pre>
 <pre><code>## Error in is.data.frame(data): object &#39;.&#39; not found</code></pre>
-<p>One advantage is there is no performance penalty as it acts the same as the function call. This is shown with the microbenchmark function which shows not only the same level of performance as the regular call, but even the results themselves are shown as the function call.</p>
+<p>One advantage is there is no performance penalty as it acts the same as the function call. This is shown with the microbenchmark function, which shows not only the same level of performance as the regular call, but even the results themselves are shown as the function call.</p>
 <pre class="r"><code>library(microbenchmark)
 microbenchmark(sqrt(3),
                4 |&gt; sqrt(),
                5 %&gt;% sqrt())</code></pre>
 <pre><code>## Unit: nanoseconds
 ##          expr  min   lq mean median   uq   max neval
-##       sqrt(3)    0    0   42      0  100   200   100
-##       sqrt(4)    0    0   90      0  100  5100   100
-##  5 %&gt;% sqrt() 2000 2100 2433   2100 2200 26200   100</code></pre>
-<p>So when should we use the native vs the magrittr pipe? Well it looks like not all the functionality of the magrittr pipe is carried over so it should still be continued to be used. The native pipe however, provides a good performance boost which makes it a better option for code written in functions and libraries. I think that the major application should be to increase the readability of library and function code.</p>
+##       sqrt(3)    0    0   47      0  100   300   100
+##       sqrt(4)    0    0   79      0  100  5200   100
+##  5 %&gt;% sqrt() 2000 2100 2387   2100 2200 24400   100</code></pre>
+<p>So when should we use the native vs the magrittr pipe? Well, it looks like not all the functionality of the magrittr pipe is carried over, so it should still be continued to be used. The native pipe, however, provides a good performance boost, which makes it a better option for code written in functions and libraries. I think that the major application should be to increase the readability of library and function code.</p>
 </div>
 <div id="lambda-functions" class="section level2">
 <h2>Lambda Functions</h2>
-<p>There has been a simplification in the creation or lambda functions. The notation is simplified while the results are the same.</p>
+<p>There has been a simplification in the creation of lambda functions. The notation is simplified, while the results are the same.</p>
 <pre class="r"><code>library(tidyverse)
 x &lt;- 0:10/10
 y1 &lt;- function(x) x + 0.5
@@ -86,8 +86,8 @@ g</code></pre>
 <div id="other-minor-changes" class="section level2">
 <h2>Other minor changes</h2>
 <ul>
-<li>The default has been changed for ‘stringsAsFactors = FALSE’. Previously, when using the data.frame() or the read.table() the default option would turn strings into factors. This was a annoying feature that would always create headaches.</li>
+<li>The default has been changed for ‘stringsAsFactors = FALSE’. Previously, when using the data.frame() or the read.table() the default option would turn strings into factors. This was an annoying feature that would always create headaches.</li>
 <li>Introduction of an experimental implementation of hash tables. This development should be watched for people keen on program performance.</li>
-<li>c() can now combine factors to create a new factor. I am not familiar with the original behavior but this seems intuitive.</li>
+<li>c() can now combine factors to create a new factor. I am not familiar with the original behaviour, but this seems intuitive.</li>
 </ul>
 </div>

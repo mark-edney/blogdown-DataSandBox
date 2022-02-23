@@ -30,9 +30,9 @@ morley |>
         summarise(mean = mean(Speed, na.rm=TRUE))
 ```
 
-From this example, it is apparent that the behavior of the native pipe is the same as the magrittr pipe.
+From this example, it is apparent that the behaviour of the native pipe is the same as the magrittr pipe.
 
-Some of the differences I have found is that the native pipe requires the brackets for functions while the magrittr pipe will usually accept just the function name.
+Some of the differences I have found is that the native pipe requires the brackets for functions, while the magrittr pipe will usually accept just the function name.
 
 ```{r pipe_functions_good}
 2 %>% sqrt()
@@ -44,14 +44,14 @@ Some of the differences I have found is that the native pipe requires the bracke
 2 |> sqrt
 ```
 
-One disadvantage of the native pipe is that it doesn't support the placeholder operator (.) which helps refer to the data in the function. This is a useful function of the magrittr pipe when the data isn't the first argument in the function such as the lm function.
+One disadvantage of the native pipe is that it doesn't support the placeholder operator (.) which helps refer to the data in the function. This is a useful function of the magrittr pipe when the data isn't the first argument in the function, such as the lm function.
 
 ```{r lm_pipe, error=TRUE}
 morley %>% lm(Speed~Run, data = .)
 morley |> lm(Speed~Run, data = .)
 ```
 
-One advantage is there is no performance penalty as it acts the same as the function call. This is shown with the microbenchmark function which shows not only the same level of performance as the regular call, but even the results themselves are shown as the function call.
+One advantage is there is no performance penalty as it acts the same as the function call. This is shown with the microbenchmark function, which shows not only the same level of performance as the regular call, but even the results themselves are shown as the function call.
 
 ```{r pipe_bench}
 library(microbenchmark)
@@ -60,11 +60,11 @@ microbenchmark(sqrt(3),
                5 %>% sqrt())
 ```
 
-So when should we use the native vs the magrittr pipe? Well it looks like not all the functionality of the magrittr pipe is carried over so it should still be continued to be used. The native pipe however, provides a good performance boost which makes it a better option for code written in functions and libraries. I think that the major application should be to increase the readability of library and function code.
+So when should we use the native vs the magrittr pipe? Well, it looks like not all the functionality of the magrittr pipe is carried over, so it should still be continued to be used. The native pipe, however, provides a good performance boost, which makes it a better option for code written in functions and libraries. I think that the major application should be to increase the readability of library and function code.
 
 ## Lambda Functions
 
-There has been a simplification in the creation or lambda functions. The notation is simplified while the results are the same.
+There has been a simplification in the creation of lambda functions. The notation is simplified, while the results are the same.
 
 ```{r lambda}
 library(tidyverse)
@@ -79,6 +79,6 @@ g
 
 ## Other minor changes
 
-* The default has been changed for 'stringsAsFactors = FALSE'. Previously, when using the data.frame() or the read.table() the default option would turn strings into factors. This was a annoying feature that would always create headaches.
+* The default has been changed for 'stringsAsFactors = FALSE'. Previously, when using the data.frame() or the read.table() the default option would turn strings into factors. This was an annoying feature that would always create headaches.
 * Introduction of an experimental implementation of hash tables. This development should be watched for people keen on program performance.
-* c() can now combine factors to create a new factor. I am not familiar with the original behavior but this seems intuitive.
+* c() can now combine factors to create a new factor. I am not familiar with the original behaviour, but this seems intuitive.
