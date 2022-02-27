@@ -43,7 +43,7 @@ darkmode = "dark"
     thumbnail = true
 
     # Disable the "NO IMAGE" image.
-    noimage = false
+    noimage = true
 
     # See the Tailwind CSS documentation to set it up.
     # Recommended settings are h-32 to h-48.

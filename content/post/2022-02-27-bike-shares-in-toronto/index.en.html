@@ -1,0 +1,77 @@
+---
+title: Bike shares in Toronto
+author: Mark Edney
+date: '2022-02-27'
+slug: []
+categories:
+  - Project
+tags:
+  - Shiny App
+  - R
+draft: no
+description: 'Analysis of a bike sharing app in Toronto'
+archives:
+  - 2022/02
+image: '/img/bike_toronto.jpg'
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+
+
+<blockquote>
+<p>Photo by <a href="https://unsplash.com/@mvdheuvel?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Maarten van den Heuvel</a> on <a href="https://unsplash.com/s/photos/toronto-bike?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+</blockquote>
+<blockquote>
+<p>This article is based on a project written on 01/14/2021</p>
+</blockquote>
+<div id="bike-rental-shiny-app" class="section level2">
+<h2>Bike Rental Shiny App</h2>
+<p>This application use the data collected from the <a href="https://open.toronto.ca/dataset/bike-share-toronto-ridership-data/">Toronto Open Data</a> to generate a histogram of the usage of rental bikes in Toronto during the month of June in 2020.</p>
+<pre class="r"><code>install.packages(&quot;opendatatoronto&quot;, 
+                 repos = &quot;http://cran.us.r-project.org&quot;,
+                 dependencies = TRUE)
+library(opendatatoronto)
+library(tidyverse)
+library(lubridate)
+library(shiny)</code></pre>
+</div>
+<div id="ui" class="section level2">
+<h2>UI</h2>
+<p>There are two user inputs on the UI side:</p>
+<ul>
+<li><p>A slider that limits the maximum and minimum of the displayed values</p></li>
+<li><p>A checkbox that excludes users with a annual bike pass</p></li>
+</ul>
+<pre class="r"><code>        sidebarPanel(
+            sliderInput(&quot;dur&quot;,
+                        &quot;Trip Duration:&quot;,
+                        min = 0,
+                        max = 500,
+                        value = c(0,500)),
+            checkboxInput(&quot;freq&quot;,
+                        &quot;Exclude annual users:&quot;,
+                        value = FALSE))</code></pre>
+</div>
+<div id="server" class="section level2">
+<h2>Server</h2>
+<p>The following code is used for the server side logic, this includes downloading the data from the ‘opentoronto’ library.</p>
+<pre class="r"><code> # get package
+    package &lt;- show_package(&quot;7e876c24-177c-4605-9cef-e50dd74c617f&quot;)
+    
+    # get all resources for this package
+    resources &lt;- list_package_resources(&quot;7e876c24-177c-4605-9cef-e50dd74c617f&quot;)
+    # identify datastore resources; by default, Toronto Open Data sets datastore resource format to CSV for non-geospatial and GeoJSON for geospatial resources
+    datastore_resources &lt;- filter(resources, tolower(format) %in% c(&#39;zip&#39;, &#39;geojson&#39;))
+    # load the first datastore resource as a sample
+    data &lt;- filter(datastore_resources, name == &quot;Bike share ridership 2020&quot;) %&gt;% get_resource()
+    data2 &lt;-  data$`2020-06.csv`
+    data2[grepl(&quot;Time&quot;,names(data2))] &lt;- 
+        lapply(data2[grepl(&quot;Time&quot;,names(data2))], parse_date_time, orders = &quot;mdy HM&quot;)
+    data2$Dur &lt;- as.numeric(data2$End.Time - data2$Start.Time,units=&quot;mins&quot;)</code></pre>
+</div>
+<div id="application" class="section level2">
+<h2>Application</h2>
+<p>The final application takes a while to load as the data needs to be downloaded and sorted through. In future iterations I would save the data locally as a RDS file.</p>
+<iframe src="https://m2edney.shinyapps.io/Toronto_bike/?_ga=2.75026646.519818068.1645317226-1341333380.1645206372" width="672" height="400px" data-external="1">
+</iframe>
+</div>
