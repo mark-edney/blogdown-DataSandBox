@@ -2,15 +2,15 @@
 title: Job posting analysis
 author: Mark Edney
 date: '2022-02-06'
-slug: []
 categories:
   - Project
 tags:
   - R
+  - Shiny App
 draft: no
 runtime: shiny
-description: 'A project used to study the occurance of keywords in a job posting.'
-image: "img/jobsearch.jpg"
+description: A project used to study the occurance of keywords in a job posting.
+image: img/jobsearch.jpg
 archives:
   - 2022/01
 ---

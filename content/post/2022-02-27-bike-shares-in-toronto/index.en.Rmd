@@ -55,7 +55,7 @@ There are two user inputs on the UI side:
 
 ## Server
 
-The following code is used for the server side logic, this includes downloading the data from the 'opentoronto' library.
+The following code is used for the server side logic, this includes downloading the data from the 'opendatatoronto' library.
 
 ```{r Serverhide, eval=FALSE}
  # get package
@@ -76,7 +76,7 @@ The following code is used for the server side logic, this includes downloading 
 
 ## Application
 
-The final application takes a while to load as the data needs to be downloaded and sorted through. In future iterations I would save the data locally as a RDS file. 
+The final application takes a while to load as the data needs to be downloaded and sorted through. In future iterations, I would save the data locally as an RDS file. 
 
 ```{r app, echo=FALSE, warning=FALSE}
 knitr::include_url("https://m2edney.shinyapps.io/Toronto_bike/?_ga=2.75026646.519818068.1645317226-1341333380.1645206372")
