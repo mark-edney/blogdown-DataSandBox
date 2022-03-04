@@ -1,0 +1,19 @@
+---
+title: Text Prediction App
+author: Mark Edney
+date: '2022-03-04'
+slug: []
+categories:
+  - Project
+tags:
+  - R
+  - Shiny App
+  - NLP
+draft: yes
+image: '/img/predict_text.jpg'
+description: ''
+archives:
+  - 2022/02
+---
+
+> Photo by [Sandy Millar](https://unsplash.com/@sandym10?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/predictive-text?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
