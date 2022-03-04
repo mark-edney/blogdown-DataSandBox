@@ -22,7 +22,7 @@ Markdown is however limited to R code, unable to run Python scripts. The R libra
 
 ## Initial Setup 
 
-The initial setup requires the installation of the `reticulate` library, after installation you shouldn't need to call it but I do in the proceeding code. I have loaded the `trees` dataset as a test dataset and the tidyverse library just to explore the data a bit. 
+The initial setup requires the installation of the `reticulate` library, after installation you shouldn't need to call it, but I do in the preceding code. I have loaded the `trees` dataset as a test dataset and the tidyverse library just to explore the data a bit. 
 
 ```{r initial, message=FALSE}
 library(reticulate)
@@ -31,9 +31,9 @@ data(trees)
 glimpse(trees)
 ``` 
 
-Now R Studio will use your local version of Python when you write any code in a code chuck labeled with the "{Python}" header. If you don't have any local version, R Studio will ask if you would like to install Miniconda. From here you will need to start downloading the required Python modules. 
+Now, R Studio will use your local version of Python when you write any code in a code chuck labelled with the "{Python}" header. If you don't have any local version, R Studio will ask if you would like to install Miniconda. From here, you will need to start downloading the required Python modules. 
 
-Modules can be downloaded `pip` python package installer from the terminal or command line. The easiest method in R Studio is within the terminal window next to the console window. The command used is `pip install "module name"`. Some module can be tricky and won't work if no installed after other modules. 
+Modules can be downloaded with the `pip` python package installer from the terminal or command line. The easiest method in R Studio is within the terminal window next to the console window. The command used is `pip install "module name"`. Some modules can be tricky and won't work if not installed after other modules. 
 
 ```{python plot}
 import numpy as np
@@ -42,13 +42,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 ```
 
-## Multiple Enviroments
+## Multiple Environments
 
 After the setup, you should see some additional options in the environment in R Studio. You should see that you have the option to switch between the R and Python environments.
 
-Data is transitioned from the R environment to the Python environment with the `r` variable. This method should pretty similar to the Shiny Apt's use of `input\output`. It is not only data that can move between enviroments but functions too.   
+Data is transitioned from the R environment to the Python environment with the `r` variable. This method should pretty similar to the Shiny Apt's use of `input\output`. It is not only data that can move between environments, but functions too.   
 
-The following code takes data from the R environment and creates a plot in seaborn. The mean values of the columns are calculated in `python` to be imported into the R environment. A simple linear model is created with the `SKlearn` module. 
+The following code takes data from the R environment and creates a plot in `Seaborn`. The mean values of the columns are calculated in `python` to be imported into the R environment. A simple linear model is created with the `SKlearn` module. 
 
 ```{python enviroment}
 data = r.trees
@@ -64,7 +64,7 @@ mdl.fit(data[["Girth"]], data[["Height"]])
 print(mdl.coef_)
 ```
 
-Data is transitioned from `Python` to `R` in a similar fashion with the variable `py`. Information on models can be passed but not the models themselves. This is important if you are more comfortable creating models in `Python`.  
+Data is transitioned from `Python` to, `R` similarly with the variable `py`. Information on models can be passed but not the models themselves. This is important if you are more comfortable creating models in `Python`.  
 
 ```{r return}
 print(py$means)
