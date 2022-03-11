@@ -1,0 +1,85 @@
+---
+title: "Flex Dashboard Demo 2"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(shiny)
+library(plotly)
+library(leaflet)
+download.file("https://www150.statcan.gc.ca/n1/tbl/csv/45100007-eng.zip", "donordata.zip")
+unzip("donordata.zip")
+data = read_csv("45100007.csv")
+data = data %>%
+        filter(`Donation statistics (UOM)`=='Average annual donations') %>%
+        filter(!GEO=="Canada") %>%
+        filter(!Education == "All education levels") %>% rename(Province = GEO)
+data$Province[data$Province == "Newfoundland and Labrador"] <- "Newfoundland"
+data$Province[data$Province == "Prince Edward Island"] <- "P.E.I."
+
+data2 <- data %>%
+        group_by(Province) %>%
+        summarise(Donations = sum(VALUE))
+library(rgdal)
+
+if (!file.exists("./src/ref/ne_50m_admin_1_states_provinces_lakes/ne_50m_admin_1_states_provinces_lakes.dbf")){
+  download.file(file.path('http://www.naturalearthdata.com/http/',
+                          'www.naturalearthdata.com/download/50m/cultural',
+                          'ne_50m_admin_1_states_provinces_lakes.zip'), 
+                f <- tempfile())
+  unzip(f, exdir = "./src/ref/ne_50m_admin_1_states_provinces_lakes")
+  rm(f)
+}
+
+region <- readOGR("./src/ref/ne_50m_admin_1_states_provinces_lakes", 'ne_50m_admin_1_states_provinces_lakes', encoding='UTF-8')
+data2$Province <- c("Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Nova Scotia", "Ontario", "Prince Edward Island", "QuÃ©bec", "Saskatchewan")
+
+
+library(leaflet)
+
+p <- leaflet() %>% 
+  addTiles() %>% 
+  setView(-74.09, 45.7,  zoom = 2) %>% 
+  addPolygons(data = subset(region, name %in% data2$Province), color = "#444444", opacity = 1.0, fillOpacity = 0.75,
+              fillColor = ~colorQuantile("Greens", data2$Donations)(data2$Donations),
+              weight = 1)
+
+```
+
+## Row {data-height="500"}
+
+### **Donations by Province**
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+p
+```
+
+## Row {data-height="500"}
+
+### **Donations by Education Level**
+
+```{r}
+p2 <- data %>%
+        rename(Donations = VALUE) %>%
+        ggplot(aes(y= Donations, fill = Education)) +
+        geom_histogram() +
+        theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+ggplotly(p2)
+```
+
+### **Donations by Province (GT)**
+
+```{r}
+library(gt)
+data2 %>% 
+        pivot_wider(names_from = Province, values_from = Donations) %>%
+        gt()
+
+```
