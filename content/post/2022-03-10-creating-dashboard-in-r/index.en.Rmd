@@ -1,0 +1,32 @@
+---
+title: Creating Dashboard in R
+author: Mark Edney
+date: '2022-03-10'
+slug: []
+categories:
+  - How-to
+tags:
+  - R
+  - Shiny App
+draft: yes
+description: ''
+archives:
+  - 2022/03
+---
+
+Dashboards are a great way to demonstrate knowledge and engage decision makers. Th
+
+```{r intro}
+library(flexdashboard)
+library(shiny)
+```
+
+```{r demo1, results='asis'}
+#knitr::render_html("")
+
+```
+
+```{r demo2, results='asis'}
+#knitr::render_html("")
+
+```
