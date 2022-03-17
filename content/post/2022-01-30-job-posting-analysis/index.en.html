@@ -8,7 +8,6 @@ tags:
   - R
   - Shiny App
 draft: no
-runtime: shiny
 description: A project used to study the occurance of keywords in a job posting.
 image: img/jobsearch.jpg
 archives:
@@ -20,12 +19,12 @@ archives:
 
 <p>Recently, there was a post on medium about the use of Natural Language Processing (NLP)
 to study a job posting for keywords. I found that this article was very similar to
-R shiny App that I created a while ago. <a href="#section-fn1" class="footnote-ref" id="section-fnref1"><sup>1</sup></a></p>
-<div id="section-introduction" class="section level2">
+R shiny App that I created a while ago. <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <p>Technology has changed the job application process, making it easier and quicker to
 apply to jobs. As a result, the average job posting will receive around 250 resumes.
-<a href="#section-fn2" class="footnote-ref" id="section-fnref2"><sup>2</sup></a> So how can hiring managers handle spending their time looking through that
+<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> So how can hiring managers handle spending their time looking through that
 many resumes for one posting? That’s easy, they cheat.</p>
 <p>Hiring Managers no longer look at individual resumes, but use automatic software called
 applicant tracking system (ATS). These programs filter resumes by a set of keywords,
@@ -40,7 +39,7 @@ for a Shiny App is a little different from R and requires some additional unders
 The product will be a basic, interactive program that can be hosted online. One free
 Shiny App hosting site that I recommend is <a href="https://www.shinyapps.io">shinyapps.io</a>.</p>
 </div>
-<div id="section-inialization" class="section level2">
+<div id="inialization" class="section level2">
 <h2>Inialization</h2>
 <p>The shiny App will require the following libraries.</p>
 <pre class="r"><code>library(shiny)
@@ -58,14 +57,14 @@ Keywords$Keys %&gt;% head()</code></pre>
 <pre><code>## [1] &quot;.NET&quot;                &quot;account management&quot;  &quot;accounting&quot;         
 ## [4] &quot;accounts payable&quot;    &quot;accounts receivable&quot; &quot;acquisition&quot;</code></pre>
 </div>
-<div id="section-app-structure" class="section level2">
+<div id="app-structure" class="section level2">
 <h2>App Structure</h2>
 <p>One issue I found when developing this application was the use of keywords that are
 a combination of multiple words. This creates some complications, as a simple search
 of keywords would use only the first word and lose the context.</p>
 <p>This challenge was met by breaking the website down into ngrams. An over simplification
 of a ngram is a group of n number of words. Wikipedia has a very good page that
-better explains ngrams.<a href="#section-fn3" class="footnote-ref" id="section-fnref3"><sup>3</sup></a> The website can then be split into ngrams of different
+better explains ngrams.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> The website can then be split into ngrams of different
 lengths and the keywords searched for.</p>
 <p>As a example, the phrase:</p>
 <blockquote>
@@ -84,8 +83,8 @@ lengths and the keywords searched for.</p>
 <p>(The quick brown) (quick brown fox)</p>
 </blockquote>
 </div>
-<div id="section-shiny-app" class="section level2">
-<h2>Shiny App</h2>
+<div id="application-coding" class="section level2">
+<h2>Application Coding</h2>
 <pre class="r"><code>shinyApp(
 #This is the standard format for a shiny app
         
@@ -152,11 +151,16 @@ lengths and the keywords searched for.</p>
   options = list(height = 500)
 )</code></pre>
 </div>
+<div id="shiny-app" class="section level2">
+<h2>Shiny App</h2>
+<iframe src="https://m2edney.shinyapps.io/Word_Cloud/?_ga=2.82297238.1842982076.1647479103-1341333380.1645206372" width="672" height="400px" data-external="1">
+</iframe>
+</div>
 <div class="footnotes footnotes-end-of-document">
 <hr />
 <ol>
-<li id="section-fn1"><p><a href="https://medium.com/data-marketing-philosophy/use-python-and-nlp-to-boost-your-resume-e4691a58bcc9">use-python-and-nlp-to-boost-your-resume</a><a href="#section-fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="section-fn2"><p><a href="https://ideal.com/resume-screening/">Resume Screening: A How-To Guide For Recruiters</a><a href="#section-fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="section-fn3"><p><a href="https://en.wikipedia.org/wiki/N-gram">Wiki: ngrams</a><a href="#section-fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p><a href="https://medium.com/data-marketing-philosophy/use-python-and-nlp-to-boost-your-resume-e4691a58bcc9">use-python-and-nlp-to-boost-your-resume</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://ideal.com/resume-screening/">Resume Screening: A How-To Guide For Recruiters</a><a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p><a href="https://en.wikipedia.org/wiki/N-gram">Wiki: ngrams</a><a href="#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>

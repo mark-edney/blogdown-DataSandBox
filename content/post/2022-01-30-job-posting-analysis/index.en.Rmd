@@ -8,7 +8,6 @@ tags:
   - R
   - Shiny App
 draft: no
-runtime: shiny
 description: A project used to study the occurance of keywords in a job posting.
 image: img/jobsearch.jpg
 archives:
@@ -91,7 +90,7 @@ and for a ngram of length 3 would return:
 > (The quick brown) (quick brown fox)
 
 
-## Shiny App
+## Application Coding
 
 ```{r Shiny, eval=FALSE}
 shinyApp(
@@ -161,6 +160,10 @@ shinyApp(
 )
 ```
 
+## Shiny App
+```{r app, echo=FALSE}
+knitr::include_url(url = "https://m2edney.shinyapps.io/Word_Cloud/?_ga=2.82297238.1842982076.1647479103-1341333380.1645206372")
+```
 
 [^1]:[use-python-and-nlp-to-boost-your-resume](https://medium.com/data-marketing-philosophy/use-python-and-nlp-to-boost-your-resume-e4691a58bcc9)
 [^2]:[Resume Screening: A How-To Guide For Recruiters](https://ideal.com/resume-screening/)
