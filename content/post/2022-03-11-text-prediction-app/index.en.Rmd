@@ -15,10 +15,166 @@ image: "/img/predict_text.jpg"
 archives:
   - 2022/03
 ---
- some text
+
+> This Shiny App was first written in May of 2021
+
+## Description
+
+The goal of this project was to create a N-gram based model to predict the word to follow the users input. This project was to complete the Capstone project for the Johns Hopkins University Data science program on coursera. The data for this project
+was provided by swiftkey. 
+
+## Initialization
+
+The initial step that loads the required libraries and downloads the data sets if not all read on file.
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, eval = FALSE)
+```
+
+```{r initial}
+library(tidyverse)
+library(tidytext)
+library(pryr)
+
+#downloads the corpus files, profanity filter and English dictionary
+
+url <- "https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip"
+url2 <- "https://www.freewebheaders.com/download/files/facebook-bad-words-list_comma-separated-text-file_2021_01_18.zip"
+url3 <- "https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt"
+url4 <- "https://raw.githubusercontent.com/mark-edney/Capestone/1c143b40dd71f0564c3248df2a8638d08af10440/data/contractions.txt"
+if(dir.exists("~/R/Capestone/data/") == FALSE){
+       dir.create("~/R/Capestone/data/")}
+
+if(file.exists("~/R/Capestone/data/data.zip") == FALSE|
+   file.exists("~/R/Capestone/data/prof.zip")==FALSE|
+   file.exists("~/R/Capestone/data/diction.txt")==FALSE|
+    file.exists("~/R/Capestone/data/contractions.txt")==FALSE){
+        download.file(url,destfile = "~/R/Capestone/data/data.zip")
+        download.file(url2,destfile = "~/R/Capestone/data/prof.zip")
+        download.file(url3,destfile = "~/R/Capestone/data/diction.txt")
+        download.file(url4,destfile = "~/R/Capestone/data/contractions.txt")
+        setwd("~/R/Capestone/data/")
+        unzip("~/R/Capestone/data/prof.zip")
+        unzip("~/R/Capestone/data/data.zip")
+        setwd("~/R/Capestone")
+}
+```
+
+## Creating a Corpus
+
+The project requires a Corpus, or a large body of text to create models. At this stage, the files are opened and joined. The Corpus is so large and requires some much ram that a sample of 10% is taken. 
+
+```{r corpus}
+
+blog <- read_lines("~/R/Capestone/data/final/en_US/en_US.blogs.txt")
+news <- read_lines("~/R/Capestone/data/final/en_US/en_US.news.txt")
+twitter <- read_lines("~/R/Capestone/data/final/en_US/en_US.twitter.txt")
+blog <- tibble(text = blog) 
+news <- tibble(text = news)
+twitter <- tibble(text = twitter)
+
+set.seed(90210)
+corpus <- bind_rows(blog,twitter,news) %>% 
+        slice_sample(prop = 0.10) %>%
+        mutate(line = row_number())
+```
+
+## Corpus filtering
+
+Here the corpus filter is created to remove profanity and any word that is  not in the English dictionary. 
+```{r filter}
+prof <- read_lines("~/R/Capestone/data/facebook-bad-words-list_comma-separated-text-file_2021_01_18.txt")[15]
+prof <- prof %>% str_split(", ") %>% flatten %>% unlist
+prof <- tibble("word" = prof)
+
+english <- read_lines("~/R/Capestone/data/diction.txt")
+english <- tibble("word" = english[!english==""])
+
+contract <- read_lines("~/R/Capestone/data/contractions.txt")
+contract <- tibble("word" = contract) %>% unnest_tokens(word,word)
+```
+
+## Vocabulary 
+
+A vocabulary of words is created from the unique words with the applied filters.
+```{r vocab}
+#clean up ram
+rm(blog,news,twitter)
+voc <- bind_rows(english, contract) %>% anti_join(prof)
+
+unigram <- corpus %>% unnest_tokens(ngram, text, token = "ngrams", n = 1) %>%
+        semi_join(voc, by = c("ngram"="word")) 
+#decreases the voc size
+voc <- tibble(word = unique(unigram$ngram))
+```
 
 
-```{r app, warning=FALSE, echo=FALSE}
+## Out of Vocabulary 
+
+To model out of vocabulary words we take a sampling of the least frequent unigrams and change them to the character "<unk>". If a word is tested that isn't in the vocabulary for the corpus, the quantity will be converted to "<unk>".
+```{r OOV}
+#OOV 1% of the least likely unigrams
+unigramcount <- unigram %>% count(ngram)
+unk <- unigramcount %>%
+        filter(n==1) %>%
+        slice_sample(n = mean(unigramcount$n)) 
+unigram[unigram$ngram %in% unk$ngram,]$ngram <- "unk"
+
+```
+
+The Corpus can reconstructed with the reduced vocabulary remove the need to re-filter for the higher levels of n-grams.
+
+```{r corpusremake}
+corpus <- unigram %>%
+        group_by(line) %>%
+        summarise(line = paste(ngram, collapse = " ")) %>%
+        rename("text" = "line") %>%
+        mutate("line" = row_number())
+
+rm(unigramcount)        
+```
+There are still many word that only appear once so it
+useful to remove these words as the add little to prediction value of the models but significantly to the time and memory requirement. This is mainly due to the filtering. 
+
+```{r vocabclean}
+unigram <- unigram %>%
+        count(ngram) %>%
+        filter(n > quantile(n,0.4))
+
+voc <- tibble(word = unigram$ngram)
+
+```
+## Bigrams
+
+The bigrams are created and then split into individual words which can be filtered by the vocabulary list. 
+```{r bigram}
+bigram <- corpus %>% 
+        unnest_tokens(ngram, text, token = "ngrams", n = 2) %>%
+        separate(ngram, c("word1", "word2"), sep = " ") %>%
+        count(word1, word2) %>%
+        filter(n > quantile(n,0.4)) %>%
+        na.omit()
+       
+```
+
+## Trigrams
+
+Likewise, the trigrams and higher level n-grams are created in a similar manner.
+```{r trigrams}
+trigram <- corpus %>% 
+        unnest_tokens(ngram, text, token = "ngrams", n = 3) %>%
+        separate(ngram, c("word1", "word2", "word3"), sep = " ") %>%
+        count(word1, word2, word3) %>%
+        filter(n > quantile(n,0.4)) %>%
+        na.omit()
+rm(corpus)
+```
+
+
+## Modeling
+
+## Application
+
+```{r app, warning=FALSE, echo=FALSE, eval=TRUE}
 knitr::include_url(url = " https://m2edney.shinyapps.io/Text_Predictive_Model/?_ga=2.105454339.129590181.1646962570-1341333380.1645206372")
 ```
 
