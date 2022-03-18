@@ -17,10 +17,10 @@ image: 'img/talk.jpg'
 archives:
   - 2022/03
 --- 
-I recently wrote a post about [creating dashboards in R](https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/) which was based on the fleboard library. My largest critisim was the lack of communication between visualizations on the same dashboard. This was before I learnt about the `Crosstalk` package which adds this feature to html widgets, such as the flexdashboard, to atleast a limitied degree.
+I recently wrote a post about [creating dashboards in R](https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/) which was based on the `Flexdashboard` library. My largest criticism was the lack of communication between visualizations on the same dashboard. This was before I learned about the `Crosstalk` package which adds this feature to html widgets, such as the Flexdashboard, to at least a limited degree.
 
-## Inialization
-The `Crosstalk` package is available on cran and is loaded along with other important packages for this demonstration. 
+## Initialization
+The `Crosstalk` package is available on CRAN and is loaded along with other important packages for this demonstration. 
 ```{r inital, include=FALSE}
 knitr::opts_chunk$set(eval=FALSE, message = FALSE, warning = FALSE)
 ```
@@ -47,7 +47,7 @@ df <- read_csv("data.csv") %>%
         slice_sample(n = 200)
 ```
 
-The key to the `crosstalk` library is the `SharedData` functions. An object is create when a Data Frame is passed to the `SharedData$new` function. This is what enables communication between plots.
+The key to the `crosstalk` library is the `SharedData` functions. An object is created when a Data Frame is passed to the `SharedData$new` function. This is what enables communication between plots.
 
 ```{r shared}
 shared_df <- SharedData$new(df)
@@ -55,9 +55,9 @@ shared_df <- SharedData$new(df)
 
 ## Dashboard Creation
 
-The dashboard is create pretty much as previous mentioned in [my dashboard post](https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/) with the exception that the shared Data Frame object is passed rather than the Data Frame. 
+The dashboard is created pretty much as previous mentioned in [my dashboard post](https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/), with the exception that the shared Data Frame object is passed rather than the Data Frame. 
 
-The dashboard can include filters that are very similar to the Shiny Apt filters with the `filter_*` family of functions.
+The dashboard can include filters that are very similar to the Shiny Apt filters, with the `filter_*` family of functions.
 
 ```{r}
 filter_slider("Score", "SCORE", shared_df, ~SCORE, round = TRUE)
@@ -66,7 +66,7 @@ filter_checkbox("Property Type", "PROPERTY_TYPE", shared_df, ~PROPERTY_TYPE, inl
 ```
 
 ## Conclusion
-The `Crosstalk` package does add some important connectivity to Flex Dashboards. It is relatively simple to use with some basic functions. It does have the issue of not working with aggregating data. The utility of finding the mean value of a selection is something `Tableu` and `PowerBI` are still superior at. I think that it is still a welcome improvement.  
+The `Crosstalk` package does add some significant connectivity to Flex Dashboards. It is relatively simple to use with some basic functions. It does have the issue of not working with aggregating data. The utility of finding the mean value of a selection is something `Tableu` and `PowerBI` are still superior at. I think that it is still a welcome improvement.  
 
 ## Final Dashboard
 

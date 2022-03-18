@@ -21,10 +21,10 @@ archives:
 <script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
 
 
-<p>I recently wrote a post about <a href="https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/">creating dashboards in R</a> which was based on the fleboard library. My largest critisim was the lack of communication between visualizations on the same dashboard. This was before I learnt about the <code>Crosstalk</code> package which adds this feature to html widgets, such as the flexdashboard, to atleast a limitied degree.</p>
-<div id="inialization" class="section level2">
-<h2>Inialization</h2>
-<p>The <code>Crosstalk</code> package is available on cran and is loaded along with other important packages for this demonstration.</p>
+<p>I recently wrote a post about <a href="https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/">creating dashboards in R</a> which was based on the <code>Flexdashboard</code> library. My largest criticism was the lack of communication between visualizations on the same dashboard. This was before I learned about the <code>Crosstalk</code> package which adds this feature to html widgets, such as the Flexdashboard, to at least a limited degree.</p>
+<div id="initialization" class="section level2">
+<h2>Initialization</h2>
+<p>The <code>Crosstalk</code> package is available on CRAN and is loaded along with other important packages for this demonstration.</p>
 <pre class="r"><code>install.packages(&quot;crosstalk&quot;)
 library(crosstalk)
 library(tidyverse)
@@ -40,19 +40,19 @@ df &lt;- read_csv(&quot;data.csv&quot;) %&gt;%
                SITE_ADDRESS, 
                PROPERTY_TYPE) %&gt;% 
         slice_sample(n = 200)</code></pre>
-<p>The key to the <code>crosstalk</code> library is the <code>SharedData</code> functions. An object is create when a Data Frame is passed to the <code>SharedData$new</code> function. This is what enables communication between plots.</p>
+<p>The key to the <code>crosstalk</code> library is the <code>SharedData</code> functions. An object is created when a Data Frame is passed to the <code>SharedData$new</code> function. This is what enables communication between plots.</p>
 <pre class="r"><code>shared_df &lt;- SharedData$new(df)</code></pre>
 </div>
 <div id="dashboard-creation" class="section level2">
 <h2>Dashboard Creation</h2>
-<p>The dashboard is create pretty much as previous mentioned in <a href="https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/">my dashboard post</a> with the exception that the shared Data Frame object is passed rather than the Data Frame.</p>
-<p>The dashboard can include filters that are very similar to the Shiny Apt filters with the <code>filter_*</code> family of functions.</p>
+<p>The dashboard is created pretty much as previous mentioned in <a href="https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/">my dashboard post</a>, with the exception that the shared Data Frame object is passed rather than the Data Frame.</p>
+<p>The dashboard can include filters that are very similar to the Shiny Apt filters, with the <code>filter_*</code> family of functions.</p>
 <pre class="r"><code>filter_slider(&quot;Score&quot;, &quot;SCORE&quot;, shared_df, ~SCORE, round = TRUE)
 filter_checkbox(&quot;Property Type&quot;, &quot;PROPERTY_TYPE&quot;, shared_df, ~PROPERTY_TYPE, inline = TRUE)</code></pre>
 </div>
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>
-<p>The <code>Crosstalk</code> package does add some important connectivity to Flex Dashboards. It is relatively simple to use with some basic functions. It does have the issue of not working with aggregating data. The utility of finding the mean value of a selection is something <code>Tableu</code> and <code>PowerBI</code> are still superior at. I think that it is still a welcome improvement.</p>
+<p>The <code>Crosstalk</code> package does add some significant connectivity to Flex Dashboards. It is relatively simple to use with some basic functions. It does have the issue of not working with aggregating data. The utility of finding the mean value of a selection is something <code>Tableu</code> and <code>PowerBI</code> are still superior at. I think that it is still a welcome improvement.</p>
 </div>
 <div id="final-dashboard" class="section level2">
 <h2>Final Dashboard</h2>
