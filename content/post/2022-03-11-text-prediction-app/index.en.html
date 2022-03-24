@@ -24,8 +24,7 @@ archives:
 </blockquote>
 <div id="description" class="section level2">
 <h2>Description</h2>
-<p>The goal of this project was to create a N-gram based model to predict the word to follow the users input. This project was to complete the Capstone project for the Johns Hopkins University Data science program on coursera. The data for this project
-was provided by swiftkey.</p>
+<p>The goal of this project was to create a N-gram based model to predict the word to follow the users input. This project was to complete the Capstone project for the Johns Hopkins University Data science program on coursera. The data for this project was provided by swiftkey.</p>
 </div>
 <div id="initialization" class="section level2">
 <h2>Initialization</h2>
@@ -114,8 +113,7 @@ unigram[unigram$ngram %in% unk$ngram,]$ngram &lt;- &quot;unk&quot;</code></pre>
         mutate(&quot;line&quot; = row_number())
 
 rm(unigramcount)        </code></pre>
-<p>There are still many word that only appear once so it
-useful to remove these words as the add little to prediction value of the models but significantly to the time and memory requirement. This is mainly due to the filtering.</p>
+<p>There are still many word that only appear once so it useful to remove these words as the add little to prediction value of the models but significantly to the time and memory requirement. This is mainly due to the filtering.</p>
 <pre class="r"><code>unigram &lt;- unigram %&gt;%
         count(ngram) %&gt;%
         filter(n &gt; quantile(n,0.4))
