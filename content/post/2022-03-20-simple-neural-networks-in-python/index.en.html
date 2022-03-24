@@ -18,10 +18,10 @@ archives: 2022/03
 
 
 <p>Neural Networks (NN) have become incredibly popular due to their high level of accuracy. The creation of a NN can be complicated and have a high level of customization. I wanted to explore just the simplest NN that you could create. A framework as a workhorse for developing new NN.</p>
-<p>The <code>SciKitlearn</code> provides the easiest solution with the Multi-Layer Perceptron series of functions. It doesn’t provide a bunch of the more advanced features of <code>TensorFlow</code> like GPU support, but that is not what I’m looking for.</p>
-<div id="inialization" class="section level2">
-<h2>Inialization</h2>
-<p>For the demonstration i decided to use a data set on faults found in <a href="https://www.openml.org/d/1504">steel plates</a> from the OpenML website. The data set includes 27 features with 7 binary predictors.</p>
+<p>The <code>SciKitlearn</code> provides the easiest solution with the Multi-Layer Perceptron series of functions. It doesn’t provide a bunch of the more advanced features of <code>TensorFlow</code>, like GPU support, but that is not what I’m looking for.</p>
+<div id="initialization" class="section level2">
+<h2>Initialization</h2>
+<p>For the demonstration, I decided to use a data set on faults found in <a href="https://www.openml.org/d/1504">steel plates</a> from the OpenML website. The data set includes 27 features with 7 binary predictors.</p>
 <pre class="python"><code>import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -37,7 +37,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)</code>
 </div>
 <div id="modelling" class="section level2">
 <h2>Modelling</h2>
-<p>This is the most basic model that I would like to evaluate. I’ve used the <code>GridSearch</code> function so all combinations of parameters are tested. The only parameter I wanted examine was the size of the hidden layers. Each hidden layer provided is a tuple were each number represents the number of nodes in a singled layer. Multiple numbers represent additional layers.</p>
+<p>This is the most basic model that I would like to evaluate. I’ve used the <code>GridSearch</code> function, so all combinations of parameters are tested. The only parameter I wanted to examine was the size of the hidden layers. Each hidden layer provided is a tuple, where each number represents the number of nodes in a singled layer. Multiple numbers represent additional layers.</p>
 <pre class="python"><code>from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import GridSearchCV
 
@@ -114,11 +114,11 @@ grid.fit(X_train_sc, y_train)</code></pre>
 ##                                                  100, 100, 100, 100)]})</code></pre>
 <pre class="python"><code>grid.best_score_</code></pre>
 <pre><code>## 0.7553264604810996</code></pre>
-<p>The performance of the scaled model is much more impressive. After the <code>GridSearch</code> function finds the parameters for the best model, it retrains the model on the entire dataset. This is because the function utilize cross validation, so some of the data was withheld for comparing the different models on test data.</p>
+<p>The performance of the scaled model is much more impressive. After the <code>GridSearch</code> function finds the parameters for the best model, it retrains the model on the entire dataset. This is because the function utilize cross validation, so some data was withheld for comparing the different models on test data.</p>
 </div>
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>
-<p>With our model constructed, we can now test its performance on the original test set. It is important to remember to use the scaled test features as that is what the model is expecting.</p>
+<p>With our model constructed, we can now test its performance on the original test set. It is important to remember to use the scaled test features, as that is what the model is expecting.</p>
 <pre class="python"><code>grid.score(X_test_sc, y_test)</code></pre>
 <pre><code>## 0.7304526748971193</code></pre>
 <p>The results are pretty satisfactory. A decent level of accuracy without a lot of complicated code. Default values were used, whenever they were appropriate. Additional steps could be taken, but this remains a good foundation for future exploratory analysis.</p>
