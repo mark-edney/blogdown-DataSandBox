@@ -2,6 +2,7 @@ baseURL = "https://datasandbox.netlify.app/"
 title = "The Data Sandbox"
 author = "Mark Edney"
 languageCode = "en"
+math = true
 DefaultContentLanguage = "en"
 enableInlineShortcodes = true
 theme = "Blonde"

@@ -1,0 +1,78 @@
+---
+title: Underrated CRAN Packages
+author: Mark Edney
+date: '2022-03-31'
+slug: []
+categories:
+  - Project
+tags:
+  - R
+draft: yes
+image: '/img/Rlogo.svg'
+description: 'A search for popular R packages, that I would would otherwise miss.'
+archives:
+  - 2022/03
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+
+
+<p>I sit here looking for inspiration, nothing interesting to write about. Perhaps there are some popular R packages on CRAN that I don’t know about? You can explore the data on downloads from CRAN with the <code>cranlogs</code> package.</p>
+<div id="top-cran-downloads" class="section level2">
+<h2>Top CRAN downloads</h2>
+<p>With the following code we can get the most popular packages from CRAN. The CRAN directory doesn’t represent all R packages but a good amount of them.</p>
+<pre class="r"><code>library(tidyverse)
+library(cranlogs)
+top100 &lt;- cran_top_downloads(when = &#39;last-month&#39;, count = 100)
+top100 %&gt;% head()</code></pre>
+<pre><code>##   rank package   count       from         to
+## 1    1 ggplot2 2344057 2022-03-04 2022-04-02
+## 2    2   rlang 2239228 2022-03-04 2022-04-02
+## 3    3    glue 1800420 2022-03-04 2022-04-02
+## 4    4      sf 1704701 2022-03-04 2022-04-02
+## 5    5     cli 1665769 2022-03-04 2022-04-02
+## 6    6   dplyr 1665023 2022-03-04 2022-04-02</code></pre>
+<p>From this list, we can see that the <code>tidyverse</code> represents a large amount of the top downloads with <code>ggplot2</code>, <code>rlang</code> and <code>dplyr</code>. The list includes the <code>sf</code> package for geo-spacial data, the <code>glue</code> package for string manipulation and the <code>cli</code> package which is used to create a command line interface for packages. Most of these packages I already have a good understanding of, so I need to narrow down the search.</p>
+</div>
+<div id="packages-installed" class="section level2">
+<h2>Packages installed</h2>
+<p>You can get a list of your installed packages with the installed_packages function. You can than filter the top 100 list and remove anything you already have installed to find new packages.</p>
+<pre class="r"><code>mine &lt;- installed.packages() %&gt;%
+        data.frame() %&gt;%
+        select(Package)
+new &lt;- top100 %&gt;%
+        filter(!package %in% mine$Package)
+new</code></pre>
+<pre><code>##   rank   package   count       from         to
+## 1   17      ragg 1161019 2022-03-04 2022-04-02
+## 2   21       rgl 1148721 2022-03-04 2022-04-02
+## 3   23     rgeos 1128166 2022-03-04 2022-04-02
+## 4   38       zoo  832762 2022-03-04 2022-04-02
+## 5   48   pkgdown  766019 2022-03-04 2022-04-02
+## 6   81    nloptr  565042 2022-03-04 2022-04-02
+## 7   88     Hmisc  542890 2022-03-04 2022-04-02
+## 8   89      lme4  538878 2022-03-04 2022-04-02
+## 9   93 RcppEigen  513045 2022-03-04 2022-04-02</code></pre>
+<p>From some quick research, I have found the following about the new packages:</p>
+<ul>
+<li><code>ragg</code> - a 2D library as an alternative to the RStudio default</li>
+<li><code>rgl</code> - functions for 3D interactive graphics</li>
+<li><code>rgeos</code> - a geometry package but is currently planned to be retired at the end of 2023 for the <code>sf</code> package</li>
+<li><code>zoo</code> - a library to deal with time series</li>
+<li><code>pkgdown</code> - a library fro building blog website, I use blogdown</li>
+<li><code>nloptr</code> - a library for solving non-linear optimization problems</li>
+<li><code>Hmisc</code> - an assortment of different data analysis tools</li>
+<li><code>lme4</code> - for fitting linear and generalized linear mixed-effects models</li>
+<li><code>RcppEigen</code> - integration of the <code>eigen</code> library in R for linear algebra</li>
+</ul>
+</div>
+<div id="take-away" class="section level2">
+<h2>Take-away</h2>
+<p>Hopefully your take-way is a simple method to explore R library that you have never heard about. I know that a few of the libraries seem interesting and worth further exploring.</p>
+<p>While we are at it, might as well find the daily values for the new packages and plot them for the last month.</p>
+<pre class="r"><code>new$package %&gt;%
+        cran_downloads(when = &quot;last-month&quot;) %&gt;%
+        ggplot(aes(x = date, y = count, color = package)) +
+        geom_line()</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/plot-1.png" width="672" /></p>
+</div>
