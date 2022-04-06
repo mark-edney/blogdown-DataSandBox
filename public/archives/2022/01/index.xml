@@ -7,14 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language><atom:link href="https://datasandbox.netlify.app/archives/2022/01/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Job posting analysis</title>
+      <link>https://datasandbox.netlify.app/post/2022-01-30-job-posting-analysis/</link>
+      <pubDate>Sun, 06 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-01-30-job-posting-analysis/</guid>
+      <description>Recently, there was a post on medium about the use of Natural Language Processing (NLP)to study a job posting for keywords. I found that this article was very similar toR shiny App that I created a while ago. 1
+IntroductionTechnology has changed the job application process, making it easier and quicker toapply to jobs. As a result, the average job posting will receive around 250 resumes.</description>
+    </item>
+    
+    <item>
       <title>Fitness Tracker Modeling: ML</title>
       <link>https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/</link>
       <pubDate>Sat, 29 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/</guid>
       <description>The original paper was written on 12/18/2020
-Executive SummaryThis report analyzes collected data on different users preforming barbell liftsperformed at different levels of quality. A machine learning algorithm was usedto create a model to determine the users rating based on data collected from multipleaccelerometers. More information on the project can be found here.
-AnalysisInitializationThe following code was used to initialize the required r libraries as well as downloadingthe required data and store it into memory.</description>
+Executive SummaryThis report analyzes collected data on different users preforming barbell liftsperformed at different levels of quality. A machine learning algorithm was usedto create a model to determine the user’s rating based on data collected from multipleaccelerometers. More information on the project can be found here.
+AnalysisInitializationThe following code was used to initialize the required R libraries, as well as downloading the required data and store it into memory.</description>
     </item>
     
   </channel>

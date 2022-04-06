@@ -6,7 +6,115 @@
     <description>Recent content in R on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 29 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 31 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Underrated CRAN Packages</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/</link>
+      <pubDate>Thu, 31 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/</guid>
+      <description>I sit here looking for inspiration, nothing interesting to write about. Perhaps there are some popular R packages on CRAN that I don’t know about? You can explore the data on downloads from CRAN with the cranlogs package.
+Top CRAN downloadsWith the following code we can get the most popular packages from CRAN. The CRAN directory doesn’t represent all R packages but a good amount of them.</description>
+    </item>
+    
+    <item>
+      <title>Making the Connection with Crosstalk</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/</link>
+      <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/</guid>
+      <description>I recently wrote a post about creating dashboards in R which was based on the Flexdashboard library. My largest criticism was the lack of communication between visualizations on the same dashboard. This was before I learned about the Crosstalk package which adds this feature to html widgets, such as the Flexdashboard, to at least a limited degree.
+InitializationThe Crosstalk package is available on CRAN and is loaded along with other important packages for this demonstration.</description>
+    </item>
+    
+    <item>
+      <title>Creating Dashboards in R</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/</link>
+      <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/</guid>
+      <description>Dashboards are a great way to demonstrate knowledge and engage decision makers. Their utility has made PowerBI andTableau household names. And while these solutions do support R and Python scripts and visualizations, the Flexdashboard package seeks to compete. The Flexdashboard packages does this all in R with the simplicity of writing a R Markdown file.
+Initial SetupThe setup is simple, you just need to download and load the Flexdashboard package.</description>
+    </item>
+    
+    <item>
+      <title>Python in R Markdown</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-03-python-in-r-markdown/</link>
+      <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-03-python-in-r-markdown/</guid>
+      <description>Photo by David Clode on Unsplash
+The main advantage of using the R Markdown format is the utility of running R code within the text. This is clearly more advantageous than just writing code in a Markdown file. RMarkdown is however limited to R code, unable to run Python scripts. The R library reticulate looks to add this capability.
+Initial SetupThe initial setup requires the installation of the reticulate library, after installation you shouldn’t need to call it, but I do in the preceding code.</description>
+    </item>
+    
+    <item>
+      <title>Bike shares in Toronto</title>
+      <link>https://datasandbox.netlify.app/post/2022-02-27-bike-shares-in-toronto/</link>
+      <pubDate>Sun, 27 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-02-27-bike-shares-in-toronto/</guid>
+      <description>Photo by Maarten van den Heuvel on Unsplash
+This article is based on a project written on 01/14/2021
+Bike Rental Shiny AppThis application use the data collected from the Toronto Open Data to generate a histogram of the usage of rental bikes in Toronto during the month of June in 2020.
+install.packages(&amp;quot;opendatatoronto&amp;quot;, repos = &amp;quot;http://cran.us.r-project.org&amp;quot;,dependencies = TRUE)library(opendatatoronto)library(tidyverse)library(lubridate)library(shiny)UIThere are two user inputs on the UI side:</description>
+    </item>
+    
+    <item>
+      <title>New features in R</title>
+      <link>https://datasandbox.netlify.app/post/2022-02-23-new-features-in-r/</link>
+      <pubDate>Wed, 23 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-02-23-new-features-in-r/</guid>
+      <description>Photo by Clint Patterson on Unsplash
+Recently I had updated my RStudio client and with it came a new update to R. This is an exploration of some of the most interesting changes from R 4.0 to R 4.1.
+Native Pipe FunctionDue to the extreme popularity of the magrittr pipe (‘%&amp;gt;%’), R has developed its own native pipe (‘|&amp;gt;’).
+library(tidyverse)data(&amp;quot;morley&amp;quot;)morley |&amp;gt;group_by(Expt) |&amp;gt;summarise(mean = mean(Speed, na.</description>
+    </item>
+    
+    <item>
+      <title>Speed cameras in Toronto</title>
+      <link>https://datasandbox.netlify.app/post/2022-02-16-/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-02-16-/</guid>
+      <description>Photo by Sepideh Golchin Rad on Unsplash
+This project was originally written on 02/01/2021 as part of the Data Productscourse for the Data Science Specialization from Johns Hopkins University on Coursera
+ObjectiveThis report plots the speed cameras in the Greater Toronto Area from the data providedby Open Toronto which can be found here.
+InializationThe following code is used to initialize the required libraries.</description>
+    </item>
+    
+    <item>
+      <title>Fancy Tables in R</title>
+      <link>https://datasandbox.netlify.app/post/2022-02-11-fancy-tables-in-r/</link>
+      <pubDate>Fri, 11 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-02-11-fancy-tables-in-r/</guid>
+      <description>Photo by Juan Gomez on Unsplash
+IntroductionAs a continuation from my previous post exploring the use of the Stargazer library to create better looking tables, I thought I would look into the GT library. The GT library takes a different approach by creating an object class with the GT function. It is still able to create great looking tables in html or latex, but also adds support for RTF.</description>
+    </item>
+    
+    <item>
+      <title>Professional Tables with Stargazer</title>
+      <link>https://datasandbox.netlify.app/post/2022-02-08-professional-tables/</link>
+      <pubDate>Tue, 08 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-02-08-professional-tables/</guid>
+      <description>This post was inspired by the following youtube video.
+IntroductionTables from regression models or just plain data in R are poorly organized. The havelittle formatting and are unfit for publishing. This point is illustrated with theCO2 dataset. This dataset looks at the CO2 uptake of six different types of grass.
+data(co2)mdl &amp;lt;- lm(CO2$uptake ~ CO2$Plant)mdl## ## Call:## lm(formula = CO2$uptake ~ CO2$Plant)## ## Coefficients:## (Intercept) CO2$Plant.</description>
+    </item>
+    
+    <item>
+      <title>Job posting analysis</title>
+      <link>https://datasandbox.netlify.app/post/2022-01-30-job-posting-analysis/</link>
+      <pubDate>Sun, 06 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-01-30-job-posting-analysis/</guid>
+      <description>Recently, there was a post on medium about the use of Natural Language Processing (NLP)to study a job posting for keywords. I found that this article was very similar toR shiny App that I created a while ago. 1
+IntroductionTechnology has changed the job application process, making it easier and quicker toapply to jobs. As a result, the average job posting will receive around 250 resumes.</description>
+    </item>
+    
     <item>
       <title>Fitness Tracker Modeling: ML</title>
       <link>https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/</link>
@@ -14,8 +122,8 @@
       
       <guid>https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/</guid>
       <description>The original paper was written on 12/18/2020
-Executive SummaryThis report analyzes collected data on different users preforming barbell liftsperformed at different levels of quality. A machine learning algorithm was usedto create a model to determine the users rating based on data collected from multipleaccelerometers. More information on the project can be found here.
-AnalysisInitializationThe following code was used to initialize the required r libraries as well as downloadingthe required data and store it into memory.</description>
+Executive SummaryThis report analyzes collected data on different users preforming barbell liftsperformed at different levels of quality. A machine learning algorithm was usedto create a model to determine the user’s rating based on data collected from multipleaccelerometers. More information on the project can be found here.
+AnalysisInitializationThe following code was used to initialize the required R libraries, as well as downloading the required data and store it into memory.</description>
     </item>
     
   </channel>

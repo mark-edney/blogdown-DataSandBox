@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NN on The Data Sandbox</title>
+    <link>https://datasandbox.netlify.app/tags/nn/</link>
+    <description>Recent content in NN on The Data Sandbox</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 20 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/tags/nn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Simple Neural Networks in Python</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/</link>
+      <pubDate>Sun, 20 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/</guid>
+      <description>Neural Networks (NN) have become incredibly popular due to their high level of accuracy. The creation of a NN can be complicated and have a high level of customization. I wanted to explore just the simplest NN that you could create. A framework as a workhorse for developing new NN.
+The SciKitlearn provides the easiest solution with the Multi-Layer Perceptron series of functions. It doesn’t provide a bunch of the more advanced features of TensorFlow, like GPU support, but that is not what I’m looking for.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html lang="en" class="dark">
+<head>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VNSWDG9ZWF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VNSWDG9ZWF');
+</script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4108863678822570"
+     crossorigin="anonymous"></script>
+    <title>The Data Sandbox | Python in R Markdown</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <link rel="apple-touch-icon" sizes="180x180" href='/favicon/apple-touch-icon.png'>
+    <link rel="icon" type="image/png" sizes="32x32" href='/favicon/favicon-32x32.png'>
+    <link rel="icon" type="image/png" sizes="16x16" href='/favicon/favicon-16x16.png'>
+    <link rel="manifest" href='/favicon/site.webmanifest' />
+    <link rel="mask-icon" href=' /favicon/safari-pinned-tab.svg' color="#5bbad5" />
+    <link rel="shortcut icon" href='/favicon/favicon.ico' />
+    <meta name="theme-color" content="#ffffff">
+    <meta property="og:title" content="The Data Sandbox | Python in R Markdown" />
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.min.8e7bcdffab6bbed366372e694f634ed1ccdeae445b32dfeaf0395832323641f0.css" />
+    
+    <link href=' /css/blonde.min.css' rel="stylesheet" type="text/css" media="print"
+        onload="this.media=' all'">
+    
+
+
+
+<meta name="description" content="Photo by David Clode on Unsplash
+The main advantage of using the R Markdown format is the utility of running R code within the text. This is clearly more advantageous than just writing code in a Markdown file. RMarkdown is however limited to R code, unable to run Python scripts. The R library reticulate looks to add this capability.
+Initial SetupThe initial setup requires the installation of the reticulate library, after installation you shouldn’t need to call it, but I do in the preceding code.">
+<meta property="og:site_name" content="The Data Sandbox">
+<meta property="og:description" content="Photo by David Clode on Unsplash
+The main advantage of using the R Markdown format is the utility of running R code within the text. This is clearly more advantageous than just writing code in a Markdown file. RMarkdown is however limited to R code, unable to run Python scripts. The R library reticulate looks to add this capability.
+Initial SetupThe initial setup requires the installation of the reticulate library, after installation you shouldn’t need to call it, but I do in the preceding code.">
+<meta property="og:url" content="https://datasandbox.netlify.app/post/2022-03-03-python-in-r-markdown/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="">
+
+<link rel="canonical" href="https://datasandbox.netlify.app/post/2022-03-03-python-in-r-markdown/">
+
+<meta name="twitter:description" content="Photo by David Clode on Unsplash
+The main advantage of using the R Markdown format is the utility of running R code within the text. This is clearly more advantageous than just writing code in a Markdown file. RMarkdown is however limited to R code, unable to run Python scripts. The R library reticulate looks to add this capability.
+Initial SetupThe initial setup requires the installation of the reticulate library, after installation you shouldn’t need to call it, but I do in the preceding code.">
+<meta property="article:published_time" content="2022-03-03T00:00:00&#43;00:00">
+<meta property="article:updated_time" content="2022-03-03T00:00:00&#43;00:00">
+
+
+
+
+
+    
+<meta property="og:image" content="https://datasandbox.netlify.app/img/python.jpg">
+<meta property="og:image:url" content="https://datasandbox.netlify.app/img/python.jpg">
+    
+
+    
+    <link rel="stylesheet" href='/css/custom.css'>
+            <i class="dark hidden"></i>
+</head><body class="font-sans">
+    <div class="min-h-screen flex flex-col bg-gray-100 dark:bg-warmgray-800"><div class="bg-gray-800">
+    <div class="container max-w-screen-xl mr-auto ml-auto">
+        <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6">
+            <div class="flex items-center flex-no-shrink bg-gray-800 text-white mr-6">
+                <a href="https://datasandbox.netlify.app/"><span class="font-semibold text-2xl tracking-tight">The Data Sandbox</span></a>
+            </div>
+            <div class="flex md:hidden">
+                <div class="py-2">
+                    <button onclick="toggleDarkMode()" class="focus:outline-none mr-1" aria-label="Darkmode Toggle Button"><i id="icon"
+                            class="icon-moon inline-flex align-middle leading-normal text-lg text-white"></i></button>
+                    <span class="text-white">|</span>
+                </div>
+                <button id="hamburgerbtn" class="flex items-center px-3 py-1 text-white hover:opacity-50" aria-label="Hamburger Button">
+                    <span class="icon-menu text-2xl"></span>
+                </button>
+            </div>
+            <div class="hidden w-full md:flex md:flex-row sm:items-center md:w-auto" id="mobileMenu">
+                <div class="text-sm lg:flex-grow">
+                </div>
+                <div class="navmenu">
+                    
+                    <a href="/"
+                        class="no-underline duration-200 block mt-4 sm:inline-block sm:mt-0 text-white hover:opacity-50 mr-4">
+                        Home
+                    </a>
+                    
+                    <a href="/about/"
+                        class="no-underline duration-200 block mt-4 sm:inline-block sm:mt-0 text-white hover:opacity-50 mr-4">
+                        About
+                    </a>
+                    
+                    <a href="/contact/"
+                        class="no-underline duration-200 block mt-4 sm:inline-block sm:mt-0 text-white hover:opacity-50 mr-4">
+                        Contact
+                    </a>
+                    
+                </div>
+                <div class="text-white invisible md:visible">
+                    <span>|</span>
+                    <button onclick="toggleDarkMode()" class="focus:outline-none" aria-label="Darkmode Toggle Button"><i id="icon2"
+                            class="icon-moon hover:opacity-50 duration-200 inline-flex align-middle leading-normal text-lg ml-2"></i></button>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<style>
+    .active {
+        display: block;
+    }
+</style>
+
+<script>
+    let hamburger = document.getElementById('hamburgerbtn');
+
+    let mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', function () {
+        mobileMenu.classList.toggle('active');
+    });
+</script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4108863678822570"
+     crossorigin="anonymous"></script><div class="container max-w-screen-xl mx-auto mt-4 flex-grow px-5 lg:px-0" id="content">
+            <div class="lg:mx-5">
+<div class="grid grid-cols-3 gap-4">
+    
+    <div class="col-span-3 lg:col-span-2 dark:text-white">
+    
+        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
+            <h1 class="title text-4xl">Python in R Markdown</h1>
+            <hr class="my-2">
+            <aside id="meta">
+                <div>
+                    <section>
+                        <h4 id="date"><span class="icon-access_time mr-2"></span>2022/03/03 </h4>
+                    </section>
+                    
+                    <div id="tags">
+                        <span class="icon-local_offer mr-1"></span>
+                        
+                        <a href="https://datasandbox.netlify.app/tags/r">R</a> |
+                        
+                        <a href="https://datasandbox.netlify.app/tags/python">Python</a> |
+                        
+                        <a href="https://datasandbox.netlify.app/tags/rmarkdown">Rmarkdown</a> |
+                        
+                    </div>
+                    
+                </div>
+            </aside>
+            <hr class="my-2">
+            
+            <img class="py-4" src="https://datasandbox.netlify.app/img/python.jpg">
+            
+            <div class="content mt-5">
+<script src="https://datasandbox.netlify.app/post/2022-03-03-python-in-r-markdown/index.en_files/header-attrs/header-attrs.js"></script>
+
+
+<blockquote>
+<p>Photo by <a href="https://unsplash.com/@davidclode?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">David Clode</a> on <a href="https://unsplash.com/s/photos/python?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+</blockquote>
+<p>The main advantage of using the R Markdown format is the utility of running R code within the text. This is clearly more advantageous than just writing code in a Markdown file. R
+Markdown is however limited to R code, unable to run Python scripts. The R library <code>reticulate</code> looks to add this capability.</p>
+<div id="initial-setup" class="section level2">
+<h2>Initial Setup</h2>
+<p>The initial setup requires the installation of the <code>reticulate</code> library, after installation you shouldn’t need to call it, but I do in the preceding code. I have loaded the <code>trees</code> dataset as a test dataset and the tidyverse library just to explore the data a bit.</p>
+<pre class="r"><code>library(reticulate)
+library(tidyverse)
+data(trees)
+glimpse(trees)</code></pre>
+<pre><code>## Rows: 31
+## Columns: 3
+## $ Girth  &lt;dbl&gt; 8.3, 8.6, 8.8, 10.5, 10.7, 10.8, 11.0, 11.0, 11.1, 11.2, 11.3, ~
+## $ Height &lt;dbl&gt; 70, 65, 63, 72, 81, 83, 66, 75, 80, 75, 79, 76, 76, 69, 75, 74,~
+## $ Volume &lt;dbl&gt; 10.3, 10.3, 10.2, 16.4, 18.8, 19.7, 15.6, 18.2, 22.6, 19.9, 24.~</code></pre>
+<p>Now, R Studio will use your local version of Python when you write any code in a code chuck labelled with the “{Python}” header. If you don’t have any local version, R Studio will ask if you would like to install Miniconda. From here, you will need to start downloading the required Python modules.</p>
+<p>Modules can be downloaded with the <code>pip</code> python package installer from the terminal or command line. The easiest method in R Studio is within the terminal window next to the console window. The command used is <code>pip install "module name"</code>. Some modules can be tricky and won’t work if not installed after other modules.</p>
+<pre class="python"><code>import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns</code></pre>
+</div>
+<div id="multiple-environments" class="section level2">
+<h2>Multiple Environments</h2>
+<p>After the setup, you should see some additional options in the environment in R Studio. You should see that you have the option to switch between the R and Python environments.</p>
+<p>Data is transitioned from the R environment to the Python environment with the <code>r</code> variable. This method should pretty similar to the Shiny Apt’s use of <code>input\output</code>. It is not only data that can move between environments, but functions too.</p>
+<p>The following code takes data from the R environment and creates a plot in <code>Seaborn</code>. The mean values of the columns are calculated in <code>python</code> to be imported into the R environment. A simple linear model is created with the <code>SKlearn</code> module.</p>
+<pre class="python"><code>data = r.trees
+means = np.mean(data, axis = 0)
+data[&quot;big&quot;] = data.Height &gt; means.Height 
+sns.scatterplot(data = data, x= &quot;Girth&quot;, y= &quot;Height&quot;, hue = &quot;big&quot;)
+sns.set_theme(color_codes=True)
+plt.show()</code></pre>
+<p><img src="https://datasandbox.netlify.app/post/2022-03-03-python-in-r-markdown/index.en_files/figure-html/enviroment-1.png" width="672" /></p>
+<pre class="python"><code>from sklearn.linear_model import LinearRegression
+mdl = LinearRegression()
+mdl.fit(data[[&quot;Girth&quot;]], data[[&quot;Height&quot;]])</code></pre>
+<pre><code>## LinearRegression()</code></pre>
+<pre class="python"><code>print(mdl.coef_)</code></pre>
+<pre><code>## [[1.05436881]]</code></pre>
+<p>Data is transitioned from <code>Python</code> to, <code>R</code> similarly with the variable <code>py</code>. Information on models can be passed but not the models themselves. This is important if you are more comfortable creating models in <code>Python</code>.</p>
+<pre class="r"><code>print(py$means)</code></pre>
+<pre><code>##    Girth   Height   Volume 
+## 13.24839 76.00000 30.17097</code></pre>
+<pre class="r"><code>print(py$mdl$intercept_)</code></pre>
+<pre><code>## [1] 62.03131</code></pre>
+<pre class="r"><code>py$data %&gt;%
+        ggplot(aes(x = Girth, y = Height, colour = big)) +
+        geom_point()</code></pre>
+<p><img src="https://datasandbox.netlify.app/post/2022-03-03-python-in-r-markdown/index.en_files/figure-html/return-3.png" width="672" /></p>
+</div>
+</div>
+            <aside id="meta">
+                
+                <hr class="py-2">
+                <div id="categories">
+                    <span class="icon-folder text-xl mr-1"></span>
+                    
+                    <span
+                        class="inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-200 justify-center h-8 px-3 text-blue-500 duration-200 hover:text-black dark:bg-warmgray-800"><a
+                            href="https://datasandbox.netlify.app/categories/how-to">How-to</a></span>
+                    
+                </div>
+                
+            </aside>
+            </div>
+        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
+            <div class="grid grid-cols-2">
+                <div class="col-span-1">
+                    
+                    <a class="previous lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-02-27-bike-shares-in-toronto/">
+                        <div
+                            class="transition-colors duration-300 border border-gray-600 hover:border-black h-auto m-3 text-center py-3 lg:py-1">
+                            <span class="icon-keyboard_arrow_left"></span> Bike shares in Toronto
+                        </div>
+                    </a>
+                    
+                </div>
+                
+                <a class="next lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/">
+                    <div
+                        class="transition-colors duration-300 col-span-1 border border-gray-600 hover:border-black h-auto m-3 text-center py-3 lg:py-1">
+                        Creating Dashboards in R <span class="icon-keyboard_arrow_right"></span>
+                    </div>
+                </a>
+                
+            </div>
+        </div>
+        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
+            <div class="mb-3">
+                <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "data-sandbox" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="hidden lg:block lg:col-span-1">
+        <div class="mb-3">
+    <form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+        <label>
+            <input class="w-full p-3 focus:outline-none dark:bg-warmgray-900 dark:text-white placeholder-gray-700 dark:placeholder-gray-300" type="search"
+                placeholder="Search..." value="" name="q" aria-label="Search">
+        </label>
+        <input class="hidden" type="submit" value="Search">
+        <input type="hidden" name="sitesearch" value="https://datasandbox.netlify.app/" />
+    </form>
+</div>
+        <div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-3 px-3 dark:text-gray-300">Archives</p>
+    
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/01">2022/01 (2)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/02">2022/02 (5)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/03">2022/03 (5)</a>
+    
+    
+</div>
+        
+<div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Categories</p>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/general">General</a>
+
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/how-to">How to</a>
+
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/project">Project</a>
+
+    
+</div>
+
+        
+<div class="bg-white panel mb-3 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-3 pl-3 dark:text-gray-300">Tags</p>
+    <div class="panel-block p-2">
+        <a href="/tags/ggplot">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                ggplot
+            </span></a>
+        <a href="/tags/leaflet">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                leaflet
+            </span></a>
+        <a href="/tags/ml">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                ml
+            </span></a>
+        <a href="/tags/nn">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                nn
+            </span></a>
+        <a href="/tags/python">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                python
+            </span></a>
+        <a href="/tags/r">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                r
+            </span></a>
+        <a href="/tags/rmarkdown">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                rmarkdown
+            </span></a>
+        <a href="/tags/shiny-app">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                shiny-app
+            </span></a>
+    </div>
+</div>
+
+        
+
+<div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Recent Posts</p>
+    <div class="mx-6">
+        
+        <a href="/post/2022-03-18-making-the-connection-with-crosstalk/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Making the Connection with Crosstalk</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/03/18</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-03-20-simple-neural-networks-in-python/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Simple Neural Networks in Python</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/03/20</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-02-11-fancy-tables-in-r/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Fancy Tables in R</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/02/11</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-02-23-new-features-in-r/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">New features in R</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/02/23</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-03-31-underrated-cran-packages/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Underrated CRAN Packages</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/03/31</time>
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+    </div>
+    
+</div>
+
+            </div>
+        </div><footer class="bg-gray-800 text-white p-6">
+    
+    <div class="container max-w-screen-xl mr-auto ml-auto">
+        <p>&copy; 2022 <a href="https://datasandbox.netlify.app/" class="duration-200 hover:opacity-50">The Data Sandbox</a></p>
+        <p>Powered by <a href="https://gohugo.io/" class="duration-200 hover:opacity-50">Hugo</a>, Theme <a
+                href="https://github.com/opera7133/Blonde" class="duration-200 hover:opacity-50">Blonde</a>.</p>
+    </div>
+    <script>
+        var icon = document.getElementById("icon");
+        var icon2 = document.getElementById("icon2");
+        
+        if (document.documentElement.classList.contains("dark") || localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          icon.classList.remove("icon-moon");
+          icon.classList.add("icon-sun");
+          icon2.classList.remove("icon-moon");
+          icon2.classList.add("icon-sun");
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }
+        function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+            icon.classList.remove("icon-sun");
+            icon.classList.add("icon-moon");
+            icon2.classList.remove("icon-sun");
+            icon2.classList.add("icon-moon");
+            document.documentElement.classList.remove('dark')
+            localStorage.theme = 'light'
+        } else {
+            icon.classList.remove("icon-moon");
+            icon.classList.add("icon-sun");
+            icon2.classList.remove("icon-moon");
+            icon2.classList.add("icon-sun");
+            document.documentElement.classList.add('dark')
+            localStorage.theme = 'dark'
+        }
+    }
+    </script>
+</footer>
+</div>
+</body>
+
+</html>

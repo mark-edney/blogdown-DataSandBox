@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>General on The Data Sandbox</title>
+    <link>https://datasandbox.netlify.app/categories/general/</link>
+    <description>Recent content in General on The Data Sandbox</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 23 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/categories/general/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>New features in R</title>
+      <link>https://datasandbox.netlify.app/post/2022-02-23-new-features-in-r/</link>
+      <pubDate>Wed, 23 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-02-23-new-features-in-r/</guid>
+      <description>Photo by Clint Patterson on Unsplash
+Recently I had updated my RStudio client and with it came a new update to R. This is an exploration of some of the most interesting changes from R 4.0 to R 4.1.
+Native Pipe FunctionDue to the extreme popularity of the magrittr pipe (‘%&amp;gt;%’), R has developed its own native pipe (‘|&amp;gt;’).
+library(tidyverse)data(&amp;quot;morley&amp;quot;)morley |&amp;gt;group_by(Expt) |&amp;gt;summarise(mean = mean(Speed, na.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -4,16 +4,18 @@
 <head>
 
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-E43VRHY9MD"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VNSWDG9ZWF"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-E43VRHY9MD');
+  gtag('config', 'G-VNSWDG9ZWF');
 </script>
 
-<title>The Data Sandbox | Fitness Tracker Modeling: ML</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4108863678822570"
+     crossorigin="anonymous"></script>
+    <title>The Data Sandbox | Fitness Tracker Modeling: ML</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <link rel="apple-touch-icon" sizes="180x180" href='/favicon/apple-touch-icon.png'>
@@ -61,7 +63,7 @@
 
     
     <link rel="stylesheet" href='/css/custom.css'>
-    <i class="dark hidden"></i>
+            <i class="dark hidden"></i>
 </head><body class="font-sans">
     <div class="min-h-screen flex flex-col bg-gray-100 dark:bg-warmgray-800"><div class="bg-gray-800">
     <div class="container max-w-screen-xl mr-auto ml-auto">
@@ -124,7 +126,9 @@
         mobileMenu.classList.toggle('active');
     });
 </script>
-<div class="container max-w-screen-xl mx-auto mt-4 flex-grow px-5 lg:px-0" id="content">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4108863678822570"
+     crossorigin="anonymous"></script><div class="container max-w-screen-xl mx-auto mt-4 flex-grow px-5 lg:px-0" id="content">
             <div class="lg:mx-5">
 <div class="grid grid-cols-3 gap-4">
     
@@ -167,16 +171,14 @@
 <h1>Executive Summary</h1>
 <p>This report analyzes collected data on different users preforming barbell lifts
 performed at different levels of quality. A machine learning algorithm was used
-to create a model to determine the users rating based on data collected from multiple
+to create a model to determine the user’s rating based on data collected from multiple
 accelerometers. More information on the project can be found <a href="http://web.archive.org/web/20161224072740/http:/groupware.les.inf.puc-rio.br/har">here</a>.</p>
 </div>
 <div id="analysis" class="section level1">
 <h1>Analysis</h1>
 <div id="initialization" class="section level2">
 <h2>Initialization</h2>
-<p>The following code was used to initialize the required r libraries as well as downloading
-the required data and store it into memory. There are some of the columns off the
-data that were not required for modeling which were excluded (ex. user names).</p>
+<p>The following code was used to initialize the required R libraries, as well as downloading the required data and store it into memory. There are some columns of the data that were not required for modelling which were excluded (ex. usernames).</p>
 <pre class="r"><code>library(caret)
 library(gbm)
 library(dplyr)
@@ -193,15 +195,11 @@ test &lt;- read.csv2(&quot;testing.csv&quot;, sep = &quot;,&quot;)[,-c(1:7)]</co
 <div id="reducing-predictors" class="section level2">
 <h2>Reducing predictors</h2>
 <p>The data contains way too many predictors (153 in total) to produce accurate and simple models.
-Some trimming is required. The first trim is performed with the near zero variance function
-from the caret library which finds the predictors that exhibit near zero variation.
-These predictors would add little benefit to include in models.</p>
+Some trimming is required. The first trim is performed with the near zero variance function from the caret library, which finds the predictors that exhibit near zero variation. These predictors would add little benefit to include in models.</p>
 <pre class="r"><code>nz &lt;- nearZeroVar(train)
 train &lt;- train[,-nz]
 test &lt;- test[-nz]</code></pre>
-<p>From this step, the number of predictors is reduced to 94. There remains
-a large number of NA values in the data. These values are examined in the next chunk
-of code.</p>
+<p>From this step, the number of predictors is reduced to 94. There remains numerous NA values in the data. These values are examined in the next chunk of code.</p>
 <pre class="r"><code>maxi &lt;- length(train) - 1
 valna &lt;- 1:maxi
 
@@ -217,20 +215,17 @@ table(valna)</code></pre>
 ##                52                41</code></pre>
 <p>The code shows that there are 52 predictors that have no missing
 data and 41 predictors that are mostly missing values.
-These predictors would add little value to the modeling and are removed with the
+These predictors would add little value to the modelling and are removed with the
 following code</p>
 <pre class="r"><code>train &lt;- train[, valna == 0]
 test &lt;- test[, valna == 0]</code></pre>
-<p>The training was then divided to create a valdiation set which will be used for
+<p>The training was then divided to create a validation set which will be used for
 cross validation. Note that the random forest algorithm has built in cross validation
 with the “out of bag error”. About 1/3 of the data is used in a random forest.</p>
 <pre class="r"><code>Valid &lt;- createDataPartition(train$classe, p = 0.3)[[1]]
 valid &lt;- train[Valid,]
 train &lt;- train[-Valid,]</code></pre>
-<p>The next step is to utilize the variable of importance function in the caret library
-to reduce the number of predictors even further. The train data is still very large
-but by making a sample set from the training data and modeling from that we can get a
-reasonable approximation of the variables of importance.</p>
+<p>The next step is to utilize the variable of importance function in the caret library to reduce the number of predictors even further. The train data is still very large, but by making a sample set from the training data and modelling from that we can get a reasonable approximation of the variables of importance.</p>
 <pre class="r"><code>strain &lt;- rbind(sample_n(train[train$classe == &quot;A&quot;,],round(mean(train$classe == &quot;A&quot;)*200,0)),
                 sample_n(train[train$classe == &quot;B&quot;,],round(mean(train$classe == &quot;B&quot;)*200,0)),
                 sample_n(train[train$classe == &quot;C&quot;,],round(mean(train$classe == &quot;C&quot;)*200,0)),
@@ -251,8 +246,8 @@ reduced to 4.</p>
 train &lt;- train[,var]
 test &lt;- test[,var]</code></pre>
 </div>
-<div id="modeling" class="section level2">
-<h2>Modeling</h2>
+<div id="modelling" class="section level2">
+<h2>Modelling</h2>
 <p>With the reduced predictors, the models can now be trained. Since these model will look
 at the entire training data set, it will require a lot of time. The models include:<br />
 - Random forest<br />
@@ -260,7 +255,7 @@ at the entire training data set, it will require a lot of time. The models inclu
 - Linear Discriminant<br />
 - Combined<br />
 The randomForest function is used as it is more efficient than the train function.
-The data method is also more efficient then using the formula method.</p>
+The data method is also more efficient than using the formula method.</p>
 <pre class="r"><code>mdl11 &lt;- randomForest(x = train[,1:(ncol(train) - 1)], y = as.factor(train[,ncol(train)]), ntree = Ntree, proximity = TRUE)
 mdl21 &lt;- train(classe~., data = train, method = &quot;gbm&quot;, verbose = FALSE)
 mdl31 &lt;- train(classe~., data = train, method = &quot;lda&quot;)</code></pre>
@@ -274,7 +269,7 @@ jmdl &lt;- randomForest(x = join[,1:3], y = as.factor(join$classe), ntree = Ntre
 <div id="model-evaluation" class="section level2">
 <h2>Model Evaluation</h2>
 <p>The new models will need to be examined against the validation data set. The out of
-bag error for the random forest models were not used as the validation data provides
+bag error for the random forest models were not used, as the validation data provides
 a uniform comparison for all models. The following function was used to test the models:</p>
 <pre class="r"><code>Exacc &lt;- function(mdl, test){
         mean(predict(mdl,test) == test$classe)
@@ -290,25 +285,16 @@ to predict the results in the validation set:</p>
 </div>
 <div id="conclusion" class="section level1">
 <h1>Conclusion</h1>
-<p>From the results from the model testing, it is clear that the random forest and the
-combined are the most accurate models for the validation set. The combined model
-has approxiametly the same level of accuracy as the random forest meaning it is the most heavily
-weighted model. It also means that the inclusion of the boosted and linear discriminant
-models do not contribute to its accuracy. For simplification, the random forest
-model is the best model.</p>
+<p>From the results from the model testing, it is clear that the random forest and the combined are the most accurate models for the validation set. The combined model has approximately the same level of accuracy as the random forest, meaning it is the most heavily weighted model. It also means that the inclusion of the boosted and linear discriminant models do not contribute to its accuracy. For simplification, the random forest model is the best model.</p>
 </div>
 <div id="plot" class="section level1">
 <h1>Plot</h1>
-<p>The centers of the model can be found from the proximity data. The proximity data
-is compared to two predictors, the most important predictors. The two most important
-predictors would sometimes vary so the code was changed to be flexible to it.</p>
+<p>The centres of the model can be found from the proximity data. The proximity data is compared to two predictors, the most important predictors. The two most significant predictors would sometimes vary, so the code was changed to be flexible to it.</p>
 <pre class="r"><code>index &lt;- names(train) %in% Varimp
 mdlp &lt;- classCenter(train[index], train$classe, mdl11$proximity)
 mdlp &lt;- as.data.frame(mdlp)
 mdlp$classe &lt;- rownames(mdlp)</code></pre>
-<p>This centers data can be included with the training data. There are distinctly different
-regions based off of the different classe values but the other predictors also contribute to
-model accuracy.</p>
+<p>This centre data can be included with the training data. There are distinctly different regions based off of the different classe values, but the other predictors also contribute to model accuracy.</p>
 <pre class="r"><code>index &lt;- names(train) %in% Varimp
 names &lt;- names(train[index])
 
@@ -343,6 +329,13 @@ f(names[1], names[2])</code></pre>
                 <div class="col-span-1">
                     
                 </div>
+                
+                <a class="next lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-01-30-job-posting-analysis/">
+                    <div
+                        class="transition-colors duration-300 col-span-1 border border-gray-600 hover:border-black h-auto m-3 text-center py-3 lg:py-1">
+                        Job posting analysis <span class="icon-keyboard_arrow_right"></span>
+                    </div>
+                </a>
                 
             </div>
         </div>
@@ -388,13 +381,27 @@ f(names[1], names[2])</code></pre>
     
     
     <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
-        href="https://datasandbox.netlify.app//archives/2022/01">2022/01 (1)</a>
+        href="https://datasandbox.netlify.app//archives/2022/01">2022/01 (2)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/02">2022/02 (5)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/03">2022/03 (5)</a>
     
     
 </div>
         
 <div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
     <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Categories</p>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/general">General</a>
+
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/how-to">How to</a>
+
     
     <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
         href="https://datasandbox.netlify.app//categories/project">Project</a>
@@ -411,15 +418,40 @@ f(names[1], names[2])</code></pre>
                 class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
                 ggplot
             </span></a>
+        <a href="/tags/leaflet">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                leaflet
+            </span></a>
         <a href="/tags/ml">
             <span
                 class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
                 ml
             </span></a>
+        <a href="/tags/nn">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                nn
+            </span></a>
+        <a href="/tags/python">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                python
+            </span></a>
         <a href="/tags/r">
             <span
                 class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
                 r
+            </span></a>
+        <a href="/tags/rmarkdown">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                rmarkdown
+            </span></a>
+        <a href="/tags/shiny-app">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                shiny-app
             </span></a>
     </div>
 </div>
@@ -430,12 +462,48 @@ f(names[1], names[2])</code></pre>
     <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Recent Posts</p>
     <div class="mx-6">
         
+        <a href="/post/2022-02-16-/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Speed cameras in Toronto</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/02/16</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-02-08-professional-tables/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Professional Tables with Stargazer</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/02/08</time>
+                    </p>
+                </div>
+            </div>
         <a href="/post/2022-01-29-fitness-tracker-modeling-ml/" class="">
             <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
                 <div class="px-2">
                     <div class="text-gray-900 font-bold text-xl dark:text-white">Fitness Tracker Modeling: ML</div>
                     <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
                         <time><span class="icon-access_time mr-1"></span>2022/01/29</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-02-27-bike-shares-in-toronto/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Bike shares in Toronto</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/02/27</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-03-10-creating-dashboard-in-r/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Creating Dashboards in R</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/03/10</time>
                     </p>
                 </div>
             </div>

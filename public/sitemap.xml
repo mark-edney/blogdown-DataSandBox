@@ -3,33 +3,87 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://datasandbox.netlify.app/</loc>
-    <lastmod>2022-01-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://datasandbox.netlify.app/about/</loc>
-    <lastmod>2022-01-29T00:00:00+00:00</lastmod>
+    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/categories/</loc>
+    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/</loc>
+    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/categories/project/</loc>
+    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/tags/r/</loc>
+    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/tags/</loc>
+    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/</loc>
+    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/categories/how-to/</loc>
+    <lastmod>2022-03-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/tags/nn/</loc>
+    <lastmod>2022-03-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/tags/python/</loc>
+    <lastmod>2022-03-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/</loc>
+    <lastmod>2022-03-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/tags/ggplot/</loc>
+    <lastmod>2022-03-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/tags/leaflet/</loc>
+    <lastmod>2022-03-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/</loc>
+    <lastmod>2022-03-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/tags/rmarkdown/</loc>
+    <lastmod>2022-03-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/tags/shiny-app/</loc>
+    <lastmod>2022-03-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/</loc>
+    <lastmod>2022-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-03-03-python-in-r-markdown/</loc>
+    <lastmod>2022-03-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-02-27-bike-shares-in-toronto/</loc>
+    <lastmod>2022-02-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/categories/general/</loc>
+    <lastmod>2022-02-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-02-23-new-features-in-r/</loc>
+    <lastmod>2022-02-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-02-16-/</loc>
+    <lastmod>2022-02-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-02-11-fancy-tables-in-r/</loc>
+    <lastmod>2022-02-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-02-08-professional-tables/</loc>
+    <lastmod>2022-02-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-01-30-job-posting-analysis/</loc>
+    <lastmod>2022-02-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/about/</loc>
     <lastmod>2022-01-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/</loc>
     <lastmod>2022-01-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://datasandbox.netlify.app/tags/ggplot/</loc>
-    <lastmod>2022-01-29T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://datasandbox.netlify.app/tags/ml/</loc>
-    <lastmod>2022-01-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://datasandbox.netlify.app/post/</loc>
-    <lastmod>2022-01-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://datasandbox.netlify.app/categories/project/</loc>
-    <lastmod>2022-01-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://datasandbox.netlify.app/tags/r/</loc>
-    <lastmod>2022-01-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://datasandbox.netlify.app/tags/</loc>
     <lastmod>2022-01-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/contact/</loc>
@@ -39,6 +93,10 @@
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/archives/2022/01/</loc>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/archives/2022/02/</loc>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/archives/2022/03/</loc>
   </url><url>
     <loc>https://datasandbox.netlify.app/archives/</loc>
   </url>

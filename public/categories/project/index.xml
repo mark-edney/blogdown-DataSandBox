@@ -6,7 +6,51 @@
     <description>Recent content in Project on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 29 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/categories/project/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 31 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/categories/project/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Underrated CRAN Packages</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/</link>
+      <pubDate>Thu, 31 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/</guid>
+      <description>I sit here looking for inspiration, nothing interesting to write about. Perhaps there are some popular R packages on CRAN that I don’t know about? You can explore the data on downloads from CRAN with the cranlogs package.
+Top CRAN downloadsWith the following code we can get the most popular packages from CRAN. The CRAN directory doesn’t represent all R packages but a good amount of them.</description>
+    </item>
+    
+    <item>
+      <title>Bike shares in Toronto</title>
+      <link>https://datasandbox.netlify.app/post/2022-02-27-bike-shares-in-toronto/</link>
+      <pubDate>Sun, 27 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-02-27-bike-shares-in-toronto/</guid>
+      <description>Photo by Maarten van den Heuvel on Unsplash
+This article is based on a project written on 01/14/2021
+Bike Rental Shiny AppThis application use the data collected from the Toronto Open Data to generate a histogram of the usage of rental bikes in Toronto during the month of June in 2020.
+install.packages(&amp;quot;opendatatoronto&amp;quot;, repos = &amp;quot;http://cran.us.r-project.org&amp;quot;,dependencies = TRUE)library(opendatatoronto)library(tidyverse)library(lubridate)library(shiny)UIThere are two user inputs on the UI side:</description>
+    </item>
+    
+    <item>
+      <title>Speed cameras in Toronto</title>
+      <link>https://datasandbox.netlify.app/post/2022-02-16-/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-02-16-/</guid>
+      <description>Photo by Sepideh Golchin Rad on Unsplash
+This project was originally written on 02/01/2021 as part of the Data Productscourse for the Data Science Specialization from Johns Hopkins University on Coursera
+ObjectiveThis report plots the speed cameras in the Greater Toronto Area from the data providedby Open Toronto which can be found here.
+InializationThe following code is used to initialize the required libraries.</description>
+    </item>
+    
+    <item>
+      <title>Job posting analysis</title>
+      <link>https://datasandbox.netlify.app/post/2022-01-30-job-posting-analysis/</link>
+      <pubDate>Sun, 06 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-01-30-job-posting-analysis/</guid>
+      <description>Recently, there was a post on medium about the use of Natural Language Processing (NLP)to study a job posting for keywords. I found that this article was very similar toR shiny App that I created a while ago. 1
+IntroductionTechnology has changed the job application process, making it easier and quicker toapply to jobs. As a result, the average job posting will receive around 250 resumes.</description>
+    </item>
+    
     <item>
       <title>Fitness Tracker Modeling: ML</title>
       <link>https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/</link>
@@ -14,8 +58,8 @@
       
       <guid>https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/</guid>
       <description>The original paper was written on 12/18/2020
-Executive SummaryThis report analyzes collected data on different users preforming barbell liftsperformed at different levels of quality. A machine learning algorithm was usedto create a model to determine the users rating based on data collected from multipleaccelerometers. More information on the project can be found here.
-AnalysisInitializationThe following code was used to initialize the required r libraries as well as downloadingthe required data and store it into memory.</description>
+Executive SummaryThis report analyzes collected data on different users preforming barbell liftsperformed at different levels of quality. A machine learning algorithm was usedto create a model to determine the user’s rating based on data collected from multipleaccelerometers. More information on the project can be found here.
+AnalysisInitializationThe following code was used to initialize the required R libraries, as well as downloading the required data and store it into memory.</description>
     </item>
     
   </channel>

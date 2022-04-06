@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Leaflet on The Data Sandbox</title>
+    <link>https://datasandbox.netlify.app/tags/leaflet/</link>
+    <description>Recent content in Leaflet on The Data Sandbox</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/tags/leaflet/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Making the Connection with Crosstalk</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/</link>
+      <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/</guid>
+      <description>I recently wrote a post about creating dashboards in R which was based on the Flexdashboard library. My largest criticism was the lack of communication between visualizations on the same dashboard. This was before I learned about the Crosstalk package which adds this feature to html widgets, such as the Flexdashboard, to at least a limited degree.
+InitializationThe Crosstalk package is available on CRAN and is loaded along with other important packages for this demonstration.</description>
+    </item>
+    
+    <item>
+      <title>Creating Dashboards in R</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/</link>
+      <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/</guid>
+      <description>Dashboards are a great way to demonstrate knowledge and engage decision makers. Their utility has made PowerBI andTableau household names. And while these solutions do support R and Python scripts and visualizations, the Flexdashboard package seeks to compete. The Flexdashboard packages does this all in R with the simplicity of writing a R Markdown file.
+Initial SetupThe setup is simple, you just need to download and load the Flexdashboard package.</description>
+    </item>
+    
+    <item>
+      <title>Speed cameras in Toronto</title>
+      <link>https://datasandbox.netlify.app/post/2022-02-16-/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-02-16-/</guid>
+      <description>Photo by Sepideh Golchin Rad on Unsplash
+This project was originally written on 02/01/2021 as part of the Data Productscourse for the Data Science Specialization from Johns Hopkins University on Coursera
+ObjectiveThis report plots the speed cameras in the Greater Toronto Area from the data providedby Open Toronto which can be found here.
+InializationThe following code is used to initialize the required libraries.</description>
+    </item>
+    
+  </channel>
+</rss>

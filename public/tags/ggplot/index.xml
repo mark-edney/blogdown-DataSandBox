@@ -6,7 +6,27 @@
     <description>Recent content in GGPlot on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 29 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/tags/ggplot/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/tags/ggplot/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Making the Connection with Crosstalk</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/</link>
+      <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/</guid>
+      <description>I recently wrote a post about creating dashboards in R which was based on the Flexdashboard library. My largest criticism was the lack of communication between visualizations on the same dashboard. This was before I learned about the Crosstalk package which adds this feature to html widgets, such as the Flexdashboard, to at least a limited degree.
+InitializationThe Crosstalk package is available on CRAN and is loaded along with other important packages for this demonstration.</description>
+    </item>
+    
+    <item>
+      <title>Creating Dashboards in R</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/</link>
+      <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/</guid>
+      <description>Dashboards are a great way to demonstrate knowledge and engage decision makers. Their utility has made PowerBI andTableau household names. And while these solutions do support R and Python scripts and visualizations, the Flexdashboard package seeks to compete. The Flexdashboard packages does this all in R with the simplicity of writing a R Markdown file.
+Initial SetupThe setup is simple, you just need to download and load the Flexdashboard package.</description>
+    </item>
+    
     <item>
       <title>Fitness Tracker Modeling: ML</title>
       <link>https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/</link>
@@ -14,8 +34,8 @@
       
       <guid>https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/</guid>
       <description>The original paper was written on 12/18/2020
-Executive SummaryThis report analyzes collected data on different users preforming barbell liftsperformed at different levels of quality. A machine learning algorithm was usedto create a model to determine the users rating based on data collected from multipleaccelerometers. More information on the project can be found here.
-AnalysisInitializationThe following code was used to initialize the required r libraries as well as downloadingthe required data and store it into memory.</description>
+Executive SummaryThis report analyzes collected data on different users preforming barbell liftsperformed at different levels of quality. A machine learning algorithm was usedto create a model to determine the user’s rating based on data collected from multipleaccelerometers. More information on the project can be found here.
+AnalysisInitializationThe following code was used to initialize the required R libraries, as well as downloading the required data and store it into memory.</description>
     </item>
     
   </channel>

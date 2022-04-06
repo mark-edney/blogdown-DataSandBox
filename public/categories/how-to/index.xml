@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>How-to on The Data Sandbox</title>
+    <link>https://datasandbox.netlify.app/categories/how-to/</link>
+    <description>Recent content in How-to on The Data Sandbox</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 20 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/categories/how-to/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Simple Neural Networks in Python</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/</link>
+      <pubDate>Sun, 20 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/</guid>
+      <description>Neural Networks (NN) have become incredibly popular due to their high level of accuracy. The creation of a NN can be complicated and have a high level of customization. I wanted to explore just the simplest NN that you could create. A framework as a workhorse for developing new NN.
+The SciKitlearn provides the easiest solution with the Multi-Layer Perceptron series of functions. It doesn’t provide a bunch of the more advanced features of TensorFlow, like GPU support, but that is not what I’m looking for.</description>
+    </item>
+    
+    <item>
+      <title>Making the Connection with Crosstalk</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/</link>
+      <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/</guid>
+      <description>I recently wrote a post about creating dashboards in R which was based on the Flexdashboard library. My largest criticism was the lack of communication between visualizations on the same dashboard. This was before I learned about the Crosstalk package which adds this feature to html widgets, such as the Flexdashboard, to at least a limited degree.
+InitializationThe Crosstalk package is available on CRAN and is loaded along with other important packages for this demonstration.</description>
+    </item>
+    
+    <item>
+      <title>Creating Dashboards in R</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/</link>
+      <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/</guid>
+      <description>Dashboards are a great way to demonstrate knowledge and engage decision makers. Their utility has made PowerBI andTableau household names. And while these solutions do support R and Python scripts and visualizations, the Flexdashboard package seeks to compete. The Flexdashboard packages does this all in R with the simplicity of writing a R Markdown file.
+Initial SetupThe setup is simple, you just need to download and load the Flexdashboard package.</description>
+    </item>
+    
+    <item>
+      <title>Python in R Markdown</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-03-python-in-r-markdown/</link>
+      <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-03-python-in-r-markdown/</guid>
+      <description>Photo by David Clode on Unsplash
+The main advantage of using the R Markdown format is the utility of running R code within the text. This is clearly more advantageous than just writing code in a Markdown file. RMarkdown is however limited to R code, unable to run Python scripts. The R library reticulate looks to add this capability.
+Initial SetupThe initial setup requires the installation of the reticulate library, after installation you shouldn’t need to call it, but I do in the preceding code.</description>
+    </item>
+    
+    <item>
+      <title>Fancy Tables in R</title>
+      <link>https://datasandbox.netlify.app/post/2022-02-11-fancy-tables-in-r/</link>
+      <pubDate>Fri, 11 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-02-11-fancy-tables-in-r/</guid>
+      <description>Photo by Juan Gomez on Unsplash
+IntroductionAs a continuation from my previous post exploring the use of the Stargazer library to create better looking tables, I thought I would look into the GT library. The GT library takes a different approach by creating an object class with the GT function. It is still able to create great looking tables in html or latex, but also adds support for RTF.</description>
+    </item>
+    
+    <item>
+      <title>Professional Tables with Stargazer</title>
+      <link>https://datasandbox.netlify.app/post/2022-02-08-professional-tables/</link>
+      <pubDate>Tue, 08 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-02-08-professional-tables/</guid>
+      <description>This post was inspired by the following youtube video.
+IntroductionTables from regression models or just plain data in R are poorly organized. The havelittle formatting and are unfit for publishing. This point is illustrated with theCO2 dataset. This dataset looks at the CO2 uptake of six different types of grass.
+data(co2)mdl &amp;lt;- lm(CO2$uptake ~ CO2$Plant)mdl## ## Call:## lm(formula = CO2$uptake ~ CO2$Plant)## ## Coefficients:## (Intercept) CO2$Plant.</description>
+    </item>
+    
+  </channel>
+</rss>
