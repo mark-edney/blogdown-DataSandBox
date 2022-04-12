@@ -1,10 +1,10 @@
 <head>
+
     {{- partial "analytics" . -}}
     {{- if .Site.Params.Analytics.Yandexmetrica.Enabled -}}
     {{ partial "metrica.html" . }}
     {{- end -}}
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4108863678822570"
-     crossorigin="anonymous"></script>
+
     <title>{{site.Title}}{{if not .IsHome}} | {{.Title}}{{end}}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />

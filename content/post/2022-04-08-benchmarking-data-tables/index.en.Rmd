@@ -1,0 +1,61 @@
+---
+title: Benchmarking Data Tables
+author: Mark Edney
+date: '2022-04-08'
+slug: []
+categories:
+  - How-to
+tags:
+  - R
+draft: yes
+description: ''
+archives:
+  - 2022/04
+---
+When I started learning R, I was heard vague tales of the use of Data tables. Really just whisperers of something to consider in the future after I've become more proficient. Well now is the time to learn what if anything I've been missing out on.
+
+## Introduction
+
+Data tables are a potenial replacement for the common dataframe. It  seeks to perform that same role but with improved performance. I would like to see the speed comparision between dataframes, data tables and tibbles. I will use the microbenchmark package to perfoprm the actuall benchmarking.
+
+```{r packages, warning=FALSE}
+library(tidyverse)
+library(data.table)
+library(microbenchmark)
+library(farff)
+```
+
+For the benchmark, I will use the 'credit-g' dataset which can be found on the [open ml](https://www.openml.org/search?type=data&status=active&id=31) website. I'm pretty sure the last openml dataset I used was a csv file but the seem to have moved to a ARFF format. I will need to use the `farff` package to load the data. 
+
+```{r load}
+df <- farff::readARFF('dataset_31_credit-g.arff')
+dt <- setDT(df)
+ti <- tibble(df)
+```
+
+## Syntax
+
+The syntax for data tables is a little be different
+
+> DT[i,j,by]
+
+In this manner, a at data table can be subset by i, to calculate j when grouped with a by. For this comparison, we will look at the performance of finding the average age of the credit holders grouped by the class or credit rating.
+
+Along with the special syntax, there are some common functions that add some additional simpilifcation.
+
+> .()
+The '.()' function can be used as a place holder for 'list()'. The list function is usefull for subsetti
+
+
+## Grouped Aggreagate
+
+```{r grouped}
+microbenchmark(df %>% 
+                                 group_by(class) %>%
+                       summarise(avg = mean(age)),
+               dt[,.(avg = mean(age)), by = class],
+               ti %>% 
+                       group_by(class) %>%
+                       summarise(avg = mean(age)))
+```
+
