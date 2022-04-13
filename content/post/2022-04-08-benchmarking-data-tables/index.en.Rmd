@@ -1,14 +1,14 @@
 ---
 title: Benchmarking Data Tables
 author: Mark Edney
-date: '2022-04-08'
+date: '2022-04-12'
 slug: []
 categories:
   - How-to
 tags:
   - R
 draft: yes
-description: ''
+description: 'A look into the claim performance of Data Tables in the R language.'
 archives:
   - 2022/04
 ---
@@ -16,9 +16,9 @@ When I started learning R, I was heard vague tales of the use of Data tables. Re
 
 ## Introduction
 
-Data tables are a potenial replacement for the common dataframe. It  seeks to perform that same role but with improved performance. I would like to see the speed comparision between dataframes, data tables and tibbles. I will use the microbenchmark package to perfoprm the actuall benchmarking.
+Data tables are a potential replacement for the common dataframe. It  seeks to perform that same role but with improved performance. I would like to see the speed comparison between data frames, data tables and tibbles. I will use the `microbenchmark` package to perform the actual benchmarking.
 
-```{r packages, warning=FALSE}
+```{r packages, warning=FALSE, message=FALSE}
 library(tidyverse)
 library(data.table)
 library(microbenchmark)
@@ -27,7 +27,7 @@ library(farff)
 
 For the benchmark, I will use the 'credit-g' dataset which can be found on the [open ml](https://www.openml.org/search?type=data&status=active&id=31) website. I'm pretty sure the last openml dataset I used was a csv file but the seem to have moved to a ARFF format. I will need to use the `farff` package to load the data. 
 
-```{r load}
+```{r load, message=FALSE}
 df <- farff::readARFF('dataset_31_credit-g.arff')
 dt <- setDT(df)
 ti <- tibble(df)
@@ -41,21 +41,45 @@ The syntax for data tables is a little be different
 
 In this manner, a at data table can be subset by i, to calculate j when grouped with a by. For this comparison, we will look at the performance of finding the average age of the credit holders grouped by the class or credit rating.
 
-Along with the special syntax, there are some common functions that add some additional simpilifcation.
+Along with the special syntax, there are some common functions that add some additional simplification.
 
 > .()
-The '.()' function can be used as a place holder for 'list()'. The list function is usefull for subsetti
+
+The '.()' function can be used as a place holder for 'list()'. The list function is usefull for subseting
 
 
-## Grouped Aggreagate
+## Grouped Aggregate
+
+Aggregating data in data tables is simple by using the j and by parameters in the syntax. Again multiple functions or even multiple groupings can be passed with the '.()' function 
 
 ```{r grouped}
-microbenchmark(df %>% 
+microbenchmark(Data_Frame = df %>% 
                                  group_by(class) %>%
                        summarise(avg = mean(age)),
-               dt[,.(avg = mean(age)), by = class],
-               ti %>% 
+               Data_Table = dt[,.(avg = mean(age)), by = class],
+               Tibble = ti %>% 
                        group_by(class) %>%
                        summarise(avg = mean(age)))
 ```
 
+## Taking counts
+
+Another function of interest is the '.N' function. This function will return the count of rows.
+
+```{r counts}
+microbenchmark(Data_Frame = df %>% 
+                                 filter(credit_amount > 5000, age <35) %>%
+                       nrow(),
+               Data_Table = dt[credit_amount > 5000 & age < 35, .N ,],
+               Tibble = ti %>% 
+                       filter(credit_amount > 5000, age <35) %>%
+                       nrow())
+```
+
+## Creating new columns
+
+```{r new_col}
+microbenchmark(Data_Frame = df$property <- paste(df$property_magnitude, df$housing),
+               Data_Table = dt[,property := paste(property_magnitude, housing)],
+               Tibble = ti$property <- paste(ti$property_magnitude, ti$housing))
+```

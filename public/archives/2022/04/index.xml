@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2022/04 on The Data Sandbox</title>
+    <link>https://datasandbox.netlify.app/archives/2022/04/</link>
+    <description>Recent content in 2022/04 on The Data Sandbox</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language><atom:link href="https://datasandbox.netlify.app/archives/2022/04/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>R-Bloggers site</title>
+      <link>https://datasandbox.netlify.app/post/2022-04-11-r-bloggers-site/</link>
+      <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-04-11-r-bloggers-site/</guid>
+      <description>I would like to take the time to mention the r-bloggers site. It is a vast collection of Blogs on everything that has to do will the R language. I would very much like to contribute to their work with this blog.
+Just to keep it interesting, I would like to recommend this specific post by The Jumping Rivers Blog about upcoming R conferences. I’ve attended a few digital R Conferences, hosted by R-Studio, and they are very rewarding experiences.</description>
+    </item>
+    
+  </channel>
+</rss>

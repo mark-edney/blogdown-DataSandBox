@@ -3,21 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://datasandbox.netlify.app/</loc>
-    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
+    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/categories/</loc>
-    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
+    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/categories/general/</loc>
+    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/post/</loc>
-    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://datasandbox.netlify.app/categories/project/</loc>
-    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
+    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/tags/r/</loc>
-    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
+    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-04-11-r-bloggers-site/</loc>
+    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/tags/</loc>
+    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/categories/project/</loc>
     <lastmod>2022-03-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/</loc>
@@ -59,9 +65,6 @@
     <loc>https://datasandbox.netlify.app/post/2022-02-27-bike-shares-in-toronto/</loc>
     <lastmod>2022-02-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://datasandbox.netlify.app/categories/general/</loc>
-    <lastmod>2022-02-23T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://datasandbox.netlify.app/post/2022-02-23-new-features-in-r/</loc>
     <lastmod>2022-02-23T00:00:00+00:00</lastmod>
   </url><url>
@@ -97,6 +100,8 @@
     <loc>https://datasandbox.netlify.app/archives/2022/02/</loc>
   </url><url>
     <loc>https://datasandbox.netlify.app/archives/2022/03/</loc>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/archives/2022/04/</loc>
   </url><url>
     <loc>https://datasandbox.netlify.app/archives/</loc>
   </url>

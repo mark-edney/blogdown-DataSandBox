@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Python on The Data Sandbox</title>
@@ -6,15 +5,139 @@
     <description>Recent content in Python on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 20 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 20 Mar 2022 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://datasandbox.netlify.app/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>Simple Neural Networks in Python</title>
       <link>https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/</link>
       <pubDate>Sun, 20 Mar 2022 00:00:00 +0000</pubDate>
       
       <guid>https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/</guid>
-      <description>Neural Networks (NN) have become incredibly popular due to their high level of accuracy. The creation of a NN can be complicated and have a high level of customization. I wanted to explore just the simplest NN that you could create. A framework as a workhorse for developing new NN.
-The SciKitlearn provides the easiest solution with the Multi-Layer Perceptron series of functions. It doesn’t provide a bunch of the more advanced features of TensorFlow, like GPU support, but that is not what I’m looking for.</description>
+      <description>
+&lt;script src=&#34;https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;Neural Networks (NN) have become incredibly popular due to their high level of accuracy. The creation of a NN can be complicated and have a high level of customization. I wanted to explore just the simplest NN that you could create. A framework as a workhorse for developing new NN.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;SciKitlearn&lt;/code&gt; provides the easiest solution with the Multi-Layer Perceptron series of functions. It doesn’t provide a bunch of the more advanced features of &lt;code&gt;TensorFlow&lt;/code&gt;, like GPU support, but that is not what I’m looking for.&lt;/p&gt;
+&lt;div id=&#34;initialization&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Initialization&lt;/h2&gt;
+&lt;p&gt;For the demonstration, I decided to use a data set on faults found in &lt;a href=&#34;https://www.openml.org/d/1504&#34;&gt;steel plates&lt;/a&gt; from the OpenML website. The data set includes 27 features with 7 binary predictors.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+
+df = pd.read_csv(&amp;#39;https://www.openml.org/data/get_csv/1592296/php9xWOpn&amp;#39;)
+
+predictors = [&amp;#39;V28&amp;#39;, &amp;#39;V29&amp;#39;, &amp;#39;V30&amp;#39;, &amp;#39;V31&amp;#39;, &amp;#39;V32&amp;#39;, &amp;#39;V33&amp;#39;, &amp;#39;Class&amp;#39;]
+df[&amp;#39;Class&amp;#39;] -= 1 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Since there are multiple binary predictors, I needed to create a single class variable to represent each class. The &lt;code&gt;Class&lt;/code&gt; variable doesn’t currently represent this, it represents all faults that don’t fit in the categories of &lt;code&gt;V28&lt;/code&gt; to &lt;code&gt;V33&lt;/code&gt;. The single variable class was created with the &lt;code&gt;np.argmax&lt;/code&gt; function which returns the index of the highest value between all the predictors.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;y = np.argmax(df[predictors].values, axis =1)
+X = df.drop(predictors, axis = 1)
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;modelling&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Modelling&lt;/h2&gt;
+&lt;p&gt;This is the most basic model that I would like to evaluate. I’ve used the &lt;code&gt;GridSearch&lt;/code&gt; function, so all combinations of parameters are tested. The only parameter I wanted to examine was the size of the hidden layers. Each hidden layer provided is a tuple, where each number represents the number of nodes in a singled layer. Multiple numbers represent additional layers.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;from sklearn.neural_network import MLPClassifier
+from sklearn.model_selection import GridSearchCV
+
+parameters = {&amp;#39;hidden_layer_sizes&amp;#39;:[(1),(100), (100,100), (100,100,100), 
+(100,100,100,100), 
+(100,100,100,100,100), 
+(100,100,100,100,100,100), 
+(100,100,100,100,100,100,100),
+(100,100,100,100,100,100,100,100),
+(100,100,100,100,100,100,100,100,100),
+(100,100,100,100,100,100,100,100,100,100)]}
+model = MLPClassifier(random_state = 1,max_iter = 10000, 
+solver = &amp;#39;adam&amp;#39;, learning_rate = &amp;#39;adaptive&amp;#39;)
+
+grid = GridSearchCV(estimator = model, param_grid = parameters)
+grid.fit(X_train, y_train)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## GridSearchCV(estimator=MLPClassifier(learning_rate=&amp;#39;adaptive&amp;#39;, max_iter=10000,
+##                                      random_state=1),
+##              param_grid={&amp;#39;hidden_layer_sizes&amp;#39;: [1, 100, (100, 100),
+##                                                 (100, 100, 100),
+##                                                 (100, 100, 100, 100),
+##                                                 (100, 100, 100, 100, 100),
+##                                                 (100, 100, 100, 100, 100, 100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100, 100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100, 100, 100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100, 100, 100, 100)]})&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(grid.best_score_)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 0.4213058419243986&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The performance of the best model in the grid is not impressive. It took me awhile to realize that I had forgotten to scale the features. I included this error to show the importance of scaling on model performance.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;feature-scaling&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Feature Scaling&lt;/h2&gt;
+&lt;p&gt;The features are simply scaled with the &lt;code&gt;StandardScaler&lt;/code&gt; function. The same model is used on the scaled features.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;from sklearn.preprocessing import StandardScaler
+
+sc = StandardScaler()
+scaler = sc.fit(X_train)
+X_train_sc = scaler.transform(X_train)
+X_test_sc = scaler.transform(X_test)
+
+parameters = {&amp;#39;hidden_layer_sizes&amp;#39;:[(1),(100), (100,100), (100,100,100), 
+(100,100,100,100), 
+(100,100,100,100,100), 
+(100,100,100,100,100,100), 
+(100,100,100,100,100,100,100),
+(100,100,100,100,100,100,100,100),
+(100,100,100,100,100,100,100,100,100),
+(100,100,100,100,100,100,100,100,100,100)]}
+model = MLPClassifier(random_state = 1,max_iter = 10000, 
+solver = &amp;#39;adam&amp;#39;, learning_rate = &amp;#39;adaptive&amp;#39;)
+
+grid = GridSearchCV(estimator = model, param_grid = parameters, cv=3)
+grid.fit(X_train_sc, y_train)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## GridSearchCV(cv=3,
+##              estimator=MLPClassifier(learning_rate=&amp;#39;adaptive&amp;#39;, max_iter=10000,
+##                                      random_state=1),
+##              param_grid={&amp;#39;hidden_layer_sizes&amp;#39;: [1, 100, (100, 100),
+##                                                 (100, 100, 100),
+##                                                 (100, 100, 100, 100),
+##                                                 (100, 100, 100, 100, 100),
+##                                                 (100, 100, 100, 100, 100, 100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100, 100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100, 100, 100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100, 100, 100, 100)]})&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;grid.best_score_&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 0.7553264604810996&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The performance of the scaled model is much more impressive. After the &lt;code&gt;GridSearch&lt;/code&gt; function finds the parameters for the best model, it retrains the model on the entire dataset. This is because the function utilize cross validation, so some data was withheld for comparing the different models on test data.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;With our model constructed, we can now test its performance on the original test set. It is important to remember to use the scaled test features, as that is what the model is expecting.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;grid.score(X_test_sc, y_test)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 0.7304526748971193&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The results are pretty satisfactory. A decent level of accuracy without a lot of complicated code. Default values were used, whenever they were appropriate. Additional steps could be taken, but this remains a good foundation for future exploratory analysis.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Photo by &lt;a href=&#34;https://unsplash.com/@alinnnaaaa?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Alina Grubnyak&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/s/photos/neural-networks?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>Python</category>
+      
+            <category>NN</category>
+      
+      
+            <category>How-to</category>
+      
     </item>
     
     <item>
@@ -23,9 +146,74 @@ The SciKitlearn provides the easiest solution with the Multi-Layer Perceptron se
       <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
       
       <guid>https://datasandbox.netlify.app/post/2022-03-03-python-in-r-markdown/</guid>
-      <description>Photo by David Clode on Unsplash
-The main advantage of using the R Markdown format is the utility of running R code within the text. This is clearly more advantageous than just writing code in a Markdown file. RMarkdown is however limited to R code, unable to run Python scripts. The R library reticulate looks to add this capability.
-Initial SetupThe initial setup requires the installation of the reticulate library, after installation you shouldn’t need to call it, but I do in the preceding code.</description>
+      <description>
+&lt;script src=&#34;https://datasandbox.netlify.app/post/2022-03-03-python-in-r-markdown/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;Photo by &lt;a href=&#34;https://unsplash.com/@davidclode?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;David Clode&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/s/photos/python?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The main advantage of using the R Markdown format is the utility of running R code within the text. This is clearly more advantageous than just writing code in a Markdown file. R
+Markdown is however limited to R code, unable to run Python scripts. The R library &lt;code&gt;reticulate&lt;/code&gt; looks to add this capability.&lt;/p&gt;
+&lt;div id=&#34;initial-setup&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Initial Setup&lt;/h2&gt;
+&lt;p&gt;The initial setup requires the installation of the &lt;code&gt;reticulate&lt;/code&gt; library, after installation you shouldn’t need to call it, but I do in the preceding code. I have loaded the &lt;code&gt;trees&lt;/code&gt; dataset as a test dataset and the tidyverse library just to explore the data a bit.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(reticulate)
+library(tidyverse)
+data(trees)
+glimpse(trees)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Rows: 31
+## Columns: 3
+## $ Girth  &amp;lt;dbl&amp;gt; 8.3, 8.6, 8.8, 10.5, 10.7, 10.8, 11.0, 11.0, 11.1, 11.2, 11.3, ~
+## $ Height &amp;lt;dbl&amp;gt; 70, 65, 63, 72, 81, 83, 66, 75, 80, 75, 79, 76, 76, 69, 75, 74,~
+## $ Volume &amp;lt;dbl&amp;gt; 10.3, 10.3, 10.2, 16.4, 18.8, 19.7, 15.6, 18.2, 22.6, 19.9, 24.~&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, R Studio will use your local version of Python when you write any code in a code chuck labelled with the “{Python}” header. If you don’t have any local version, R Studio will ask if you would like to install Miniconda. From here, you will need to start downloading the required Python modules.&lt;/p&gt;
+&lt;p&gt;Modules can be downloaded with the &lt;code&gt;pip&lt;/code&gt; python package installer from the terminal or command line. The easiest method in R Studio is within the terminal window next to the console window. The command used is &lt;code&gt;pip install &#34;module name&#34;&lt;/code&gt;. Some modules can be tricky and won’t work if not installed after other modules.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;multiple-environments&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Multiple Environments&lt;/h2&gt;
+&lt;p&gt;After the setup, you should see some additional options in the environment in R Studio. You should see that you have the option to switch between the R and Python environments.&lt;/p&gt;
+&lt;p&gt;Data is transitioned from the R environment to the Python environment with the &lt;code&gt;r&lt;/code&gt; variable. This method should pretty similar to the Shiny Apt’s use of &lt;code&gt;input\output&lt;/code&gt;. It is not only data that can move between environments, but functions too.&lt;/p&gt;
+&lt;p&gt;The following code takes data from the R environment and creates a plot in &lt;code&gt;Seaborn&lt;/code&gt;. The mean values of the columns are calculated in &lt;code&gt;python&lt;/code&gt; to be imported into the R environment. A simple linear model is created with the &lt;code&gt;SKlearn&lt;/code&gt; module.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;data = r.trees
+means = np.mean(data, axis = 0)
+data[&amp;quot;big&amp;quot;] = data.Height &amp;gt; means.Height 
+sns.scatterplot(data = data, x= &amp;quot;Girth&amp;quot;, y= &amp;quot;Height&amp;quot;, hue = &amp;quot;big&amp;quot;)
+sns.set_theme(color_codes=True)
+plt.show()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://datasandbox.netlify.app/post/2022-03-03-python-in-r-markdown/index.en_files/figure-html/enviroment-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;from sklearn.linear_model import LinearRegression
+mdl = LinearRegression()
+mdl.fit(data[[&amp;quot;Girth&amp;quot;]], data[[&amp;quot;Height&amp;quot;]])&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## LinearRegression()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(mdl.coef_)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [[1.05436881]]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Data is transitioned from &lt;code&gt;Python&lt;/code&gt; to, &lt;code&gt;R&lt;/code&gt; similarly with the variable &lt;code&gt;py&lt;/code&gt;. Information on models can be passed but not the models themselves. This is important if you are more comfortable creating models in &lt;code&gt;Python&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(py$means)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Girth   Height   Volume 
+## 13.24839 76.00000 30.17097&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(py$mdl$intercept_)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 62.03131&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py$data %&amp;gt;%
+        ggplot(aes(x = Girth, y = Height, colour = big)) +
+        geom_point()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://datasandbox.netlify.app/post/2022-03-03-python-in-r-markdown/index.en_files/figure-html/return-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>R</category>
+      
+            <category>Python</category>
+      
+            <category>Rmarkdown</category>
+      
+      
+            <category>How-to</category>
+      
     </item>
     
   </channel>

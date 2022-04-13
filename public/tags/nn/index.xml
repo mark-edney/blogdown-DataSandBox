@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>NN on The Data Sandbox</title>
@@ -6,15 +5,139 @@
     <description>Recent content in NN on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 20 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/tags/nn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 20 Mar 2022 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://datasandbox.netlify.app/tags/nn/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>Simple Neural Networks in Python</title>
       <link>https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/</link>
       <pubDate>Sun, 20 Mar 2022 00:00:00 +0000</pubDate>
       
       <guid>https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/</guid>
-      <description>Neural Networks (NN) have become incredibly popular due to their high level of accuracy. The creation of a NN can be complicated and have a high level of customization. I wanted to explore just the simplest NN that you could create. A framework as a workhorse for developing new NN.
-The SciKitlearn provides the easiest solution with the Multi-Layer Perceptron series of functions. It doesn’t provide a bunch of the more advanced features of TensorFlow, like GPU support, but that is not what I’m looking for.</description>
+      <description>
+&lt;script src=&#34;https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;Neural Networks (NN) have become incredibly popular due to their high level of accuracy. The creation of a NN can be complicated and have a high level of customization. I wanted to explore just the simplest NN that you could create. A framework as a workhorse for developing new NN.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;SciKitlearn&lt;/code&gt; provides the easiest solution with the Multi-Layer Perceptron series of functions. It doesn’t provide a bunch of the more advanced features of &lt;code&gt;TensorFlow&lt;/code&gt;, like GPU support, but that is not what I’m looking for.&lt;/p&gt;
+&lt;div id=&#34;initialization&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Initialization&lt;/h2&gt;
+&lt;p&gt;For the demonstration, I decided to use a data set on faults found in &lt;a href=&#34;https://www.openml.org/d/1504&#34;&gt;steel plates&lt;/a&gt; from the OpenML website. The data set includes 27 features with 7 binary predictors.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+
+df = pd.read_csv(&amp;#39;https://www.openml.org/data/get_csv/1592296/php9xWOpn&amp;#39;)
+
+predictors = [&amp;#39;V28&amp;#39;, &amp;#39;V29&amp;#39;, &amp;#39;V30&amp;#39;, &amp;#39;V31&amp;#39;, &amp;#39;V32&amp;#39;, &amp;#39;V33&amp;#39;, &amp;#39;Class&amp;#39;]
+df[&amp;#39;Class&amp;#39;] -= 1 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Since there are multiple binary predictors, I needed to create a single class variable to represent each class. The &lt;code&gt;Class&lt;/code&gt; variable doesn’t currently represent this, it represents all faults that don’t fit in the categories of &lt;code&gt;V28&lt;/code&gt; to &lt;code&gt;V33&lt;/code&gt;. The single variable class was created with the &lt;code&gt;np.argmax&lt;/code&gt; function which returns the index of the highest value between all the predictors.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;y = np.argmax(df[predictors].values, axis =1)
+X = df.drop(predictors, axis = 1)
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;modelling&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Modelling&lt;/h2&gt;
+&lt;p&gt;This is the most basic model that I would like to evaluate. I’ve used the &lt;code&gt;GridSearch&lt;/code&gt; function, so all combinations of parameters are tested. The only parameter I wanted to examine was the size of the hidden layers. Each hidden layer provided is a tuple, where each number represents the number of nodes in a singled layer. Multiple numbers represent additional layers.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;from sklearn.neural_network import MLPClassifier
+from sklearn.model_selection import GridSearchCV
+
+parameters = {&amp;#39;hidden_layer_sizes&amp;#39;:[(1),(100), (100,100), (100,100,100), 
+(100,100,100,100), 
+(100,100,100,100,100), 
+(100,100,100,100,100,100), 
+(100,100,100,100,100,100,100),
+(100,100,100,100,100,100,100,100),
+(100,100,100,100,100,100,100,100,100),
+(100,100,100,100,100,100,100,100,100,100)]}
+model = MLPClassifier(random_state = 1,max_iter = 10000, 
+solver = &amp;#39;adam&amp;#39;, learning_rate = &amp;#39;adaptive&amp;#39;)
+
+grid = GridSearchCV(estimator = model, param_grid = parameters)
+grid.fit(X_train, y_train)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## GridSearchCV(estimator=MLPClassifier(learning_rate=&amp;#39;adaptive&amp;#39;, max_iter=10000,
+##                                      random_state=1),
+##              param_grid={&amp;#39;hidden_layer_sizes&amp;#39;: [1, 100, (100, 100),
+##                                                 (100, 100, 100),
+##                                                 (100, 100, 100, 100),
+##                                                 (100, 100, 100, 100, 100),
+##                                                 (100, 100, 100, 100, 100, 100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100, 100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100, 100, 100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100, 100, 100, 100)]})&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(grid.best_score_)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 0.4213058419243986&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The performance of the best model in the grid is not impressive. It took me awhile to realize that I had forgotten to scale the features. I included this error to show the importance of scaling on model performance.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;feature-scaling&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Feature Scaling&lt;/h2&gt;
+&lt;p&gt;The features are simply scaled with the &lt;code&gt;StandardScaler&lt;/code&gt; function. The same model is used on the scaled features.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;from sklearn.preprocessing import StandardScaler
+
+sc = StandardScaler()
+scaler = sc.fit(X_train)
+X_train_sc = scaler.transform(X_train)
+X_test_sc = scaler.transform(X_test)
+
+parameters = {&amp;#39;hidden_layer_sizes&amp;#39;:[(1),(100), (100,100), (100,100,100), 
+(100,100,100,100), 
+(100,100,100,100,100), 
+(100,100,100,100,100,100), 
+(100,100,100,100,100,100,100),
+(100,100,100,100,100,100,100,100),
+(100,100,100,100,100,100,100,100,100),
+(100,100,100,100,100,100,100,100,100,100)]}
+model = MLPClassifier(random_state = 1,max_iter = 10000, 
+solver = &amp;#39;adam&amp;#39;, learning_rate = &amp;#39;adaptive&amp;#39;)
+
+grid = GridSearchCV(estimator = model, param_grid = parameters, cv=3)
+grid.fit(X_train_sc, y_train)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## GridSearchCV(cv=3,
+##              estimator=MLPClassifier(learning_rate=&amp;#39;adaptive&amp;#39;, max_iter=10000,
+##                                      random_state=1),
+##              param_grid={&amp;#39;hidden_layer_sizes&amp;#39;: [1, 100, (100, 100),
+##                                                 (100, 100, 100),
+##                                                 (100, 100, 100, 100),
+##                                                 (100, 100, 100, 100, 100),
+##                                                 (100, 100, 100, 100, 100, 100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100, 100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100, 100, 100),
+##                                                 (100, 100, 100, 100, 100, 100,
+##                                                  100, 100, 100, 100)]})&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;grid.best_score_&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 0.7553264604810996&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The performance of the scaled model is much more impressive. After the &lt;code&gt;GridSearch&lt;/code&gt; function finds the parameters for the best model, it retrains the model on the entire dataset. This is because the function utilize cross validation, so some data was withheld for comparing the different models on test data.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;With our model constructed, we can now test its performance on the original test set. It is important to remember to use the scaled test features, as that is what the model is expecting.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;grid.score(X_test_sc, y_test)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 0.7304526748971193&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The results are pretty satisfactory. A decent level of accuracy without a lot of complicated code. Default values were used, whenever they were appropriate. Additional steps could be taken, but this remains a good foundation for future exploratory analysis.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Photo by &lt;a href=&#34;https://unsplash.com/@alinnnaaaa?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Alina Grubnyak&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/s/photos/neural-networks?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>Python</category>
+      
+            <category>NN</category>
+      
+      
+            <category>How-to</category>
+      
     </item>
     
   </channel>

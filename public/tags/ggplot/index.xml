@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>GGPlot on The Data Sandbox</title>
@@ -6,15 +5,75 @@
     <description>Recent content in GGPlot on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/tags/ggplot/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://datasandbox.netlify.app/tags/ggplot/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>Making the Connection with Crosstalk</title>
       <link>https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/</link>
       <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
       
       <guid>https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/</guid>
-      <description>I recently wrote a post about creating dashboards in R which was based on the Flexdashboard library. My largest criticism was the lack of communication between visualizations on the same dashboard. This was before I learned about the Crosstalk package which adds this feature to html widgets, such as the Flexdashboard, to at least a limited degree.
-InitializationThe Crosstalk package is available on CRAN and is loaded along with other important packages for this demonstration.</description>
+      <description> 
+
+&lt;script src=&#34;https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;I recently wrote a post about &lt;a href=&#34;https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/&#34;&gt;creating dashboards in R&lt;/a&gt; which was based on the &lt;code&gt;Flexdashboard&lt;/code&gt; library. My largest criticism was the lack of communication between visualizations on the same dashboard. This was before I learned about the &lt;code&gt;Crosstalk&lt;/code&gt; package which adds this feature to html widgets, such as the Flexdashboard, to at least a limited degree.&lt;/p&gt;
+&lt;div id=&#34;initialization&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Initialization&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;Crosstalk&lt;/code&gt; package is available on CRAN and is loaded along with other important packages for this demonstration.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;install.packages(&amp;quot;crosstalk&amp;quot;)
+library(crosstalk)
+library(tidyverse)
+library(flexdashboard)
+library(plotly)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I have decided to use a Toronto Open dataset about city audits for apartment buildings. I limited the features to only the ones that I feel will be interesting to look at. More information about the data set can be found &lt;a href=&#34;https://open.toronto.ca/dataset/apartment-building-evaluation/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;download.file(&amp;quot;https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/4ef82789-e038-44ef-a478-a8f3590c3eb1/resource/979fb513-5186-41e9-bb23-7b5cc6b89915/download/Apartment%20Building%20Evaluation.csv&amp;quot;, &amp;quot;data.csv&amp;quot;)
+df &amp;lt;- read_csv(&amp;quot;data.csv&amp;quot;) %&amp;gt;%
+        select(lng = LONGITUDE, 
+               lat = LATITUDE, 
+               SCORE, 
+               YEAR_BUILT, 
+               SITE_ADDRESS, 
+               PROPERTY_TYPE) %&amp;gt;% 
+        slice_sample(n = 200)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The key to the &lt;code&gt;crosstalk&lt;/code&gt; library is the &lt;code&gt;SharedData&lt;/code&gt; functions. An object is created when a Data Frame is passed to the &lt;code&gt;SharedData$new&lt;/code&gt; function. This is what enables communication between plots.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;shared_df &amp;lt;- SharedData$new(df)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;dashboard-creation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Dashboard Creation&lt;/h2&gt;
+&lt;p&gt;The dashboard is created pretty much as previous mentioned in &lt;a href=&#34;https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/&#34;&gt;my dashboard post&lt;/a&gt;, with the exception that the shared Data Frame object is passed rather than the Data Frame.&lt;/p&gt;
+&lt;p&gt;The dashboard can include filters that are very similar to the Shiny Apt filters, with the &lt;code&gt;filter_*&lt;/code&gt; family of functions.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;filter_slider(&amp;quot;Score&amp;quot;, &amp;quot;SCORE&amp;quot;, shared_df, ~SCORE, round = TRUE)
+filter_checkbox(&amp;quot;Property Type&amp;quot;, &amp;quot;PROPERTY_TYPE&amp;quot;, shared_df, ~PROPERTY_TYPE, inline = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;Crosstalk&lt;/code&gt; package does add some significant connectivity to Flex Dashboards. It is relatively simple to use with some basic functions. It does have the issue of not working with aggregating data. The utility of finding the mean value of a selection is something &lt;code&gt;Tableu&lt;/code&gt; and &lt;code&gt;PowerBI&lt;/code&gt; are still superior at. I think that it is still a welcome improvement.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;final-dashboard&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Final Dashboard&lt;/h2&gt;
+&lt;p&gt;&lt;iframe title=&#34;Cross Talk Demo&#34; width=&#34;100%&#34; height=&#34;500&#34; src=&#34;demo1.html&#34;&gt;&lt;/iframe&gt;&lt;/p&gt;
+&lt;p&gt;Photo by &lt;a href=&#34;https://unsplash.com/@jasongoodman_youxventures?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Jason Goodman&lt;/a&gt;on &lt;a href=&#34;https://unsplash.com/s/photos/discussion?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>R</category>
+      
+            <category>Shiny App</category>
+      
+            <category>ggplot</category>
+      
+            <category>Rmarkdown</category>
+      
+            <category>Leaflet</category>
+      
+      
+            <category>How-to</category>
+      
     </item>
     
     <item>
@@ -23,8 +82,56 @@ InitializationThe Crosstalk package is available on CRAN and is loaded along wi
       <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate>
       
       <guid>https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/</guid>
-      <description>Dashboards are a great way to demonstrate knowledge and engage decision makers. Their utility has made PowerBI andTableau household names. And while these solutions do support R and Python scripts and visualizations, the Flexdashboard package seeks to compete. The Flexdashboard packages does this all in R with the simplicity of writing a R Markdown file.
-Initial SetupThe setup is simple, you just need to download and load the Flexdashboard package.</description>
+      <description>
+&lt;script src=&#34;https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;Dashboards are a great way to demonstrate knowledge and engage decision makers. Their utility has made PowerBI and
+Tableau household names. And while these solutions do support &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;Python&lt;/code&gt; scripts and visualizations, the &lt;code&gt;Flexdashboard&lt;/code&gt; package seeks to compete. The &lt;code&gt;Flexdashboard&lt;/code&gt; packages does this all in &lt;code&gt;R&lt;/code&gt; with the simplicity of writing a &lt;code&gt;R Markdown&lt;/code&gt; file.&lt;/p&gt;
+&lt;div id=&#34;initial-setup&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Initial Setup&lt;/h2&gt;
+&lt;p&gt;The setup is simple, you just need to download and load the &lt;code&gt;Flexdashboard&lt;/code&gt; package. With the package installed, the easiest way to start is by creating a new &lt;code&gt;R Markdown&lt;/code&gt; file using the &lt;code&gt;Flexdashboard&lt;/code&gt; template. Loading the &lt;code&gt;Shiny&lt;/code&gt; package is useful if you would like to use interactive plots, but it is not necessary.&lt;/p&gt;
+&lt;p&gt;The dashboard can be laid out by either columns or by rows, it doesn’t really make a difference. Just change the text of columns with rows in the following walk-through. A column is set up with “## Column” as the header. The size of the plot region can then be modified with “{data-width=”500”}” in the same header line. The next line should be the plot/area title, which is included with “### Plot Title” header. All that is left is to include a code chunk with your plot.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(flexdashboard)
+library(shiny)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sample-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sample Data&lt;/h2&gt;
+&lt;p&gt;I decided to demonstrate different dashboard features with a data set from &lt;code&gt;Open Canada&lt;/code&gt; about charitable donations. More information can be found &lt;a href=&#34;https://open.canada.ca/data/en/dataset/74c77af4-73c4-4e0d-ac5d-f74a247cdf12&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;download.file(&amp;quot;https://www150.statcan.gc.ca/n1/tbl/csv/45100007-eng.zip&amp;quot;, &amp;quot;donordata.zip&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sample-dashboard-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sample Dashboard 1&lt;/h2&gt;
+&lt;p&gt;The first dashboard was set up with the default columns layout. It includes an interactive bar chart, an interactive box plot and a pie chart. All the plot were created with &lt;code&gt;GGplot2&lt;/code&gt;, the two plot were made interactive with the &lt;code&gt;GGplotly&lt;/code&gt; function from the &lt;code&gt;Plotly&lt;/code&gt; package. I created a pie chart to demonstrate the use of regular ggplots and because I recently read a complaint about &lt;code&gt;GGplot2&lt;/code&gt; for the creation of Pie charts on Reddit. In my opinion, Pie charts are not very good very conveying information.&lt;/p&gt;
+&lt;p&gt;&lt;iframe title=&#34;Demo 1&#34; width=&#34;100%&#34; height=&#34;500&#34; src=&#34;demo1.html&#34;&gt;&lt;/iframe&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sample-dashboard-2&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sample Dashboard 2&lt;/h2&gt;
+&lt;p&gt;For the second dashboard, I used the row layout. The process is that same with no additional complications. The dashboard features an interactive Leaflet plot, an interactive histogram and data table using the &lt;code&gt;GT&lt;/code&gt; package. The table was transformed with Pivot_Wider function to better fill the space.&lt;/p&gt;
+&lt;p&gt;&lt;iframe title=&#34;Demo 2&#34; width=&#34;100%&#34; height=&#34;500&#34; src=&#34;demo2.html&#34;&gt;&lt;/iframe&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;Flexdashboard&lt;/code&gt; package can be used to create nice looking dashboards with a great level of control. The plots can also include interactive elements. When compared to PowerBi or Tableau, there remains one major deficiency. These other dashboards contain a smart interactive filter which ties all the plots together. If you select a specific element in one plot for filtering, all other plots have the same filter applied to them. This is a major boon for understanding data and not a simple feature to develop in &lt;code&gt;Flexdashboard&lt;/code&gt;. It remains an interesting package, but I would still rely on PowerBI or Tableau to create dashboards.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Photo by &lt;a href=&#34;https://unsplash.com/@lukechesser?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Luke Chesser&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/s/photos/dashboards?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>R</category>
+      
+            <category>Shiny App</category>
+      
+            <category>ggplot</category>
+      
+            <category>Rmarkdown</category>
+      
+            <category>Leaflet</category>
+      
+      
+            <category>How-to</category>
+      
     </item>
     
     <item>
@@ -33,9 +140,166 @@ Initial SetupThe setup is simple, you just need to download and load the Flexda
       <pubDate>Sat, 29 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/</guid>
-      <description>The original paper was written on 12/18/2020
-Executive SummaryThis report analyzes collected data on different users preforming barbell liftsperformed at different levels of quality. A machine learning algorithm was usedto create a model to determine the user’s rating based on data collected from multipleaccelerometers. More information on the project can be found here.
-AnalysisInitializationThe following code was used to initialize the required R libraries, as well as downloading the required data and store it into memory.</description>
+      <description>
+&lt;script src=&#34;https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;The original paper was written on 12/18/2020&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div id=&#34;executive-summary&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Executive Summary&lt;/h1&gt;
+&lt;p&gt;This report analyzes collected data on different users preforming barbell lifts
+performed at different levels of quality. A machine learning algorithm was used
+to create a model to determine the user’s rating based on data collected from multiple
+accelerometers. More information on the project can be found &lt;a href=&#34;http://web.archive.org/web/20161224072740/http:/groupware.les.inf.puc-rio.br/har&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;analysis&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Analysis&lt;/h1&gt;
+&lt;div id=&#34;initialization&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Initialization&lt;/h2&gt;
+&lt;p&gt;The following code was used to initialize the required R libraries, as well as downloading the required data and store it into memory. There are some columns of the data that were not required for modelling which were excluded (ex. usernames).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(caret)
+library(gbm)
+library(dplyr)
+library(randomForest)
+library(ggplot2)
+set.seed(90210)
+Ntree &amp;lt;- 200
+
+download.file(&amp;quot;https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv&amp;quot;, &amp;quot;training.csv&amp;quot;)
+download.file(&amp;quot;https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv&amp;quot;, &amp;quot;testing.csv&amp;quot;)
+train &amp;lt;- read.csv2(&amp;quot;training.csv&amp;quot;, sep = &amp;quot;,&amp;quot;)[,-c(1:7)]
+test &amp;lt;- read.csv2(&amp;quot;testing.csv&amp;quot;, sep = &amp;quot;,&amp;quot;)[,-c(1:7)]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;reducing-predictors&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Reducing predictors&lt;/h2&gt;
+&lt;p&gt;The data contains way too many predictors (153 in total) to produce accurate and simple models.
+Some trimming is required. The first trim is performed with the near zero variance function from the caret library, which finds the predictors that exhibit near zero variation. These predictors would add little benefit to include in models.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;nz &amp;lt;- nearZeroVar(train)
+train &amp;lt;- train[,-nz]
+test &amp;lt;- test[-nz]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From this step, the number of predictors is reduced to 94. There remains numerous NA values in the data. These values are examined in the next chunk of code.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;maxi &amp;lt;- length(train) - 1
+valna &amp;lt;- 1:maxi
+
+for (i in 1:maxi) {
+        train[,i] &amp;lt;- as.numeric(train[,i])
+        test[,i] &amp;lt;- as.numeric(test[,i])
+        valna[i] &amp;lt;- mean(is.na(train[,i]))
+}
+
+table(valna)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## valna
+##                 0 0.979308938946081 
+##                52                41&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The code shows that there are 52 predictors that have no missing
+data and 41 predictors that are mostly missing values.
+These predictors would add little value to the modelling and are removed with the
+following code&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;train &amp;lt;- train[, valna == 0]
+test &amp;lt;- test[, valna == 0]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The training was then divided to create a validation set which will be used for
+cross validation. Note that the random forest algorithm has built in cross validation
+with the “out of bag error”. About 1/3 of the data is used in a random forest.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;Valid &amp;lt;- createDataPartition(train$classe, p = 0.3)[[1]]
+valid &amp;lt;- train[Valid,]
+train &amp;lt;- train[-Valid,]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The next step is to utilize the variable of importance function in the caret library to reduce the number of predictors even further. The train data is still very large, but by making a sample set from the training data and modelling from that we can get a reasonable approximation of the variables of importance.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;strain &amp;lt;- rbind(sample_n(train[train$classe == &amp;quot;A&amp;quot;,],round(mean(train$classe == &amp;quot;A&amp;quot;)*200,0)),
+                sample_n(train[train$classe == &amp;quot;B&amp;quot;,],round(mean(train$classe == &amp;quot;B&amp;quot;)*200,0)),
+                sample_n(train[train$classe == &amp;quot;C&amp;quot;,],round(mean(train$classe == &amp;quot;C&amp;quot;)*200,0)),
+                sample_n(train[train$classe == &amp;quot;D&amp;quot;,],round(mean(train$classe == &amp;quot;D&amp;quot;)*200,0)),
+                sample_n(train[train$classe == &amp;quot;E&amp;quot;,],round(mean(train$classe == &amp;quot;E&amp;quot;)*200,0))
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The sample set was set to ensure an accurate representation of the ‘classe’ variable
+in the training data. Two models were completed and their variables of importance
+were added together.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mdl1 &amp;lt;- train(classe~., data = strain, method = &amp;quot;rf&amp;quot;, ntree = Ntree)
+mdl2 &amp;lt;- train(classe~., data = strain, method = &amp;quot;gbm&amp;quot;, verbose = FALSE)
+var &amp;lt;- varImp(mdl1)$importance &amp;gt; 50 | varImp(mdl2)$importance &amp;gt; 50
+varorder &amp;lt;- order(varImp(mdl1)$importance, decreasing = TRUE)
+Varimp &amp;lt;- row.names(varImp(mdl1)$importance)[varorder[1:2]]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A value of 50 was used for a cut-off value. The total number of predictors has been
+reduced to 4.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;valid &amp;lt;- valid[,var]
+train &amp;lt;- train[,var]
+test &amp;lt;- test[,var]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;modelling&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Modelling&lt;/h2&gt;
+&lt;p&gt;With the reduced predictors, the models can now be trained. Since these model will look
+at the entire training data set, it will require a lot of time. The models include:&lt;br /&gt;
+- Random forest&lt;br /&gt;
+- Generalized Boosted&lt;br /&gt;
+- Linear Discriminant&lt;br /&gt;
+- Combined&lt;br /&gt;
+The randomForest function is used as it is more efficient than the train function.
+The data method is also more efficient than using the formula method.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mdl11 &amp;lt;- randomForest(x = train[,1:(ncol(train) - 1)], y = as.factor(train[,ncol(train)]), ntree = Ntree, proximity = TRUE)
+mdl21 &amp;lt;- train(classe~., data = train, method = &amp;quot;gbm&amp;quot;, verbose = FALSE)
+mdl31 &amp;lt;- train(classe~., data = train, method = &amp;quot;lda&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The following code constructs the combined model&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pmdl11 &amp;lt;- predict(mdl11, valid)
+pmdl21 &amp;lt;- predict(mdl21, valid)
+pmdl31 &amp;lt;- predict(mdl31, valid)
+join &amp;lt;- data.frame(pmdl11, pmdl21, pmdl31, classe = valid$classe)
+jmdl &amp;lt;- randomForest(x = join[,1:3], y = as.factor(join$classe), ntree = Ntree)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;model-evaluation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Model Evaluation&lt;/h2&gt;
+&lt;p&gt;The new models will need to be examined against the validation data set. The out of
+bag error for the random forest models were not used, as the validation data provides
+a uniform comparison for all models. The following function was used to test the models:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;Exacc &amp;lt;- function(mdl, test){
+        mean(predict(mdl,test) == test$classe)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The model’s accuracy are summarized in the following dataframe when they are used
+to predict the results in the validation set:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;##   Model  accuracy
+## 1 mdl11 0.8955680
+## 2 mdl21 0.7994566
+## 3 mdl31 0.3625403
+## 4 joint 0.8920020&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;From the results from the model testing, it is clear that the random forest and the combined are the most accurate models for the validation set. The combined model has approximately the same level of accuracy as the random forest, meaning it is the most heavily weighted model. It also means that the inclusion of the boosted and linear discriminant models do not contribute to its accuracy. For simplification, the random forest model is the best model.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plot&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Plot&lt;/h1&gt;
+&lt;p&gt;The centres of the model can be found from the proximity data. The proximity data is compared to two predictors, the most important predictors. The two most significant predictors would sometimes vary, so the code was changed to be flexible to it.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;index &amp;lt;- names(train) %in% Varimp
+mdlp &amp;lt;- classCenter(train[index], train$classe, mdl11$proximity)
+mdlp &amp;lt;- as.data.frame(mdlp)
+mdlp$classe &amp;lt;- rownames(mdlp)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This centre data can be included with the training data. There are distinctly different regions based off of the different classe values, but the other predictors also contribute to model accuracy.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;index &amp;lt;- names(train) %in% Varimp
+names &amp;lt;- names(train[index])
+
+f &amp;lt;- function(name1, name2){
+        xval &amp;lt;- sym(name1)
+        yval &amp;lt;- sym(name2)
+        ggplot(data = train, aes_string(x = xval, y = yval, col = &amp;quot;classe&amp;quot;)) +
+                geom_point() +
+                geom_point(aes_string(x = xval, y = yval, col = &amp;quot;classe&amp;quot;), size = 10, shape = 4, data = mdlp) +
+                labs(title = &amp;quot;Model centers on two variables of importance&amp;quot;)
+        }
+f(names[1], names[2])&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://datasandbox.netlify.app/post/2022-01-29-fitness-tracker-modeling-ml/index.en_files/figure-html/plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>GGPlot</category>
+      
+            <category>ML</category>
+      
+            <category>R</category>
+      
+      
+            <category>Project</category>
+      
     </item>
     
   </channel>

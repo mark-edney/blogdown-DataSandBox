@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Shiny App on The Data Sandbox</title>
@@ -6,15 +5,75 @@
     <description>Recent content in Shiny App on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/tags/shiny-app/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://datasandbox.netlify.app/tags/shiny-app/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>Making the Connection with Crosstalk</title>
       <link>https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/</link>
       <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
       
       <guid>https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/</guid>
-      <description>I recently wrote a post about creating dashboards in R which was based on the Flexdashboard library. My largest criticism was the lack of communication between visualizations on the same dashboard. This was before I learned about the Crosstalk package which adds this feature to html widgets, such as the Flexdashboard, to at least a limited degree.
-InitializationThe Crosstalk package is available on CRAN and is loaded along with other important packages for this demonstration.</description>
+      <description> 
+
+&lt;script src=&#34;https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;I recently wrote a post about &lt;a href=&#34;https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/&#34;&gt;creating dashboards in R&lt;/a&gt; which was based on the &lt;code&gt;Flexdashboard&lt;/code&gt; library. My largest criticism was the lack of communication between visualizations on the same dashboard. This was before I learned about the &lt;code&gt;Crosstalk&lt;/code&gt; package which adds this feature to html widgets, such as the Flexdashboard, to at least a limited degree.&lt;/p&gt;
+&lt;div id=&#34;initialization&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Initialization&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;Crosstalk&lt;/code&gt; package is available on CRAN and is loaded along with other important packages for this demonstration.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;install.packages(&amp;quot;crosstalk&amp;quot;)
+library(crosstalk)
+library(tidyverse)
+library(flexdashboard)
+library(plotly)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I have decided to use a Toronto Open dataset about city audits for apartment buildings. I limited the features to only the ones that I feel will be interesting to look at. More information about the data set can be found &lt;a href=&#34;https://open.toronto.ca/dataset/apartment-building-evaluation/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;download.file(&amp;quot;https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/4ef82789-e038-44ef-a478-a8f3590c3eb1/resource/979fb513-5186-41e9-bb23-7b5cc6b89915/download/Apartment%20Building%20Evaluation.csv&amp;quot;, &amp;quot;data.csv&amp;quot;)
+df &amp;lt;- read_csv(&amp;quot;data.csv&amp;quot;) %&amp;gt;%
+        select(lng = LONGITUDE, 
+               lat = LATITUDE, 
+               SCORE, 
+               YEAR_BUILT, 
+               SITE_ADDRESS, 
+               PROPERTY_TYPE) %&amp;gt;% 
+        slice_sample(n = 200)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The key to the &lt;code&gt;crosstalk&lt;/code&gt; library is the &lt;code&gt;SharedData&lt;/code&gt; functions. An object is created when a Data Frame is passed to the &lt;code&gt;SharedData$new&lt;/code&gt; function. This is what enables communication between plots.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;shared_df &amp;lt;- SharedData$new(df)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;dashboard-creation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Dashboard Creation&lt;/h2&gt;
+&lt;p&gt;The dashboard is created pretty much as previous mentioned in &lt;a href=&#34;https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/&#34;&gt;my dashboard post&lt;/a&gt;, with the exception that the shared Data Frame object is passed rather than the Data Frame.&lt;/p&gt;
+&lt;p&gt;The dashboard can include filters that are very similar to the Shiny Apt filters, with the &lt;code&gt;filter_*&lt;/code&gt; family of functions.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;filter_slider(&amp;quot;Score&amp;quot;, &amp;quot;SCORE&amp;quot;, shared_df, ~SCORE, round = TRUE)
+filter_checkbox(&amp;quot;Property Type&amp;quot;, &amp;quot;PROPERTY_TYPE&amp;quot;, shared_df, ~PROPERTY_TYPE, inline = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;Crosstalk&lt;/code&gt; package does add some significant connectivity to Flex Dashboards. It is relatively simple to use with some basic functions. It does have the issue of not working with aggregating data. The utility of finding the mean value of a selection is something &lt;code&gt;Tableu&lt;/code&gt; and &lt;code&gt;PowerBI&lt;/code&gt; are still superior at. I think that it is still a welcome improvement.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;final-dashboard&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Final Dashboard&lt;/h2&gt;
+&lt;p&gt;&lt;iframe title=&#34;Cross Talk Demo&#34; width=&#34;100%&#34; height=&#34;500&#34; src=&#34;demo1.html&#34;&gt;&lt;/iframe&gt;&lt;/p&gt;
+&lt;p&gt;Photo by &lt;a href=&#34;https://unsplash.com/@jasongoodman_youxventures?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Jason Goodman&lt;/a&gt;on &lt;a href=&#34;https://unsplash.com/s/photos/discussion?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>R</category>
+      
+            <category>Shiny App</category>
+      
+            <category>ggplot</category>
+      
+            <category>Rmarkdown</category>
+      
+            <category>Leaflet</category>
+      
+      
+            <category>How-to</category>
+      
     </item>
     
     <item>
@@ -23,8 +82,56 @@ InitializationThe Crosstalk package is available on CRAN and is loaded along wi
       <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate>
       
       <guid>https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/</guid>
-      <description>Dashboards are a great way to demonstrate knowledge and engage decision makers. Their utility has made PowerBI andTableau household names. And while these solutions do support R and Python scripts and visualizations, the Flexdashboard package seeks to compete. The Flexdashboard packages does this all in R with the simplicity of writing a R Markdown file.
-Initial SetupThe setup is simple, you just need to download and load the Flexdashboard package.</description>
+      <description>
+&lt;script src=&#34;https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;Dashboards are a great way to demonstrate knowledge and engage decision makers. Their utility has made PowerBI and
+Tableau household names. And while these solutions do support &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;Python&lt;/code&gt; scripts and visualizations, the &lt;code&gt;Flexdashboard&lt;/code&gt; package seeks to compete. The &lt;code&gt;Flexdashboard&lt;/code&gt; packages does this all in &lt;code&gt;R&lt;/code&gt; with the simplicity of writing a &lt;code&gt;R Markdown&lt;/code&gt; file.&lt;/p&gt;
+&lt;div id=&#34;initial-setup&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Initial Setup&lt;/h2&gt;
+&lt;p&gt;The setup is simple, you just need to download and load the &lt;code&gt;Flexdashboard&lt;/code&gt; package. With the package installed, the easiest way to start is by creating a new &lt;code&gt;R Markdown&lt;/code&gt; file using the &lt;code&gt;Flexdashboard&lt;/code&gt; template. Loading the &lt;code&gt;Shiny&lt;/code&gt; package is useful if you would like to use interactive plots, but it is not necessary.&lt;/p&gt;
+&lt;p&gt;The dashboard can be laid out by either columns or by rows, it doesn’t really make a difference. Just change the text of columns with rows in the following walk-through. A column is set up with “## Column” as the header. The size of the plot region can then be modified with “{data-width=”500”}” in the same header line. The next line should be the plot/area title, which is included with “### Plot Title” header. All that is left is to include a code chunk with your plot.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(flexdashboard)
+library(shiny)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sample-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sample Data&lt;/h2&gt;
+&lt;p&gt;I decided to demonstrate different dashboard features with a data set from &lt;code&gt;Open Canada&lt;/code&gt; about charitable donations. More information can be found &lt;a href=&#34;https://open.canada.ca/data/en/dataset/74c77af4-73c4-4e0d-ac5d-f74a247cdf12&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;download.file(&amp;quot;https://www150.statcan.gc.ca/n1/tbl/csv/45100007-eng.zip&amp;quot;, &amp;quot;donordata.zip&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sample-dashboard-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sample Dashboard 1&lt;/h2&gt;
+&lt;p&gt;The first dashboard was set up with the default columns layout. It includes an interactive bar chart, an interactive box plot and a pie chart. All the plot were created with &lt;code&gt;GGplot2&lt;/code&gt;, the two plot were made interactive with the &lt;code&gt;GGplotly&lt;/code&gt; function from the &lt;code&gt;Plotly&lt;/code&gt; package. I created a pie chart to demonstrate the use of regular ggplots and because I recently read a complaint about &lt;code&gt;GGplot2&lt;/code&gt; for the creation of Pie charts on Reddit. In my opinion, Pie charts are not very good very conveying information.&lt;/p&gt;
+&lt;p&gt;&lt;iframe title=&#34;Demo 1&#34; width=&#34;100%&#34; height=&#34;500&#34; src=&#34;demo1.html&#34;&gt;&lt;/iframe&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sample-dashboard-2&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sample Dashboard 2&lt;/h2&gt;
+&lt;p&gt;For the second dashboard, I used the row layout. The process is that same with no additional complications. The dashboard features an interactive Leaflet plot, an interactive histogram and data table using the &lt;code&gt;GT&lt;/code&gt; package. The table was transformed with Pivot_Wider function to better fill the space.&lt;/p&gt;
+&lt;p&gt;&lt;iframe title=&#34;Demo 2&#34; width=&#34;100%&#34; height=&#34;500&#34; src=&#34;demo2.html&#34;&gt;&lt;/iframe&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;Flexdashboard&lt;/code&gt; package can be used to create nice looking dashboards with a great level of control. The plots can also include interactive elements. When compared to PowerBi or Tableau, there remains one major deficiency. These other dashboards contain a smart interactive filter which ties all the plots together. If you select a specific element in one plot for filtering, all other plots have the same filter applied to them. This is a major boon for understanding data and not a simple feature to develop in &lt;code&gt;Flexdashboard&lt;/code&gt;. It remains an interesting package, but I would still rely on PowerBI or Tableau to create dashboards.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Photo by &lt;a href=&#34;https://unsplash.com/@lukechesser?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Luke Chesser&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/s/photos/dashboards?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>R</category>
+      
+            <category>Shiny App</category>
+      
+            <category>ggplot</category>
+      
+            <category>Rmarkdown</category>
+      
+            <category>Leaflet</category>
+      
+      
+            <category>How-to</category>
+      
     </item>
     
     <item>
@@ -33,10 +140,76 @@ Initial SetupThe setup is simple, you just need to download and load the Flexda
       <pubDate>Sun, 27 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://datasandbox.netlify.app/post/2022-02-27-bike-shares-in-toronto/</guid>
-      <description>Photo by Maarten van den Heuvel on Unsplash
-This article is based on a project written on 01/14/2021
-Bike Rental Shiny AppThis application use the data collected from the Toronto Open Data to generate a histogram of the usage of rental bikes in Toronto during the month of June in 2020.
-install.packages(&amp;quot;opendatatoronto&amp;quot;, repos = &amp;quot;http://cran.us.r-project.org&amp;quot;,dependencies = TRUE)library(opendatatoronto)library(tidyverse)library(lubridate)library(shiny)UIThere are two user inputs on the UI side:</description>
+      <description>
+&lt;script src=&#34;https://datasandbox.netlify.app/post/2022-02-27-bike-shares-in-toronto/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;Photo by &lt;a href=&#34;https://unsplash.com/@mvdheuvel?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Maarten van den Heuvel&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/s/photos/toronto-bike?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This article is based on a project written on 01/14/2021&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div id=&#34;bike-rental-shiny-app&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Bike Rental Shiny App&lt;/h2&gt;
+&lt;p&gt;This application use the data collected from the &lt;a href=&#34;https://open.toronto.ca/dataset/bike-share-toronto-ridership-data/&#34;&gt;Toronto Open Data&lt;/a&gt; to generate a histogram of the usage of rental bikes in Toronto during the month of June in 2020.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;install.packages(&amp;quot;opendatatoronto&amp;quot;, 
+                 repos = &amp;quot;http://cran.us.r-project.org&amp;quot;,
+                 dependencies = TRUE)
+library(opendatatoronto)
+library(tidyverse)
+library(lubridate)
+library(shiny)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ui&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;UI&lt;/h2&gt;
+&lt;p&gt;There are two user inputs on the UI side:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;A slider that limits the maximum and minimum of the displayed values&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;A checkbox that excludes users with a annual bike pass&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;        sidebarPanel(
+            sliderInput(&amp;quot;dur&amp;quot;,
+                        &amp;quot;Trip Duration:&amp;quot;,
+                        min = 0,
+                        max = 500,
+                        value = c(0,500)),
+            checkboxInput(&amp;quot;freq&amp;quot;,
+                        &amp;quot;Exclude annual users:&amp;quot;,
+                        value = FALSE))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;server&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Server&lt;/h2&gt;
+&lt;p&gt;The following code is used for the server side logic, this includes downloading the data from the ‘opendatatoronto’ library.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; # get package
+    package &amp;lt;- show_package(&amp;quot;7e876c24-177c-4605-9cef-e50dd74c617f&amp;quot;)
+    
+    # get all resources for this package
+    resources &amp;lt;- list_package_resources(&amp;quot;7e876c24-177c-4605-9cef-e50dd74c617f&amp;quot;)
+    # identify datastore resources; by default, Toronto Open Data sets datastore resource format to CSV for non-geospatial and GeoJSON for geospatial resources
+    datastore_resources &amp;lt;- filter(resources, tolower(format) %in% c(&amp;#39;zip&amp;#39;, &amp;#39;geojson&amp;#39;))
+    # load the first datastore resource as a sample
+    data &amp;lt;- filter(datastore_resources, name == &amp;quot;Bike share ridership 2020&amp;quot;) %&amp;gt;% get_resource()
+    data2 &amp;lt;-  data$`2020-06.csv`
+    data2[grepl(&amp;quot;Time&amp;quot;,names(data2))] &amp;lt;- 
+        lapply(data2[grepl(&amp;quot;Time&amp;quot;,names(data2))], parse_date_time, orders = &amp;quot;mdy HM&amp;quot;)
+    data2$Dur &amp;lt;- as.numeric(data2$End.Time - data2$Start.Time,units=&amp;quot;mins&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;application&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Application&lt;/h2&gt;
+&lt;p&gt;The final application takes a while to load as the data needs to be downloaded and sorted through. In future iterations, I would save the data locally as an RDS file.&lt;/p&gt;
+&lt;iframe src=&#34;https://m2edney.shinyapps.io/Toronto_bike/?_ga=2.75026646.519818068.1645317226-1341333380.1645206372&#34; width=&#34;672&#34; height=&#34;400px&#34; data-external=&#34;1&#34;&gt;
+&lt;/iframe&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>Shiny App</category>
+      
+            <category>R</category>
+      
+      
+            <category>Project</category>
+      
     </item>
     
     <item>
@@ -45,8 +218,166 @@ install.packages(&amp;quot;opendatatoronto&amp;quot;, repos = &amp;quot;http://c
       <pubDate>Sun, 06 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://datasandbox.netlify.app/post/2022-01-30-job-posting-analysis/</guid>
-      <description>Recently, there was a post on medium about the use of Natural Language Processing (NLP)to study a job posting for keywords. I found that this article was very similar toR shiny App that I created a while ago. 1
-IntroductionTechnology has changed the job application process, making it easier and quicker toapply to jobs. As a result, the average job posting will receive around 250 resumes.</description>
+      <description>
+&lt;script src=&#34;https://datasandbox.netlify.app/post/2022-01-30-job-posting-analysis/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;Recently, there was a post on medium about the use of Natural Language Processing (NLP)
+to study a job posting for keywords. I found that this article was very similar to
+R shiny App that I created a while ago. &lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Technology has changed the job application process, making it easier and quicker to
+apply to jobs. As a result, the average job posting will receive around 250 resumes.
+&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; So how can hiring managers handle spending their time looking through that
+many resumes for one posting? That’s easy, they cheat.&lt;/p&gt;
+&lt;p&gt;Hiring Managers no longer look at individual resumes, but use automatic software called
+applicant tracking system (ATS). These programs filter resumes by a set of keywords,
+reducing the amount of resumes to a more manageable amount. So how can a job applicant
+make sure their resume is looked at? Well, they should cheat.&lt;/p&gt;
+&lt;p&gt;The medium article I mentioned uses Python and Natural Language Processing (NLP)
+to skim through the job posting to look for the most common words used. This is useful
+information, but not necessarily the keywords used by the ATS software. I propose the
+use of an R Shiny App to filter a job posting by a list of common keywords.&lt;/p&gt;
+&lt;p&gt;An R Shiny App is an interactive web based application that runs R code. The syntax
+for a Shiny App is a little different from R and requires some additional understanding.
+The product will be a basic, interactive program that can be hosted online. One free
+Shiny App hosting site that I recommend is &lt;a href=&#34;https://www.shinyapps.io&#34;&gt;shinyapps.io&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;inialization&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Inialization&lt;/h2&gt;
+&lt;p&gt;The shiny App will require the following libraries.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(shiny)
+library(wordcloud2)
+library(tidyverse)
+library(XML)
+library(rvest)
+library(tidytext)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The Shiny App will use a csv files which contains a set of keywords that ATS will
+look for. This list was found online, but I have modified by adding additional
+keywords as I see fit. The file can be downloaded &lt;a href=&#34;https://github.com/mark-edney/Resumes/blob/master/Word_Cloud/Keywords.csv&#34;&gt;here&lt;/a&gt; from my GitHub site. Here
+is a sample of some keywords:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;Keywords &amp;lt;- read_csv(&amp;quot;Keywords.csv&amp;quot;) 
+Keywords$Keys %&amp;gt;% head()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;.NET&amp;quot;                &amp;quot;account management&amp;quot;  &amp;quot;accounting&amp;quot;         
+## [4] &amp;quot;accounts payable&amp;quot;    &amp;quot;accounts receivable&amp;quot; &amp;quot;acquisition&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;app-structure&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;App Structure&lt;/h2&gt;
+&lt;p&gt;One issue I found when developing this application was the use of keywords that are
+a combination of multiple words. This creates some complications, as a simple search
+of keywords would use only the first word and lose the context.&lt;/p&gt;
+&lt;p&gt;This challenge was met by breaking the website down into ngrams. An over simplification
+of a ngram is a group of n number of words. Wikipedia has a very good page that
+better explains ngrams.&lt;a href=&#34;#fn3&#34; class=&#34;footnote-ref&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt; The website can then be split into ngrams of different
+lengths and the keywords searched for.&lt;/p&gt;
+&lt;p&gt;As a example, the phrase:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The quick brown fox&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;for a ngram of length 1 would return:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(The) (quick) (brown) (fox)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;for a ngram of length 2 would return:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(The quick) (quick brown) (brown fox)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;and for a ngram of length 3 would return:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(The quick brown) (quick brown fox)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div id=&#34;application-coding&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Application Coding&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;shinyApp(
+#This is the standard format for a shiny app
+        
+#The UI function controls all the frontend for the app
+        ui = fluidPage(
+                titlePanel(&amp;quot;Job Posting Word Cloud&amp;quot;),
+                sidebarLayout(
+                        sidebarPanel(
+#The user is asked for a url
+                                textInput(&amp;quot;url&amp;quot;, &amp;quot;input URL&amp;quot;, value = &amp;quot;https://www.google.com/&amp;quot;)
+                                ),
+                        mainPanel(
+#The word cloud plot is displayed
+                                h4(&amp;quot;Key-Word Cloud&amp;quot;),
+                                wordcloud2Output(&amp;quot;plot&amp;quot;)
+                                )
+                        )
+                ),
+        
+#The server function controls the backend for the app
+        server = function(input, output){
+                
+#The keywords are loaded and an index of how many words per keyword is created
+                Keywords &amp;lt;- read_csv(&amp;quot;Keywords.csv&amp;quot;)
+                Keywords$Keys &amp;lt;- str_to_lower(Keywords$Keys) 
+                index &amp;lt;- Keywords$Keys %&amp;gt;% str_count(&amp;quot; &amp;quot;)
+                
+#The { brackets are used to create reactive functions which continuously run 
+                data &amp;lt;- reactive({
+#The input variable is how the server side receives data from the ui side
+                url &amp;lt;- input$url
+#The text is read from the url provide by the user
+                data &amp;lt;- text %&amp;gt;%
+                        data.frame(text = .)
+#Since there are ngrams of length 1-3, there a three search&amp;#39;s that are concatenated together
+                rbind(data %&amp;gt;%
+#the unnest_tolkens from the tidytext library is used to create the ngrams
+                              unnest_tokens(word, text, token = &amp;quot;ngrams&amp;quot;, n= 1) %&amp;gt;%
+#A count is performed on each ngram in the website to find the most common ngrams 
+                              count(word, name = &amp;#39;freq&amp;#39;, sort = TRUE) %&amp;gt;%
+#The ngram count is then filtered by the keywords of the same ngram length
+                              filter(word %in% Keywords$Keys[index == 0]),
+#The steps are repeated for bigrams (ngrams of length 2) and trigrams(ngrams of length 3)
+                      data %&amp;gt;%
+                              unnest_tokens(word, text, token = &amp;quot;ngrams&amp;quot;, n= 2) %&amp;gt;%
+                              count(word, name = &amp;#39;freq&amp;#39;, sort = TRUE) %&amp;gt;%
+                              filter(word %in% Keywords$Keys[index == 1]),
+                      data %&amp;gt;%
+                              unnest_tokens(word, text, token = &amp;quot;ngrams&amp;quot;, n= 3) %&amp;gt;%
+                              count(word, name = &amp;#39;freq&amp;#39;, sort = TRUE) %&amp;gt;%
+                              filter(word %in% Keywords$Keys[index == 2]))
+                        })
+                
+#The plot/wordcloud needs to be saved as an output value
+#The output variable is how the server sends data back to the UI
+                output$plot &amp;lt;- renderWordcloud2({
+#One part of the strange syntax of a shiny app is that the since the data is reactive
+#and changes with the user input, it is passed in a function so it needs to be called
+#as data ()
+                        wordcloud2(data())
+                        })
+        },
+
+  options = list(height = 500)
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;shiny-app&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Shiny App&lt;/h2&gt;
+&lt;iframe src=&#34;https://m2edney.shinyapps.io/Word_Cloud/?_ga=2.82297238.1842982076.1647479103-1341333380.1645206372&#34; width=&#34;672&#34; height=&#34;400px&#34; data-external=&#34;1&#34;&gt;
+&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes footnotes-end-of-document&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;&lt;a href=&#34;https://medium.com/data-marketing-philosophy/use-python-and-nlp-to-boost-your-resume-e4691a58bcc9&#34;&gt;use-python-and-nlp-to-boost-your-resume&lt;/a&gt;&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;&lt;a href=&#34;https://ideal.com/resume-screening/&#34;&gt;Resume Screening: A How-To Guide For Recruiters&lt;/a&gt;&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/N-gram&#34;&gt;Wiki: ngrams&lt;/a&gt;&lt;a href=&#34;#fnref3&#34; class=&#34;footnote-back&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>R</category>
+      
+            <category>Shiny App</category>
+      
+      
+            <category>Project</category>
+      
     </item>
     
   </channel>
