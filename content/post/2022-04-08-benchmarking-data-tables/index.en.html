@@ -54,10 +54,10 @@ ti &lt;- tibble(df)</code></pre>
                        summarise(avg = mean(age)))
 print(group)</code></pre>
 <pre><code>## Unit: microseconds
-##        expr      min        lq     mean    median        uq     max neval
-##  Data_Frame 9206.101 10113.001 12688.59 10751.601 13505.351 45461.4   100
-##  Data_Table  899.501  1393.951  2011.48  1578.001  1841.952 25558.0   100
-##      Tibble 9247.902 10152.501 11738.35 10700.351 11941.651 32032.7   100</code></pre>
+##        expr      min        lq      mean    median        uq     max neval
+##  Data_Frame 8950.201  9905.301 11250.274 10430.800 11002.151 29392.6   100
+##  Data_Table  942.301  1277.851  1599.809  1454.551  1589.851 12496.6   100
+##      Tibble 9288.001 10204.701 11759.341 10727.901 11805.851 45636.2   100</code></pre>
 </div>
 <div id="taking-counts" class="section level2">
 <h2>Taking counts</h2>
@@ -71,10 +71,10 @@ print(group)</code></pre>
                        nrow())
 print(counts)</code></pre>
 <pre><code>## Unit: microseconds
-##        expr       min         lq       mean     median        uq     max neval
-##  Data_Frame 12652.201 14361.2000 16955.2210 15464.6515 17486.201 32623.4   100
-##  Data_Table   396.901   542.5005   812.7651   757.7005   928.851  3119.4   100
-##      Tibble 13532.201 15774.4010 19623.5499 17252.0010 19129.851 60731.7   100</code></pre>
+##        expr       min        lq      mean    median        uq       max neval
+##  Data_Frame 13320.601 14479.852 16289.165 15315.751 15982.151 28997.401   100
+##  Data_Table   393.901   554.151   698.718   736.151   780.401  1698.802   100
+##      Tibble 14732.101 15575.950 17111.604 16231.801 16768.300 43220.901   100</code></pre>
 </div>
 <div id="creating-new-columns" class="section level2">
 <h2>Creating new columns</h2>
@@ -84,10 +84,10 @@ print(counts)</code></pre>
                Tibble = ti %&gt;% mutate(property = paste(property_magnitude, housing)))
 print(new)</code></pre>
 <pre><code>## Unit: microseconds
-##        expr      min       lq     mean    median       uq       max neval
-##  Data_Frame 3120.700 3550.351 4212.864 3805.0505 4592.651 10099.802   100
-##  Data_Table  708.201  790.451 1120.124  966.4505 1121.601  9536.001   100
-##      Tibble 3826.101 4299.051 5110.742 4659.0015 5258.202 15083.301   100</code></pre>
+##        expr      min       lq     mean   median       uq       max neval
+##  Data_Frame 3135.701 3492.601 4049.416 3883.201 4487.702  7376.201   100
+##  Data_Table  702.702  885.051 1080.750 1023.301 1157.851  3705.001   100
+##      Tibble 3921.101 4548.501 5573.877 4943.201 5622.801 17441.400   100</code></pre>
 </div>
 <div id="chaining-data-tables" class="section level2">
 <h2>Chaining Data Tables</h2>
@@ -105,7 +105,7 @@ print(new)</code></pre>
 <div id="conclusions" class="section level2">
 <h2>Conclusions</h2>
 <p>It is clear that there are significant performance improvements when using Data Tables versus Data Frames
-(an average decrease of time by -84%). There are also insignificant differences between Data Frames and Tibbles. Also, the syntax for Data Tables is fairly simple and straight forward and yet extremely powerful.</p>
+(an average decrease of time by -86%). There are also insignificant differences between Data Frames and Tibbles. Also, the syntax for Data Tables is fairly simple and straight forward and yet extremely powerful.</p>
 <p>So, to answer the most important question, should you change to Data Tables from Data Frames? Probably, they present a significant performance gain and their structure is very flexible.</p>
 <blockquote>
 <p>Photo by <a href="https://unsplash.com/@tyler_clemmensen?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Tyler Clemmensen</a> on <a href="https://unsplash.com/s/photos/race-car?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
