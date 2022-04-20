@@ -25,7 +25,7 @@ knitr::opts_chunk$set(echo = TRUE, cache = TRUE, warning = FALSE, message = FALS
 This report analyzes collected data on different users preforming barbell lifts
 performed at different levels of quality. A machine learning algorithm was used
 to create a model to determine the user's rating based on data collected from multiple
-accelerometers. More information on the project can be found [here](http://web.archive.org/web/20161224072740/http:/groupware.les.inf.puc-rio.br/har).
+accelerometers. More information on the project can be found [here](https://web.archive.org/web/20161224072740/https:/groupware.les.inf.puc-rio.br/har).
 
 # Analysis
 

@@ -44,7 +44,7 @@ knitr::opts_chunk$set(widgetframe_isolate_widgets = TRUE) # default = TRUE
 ```
 
 ```{r packages, warning=FALSE, message=FALSE}
-install.packages("opendatatoronto", repos = "http://cran.us.r-project.org", dependencies = TRUE)
+install.packages("opendatatoronto", repos = "https://cran.us.r-project.org", dependencies = TRUE)
 library(opendatatoronto)
 library(dplyr)
 library(leaflet)
