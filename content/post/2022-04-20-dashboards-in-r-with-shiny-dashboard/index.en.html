@@ -31,7 +31,7 @@ archives:
 <p>In a previous post, I explore the Flex dashboard library for the creation of a clean and interactive dashboard. That post can be found <a href="https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/">here</a>. Unknown to me at the time, but I sort of skipped over the more natural progression of creating a dashboard with R Shiny. This is my attempt to recreate that dashboard and compare the ease of creation and functionality of the <code>Shinydashboard</code> library.</p>
 <div id="application-structure" class="section level2">
 <h2>Application Structure</h2>
-<p>My shiny dashboard will at heart be a shiny application. I will use the single App file structure rather then the separate UI/Server file structure. The R Studio site has a very good outline on the basic structure for a <a href="https://rstudio.github.io/shinydashboard/get_started.html">Shiny Dashboard</a>.</p>
+<p>My shiny dashboard will at heart be a shiny application. I will use the single App file structure rather than the separate UI/Server file structure. The R Studio site has a very good outline on the basic structure for a <a href="https://rstudio.github.io/shinydashboard/get_started.html">Shiny Dashboard</a>.</p>
 <p>MY application will then be broken down into the following structure:</p>
 <ul>
 <li>Data Collection</li>
@@ -41,9 +41,9 @@ archives:
 </ul>
 <p>Before starting to write the Shiny App, the raw data needs to be cleaned and setup to increase application performance.</p>
 </div>
-<div id="data-preperation" class="section level2">
-<h2>Data Preperation</h2>
-<p>The data is the same from the previous dashboard which was the level of donations for Canadians to charities. The data can be found <a href="https://open.canada.ca/data/en/dataset/74c77af4-73c4-4e0d-ac5d-f74a247cdf12">here</a>.</p>
+<div id="data-preparation" class="section level2">
+<h2>Data Preparation</h2>
+<p>The data is the same from the previous dashboard, which was the level of donations for Canadians to charities. The raw data can be found <a href="https://open.canada.ca/data/en/dataset/74c77af4-73c4-4e0d-ac5d-f74a247cdf12">here</a>.</p>
 <p>The following code is used to clean up the raw data and <em>is not</em> included in the Shiny App. This code is just used to create an RDS file (compressed data file) that the Shiny App will more easily load.</p>
 <pre class="r"><code>library(tidyverse)
 # Download the data and unzip
@@ -155,12 +155,12 @@ map_leaf</code></pre>
 
 # This call was added for illustration
 gt_table</code></pre>
-<div id="ukuaanryuf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="sbazvnahym" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ukuaanryuf .gt_table {
+#sbazvnahym .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -185,7 +185,7 @@ gt_table</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#ukuaanryuf .gt_heading {
+#sbazvnahym .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -197,7 +197,7 @@ gt_table</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ukuaanryuf .gt_title {
+#sbazvnahym .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -209,7 +209,7 @@ gt_table</code></pre>
   border-bottom-width: 0;
 }
 
-#ukuaanryuf .gt_subtitle {
+#sbazvnahym .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -221,13 +221,13 @@ gt_table</code></pre>
   border-top-width: 0;
 }
 
-#ukuaanryuf .gt_bottom_border {
+#sbazvnahym .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ukuaanryuf .gt_col_headings {
+#sbazvnahym .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -242,7 +242,7 @@ gt_table</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ukuaanryuf .gt_col_heading {
+#sbazvnahym .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -262,7 +262,7 @@ gt_table</code></pre>
   overflow-x: hidden;
 }
 
-#ukuaanryuf .gt_column_spanner_outer {
+#sbazvnahym .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -274,15 +274,15 @@ gt_table</code></pre>
   padding-right: 4px;
 }
 
-#ukuaanryuf .gt_column_spanner_outer:first-child {
+#sbazvnahym .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ukuaanryuf .gt_column_spanner_outer:last-child {
+#sbazvnahym .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ukuaanryuf .gt_column_spanner {
+#sbazvnahym .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -294,7 +294,7 @@ gt_table</code></pre>
   width: 100%;
 }
 
-#ukuaanryuf .gt_group_heading {
+#sbazvnahym .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -319,7 +319,7 @@ gt_table</code></pre>
   vertical-align: middle;
 }
 
-#ukuaanryuf .gt_empty_group_heading {
+#sbazvnahym .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -334,15 +334,15 @@ gt_table</code></pre>
   vertical-align: middle;
 }
 
-#ukuaanryuf .gt_from_md > :first-child {
+#sbazvnahym .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ukuaanryuf .gt_from_md > :last-child {
+#sbazvnahym .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ukuaanryuf .gt_row {
+#sbazvnahym .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -361,7 +361,7 @@ gt_table</code></pre>
   overflow-x: hidden;
 }
 
-#ukuaanryuf .gt_stub {
+#sbazvnahym .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -374,7 +374,7 @@ gt_table</code></pre>
   padding-right: 5px;
 }
 
-#ukuaanryuf .gt_stub_row_group {
+#sbazvnahym .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -388,11 +388,11 @@ gt_table</code></pre>
   vertical-align: top;
 }
 
-#ukuaanryuf .gt_row_group_first td {
+#sbazvnahym .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ukuaanryuf .gt_summary_row {
+#sbazvnahym .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -402,16 +402,16 @@ gt_table</code></pre>
   padding-right: 5px;
 }
 
-#ukuaanryuf .gt_first_summary_row {
+#sbazvnahym .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ukuaanryuf .gt_first_summary_row.thick {
+#sbazvnahym .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ukuaanryuf .gt_last_summary_row {
+#sbazvnahym .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -421,7 +421,7 @@ gt_table</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ukuaanryuf .gt_grand_summary_row {
+#sbazvnahym .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -431,7 +431,7 @@ gt_table</code></pre>
   padding-right: 5px;
 }
 
-#ukuaanryuf .gt_first_grand_summary_row {
+#sbazvnahym .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -441,11 +441,11 @@ gt_table</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#ukuaanryuf .gt_striped {
+#sbazvnahym .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ukuaanryuf .gt_table_body {
+#sbazvnahym .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -454,7 +454,7 @@ gt_table</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ukuaanryuf .gt_footnotes {
+#sbazvnahym .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -468,7 +468,7 @@ gt_table</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ukuaanryuf .gt_footnote {
+#sbazvnahym .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -477,7 +477,7 @@ gt_table</code></pre>
   padding-right: 5px;
 }
 
-#ukuaanryuf .gt_sourcenotes {
+#sbazvnahym .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -491,7 +491,7 @@ gt_table</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ukuaanryuf .gt_sourcenote {
+#sbazvnahym .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -499,60 +499,60 @@ gt_table</code></pre>
   padding-right: 5px;
 }
 
-#ukuaanryuf .gt_left {
+#sbazvnahym .gt_left {
   text-align: left;
 }
 
-#ukuaanryuf .gt_center {
+#sbazvnahym .gt_center {
   text-align: center;
 }
 
-#ukuaanryuf .gt_right {
+#sbazvnahym .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ukuaanryuf .gt_font_normal {
+#sbazvnahym .gt_font_normal {
   font-weight: normal;
 }
 
-#ukuaanryuf .gt_font_bold {
+#sbazvnahym .gt_font_bold {
   font-weight: bold;
 }
 
-#ukuaanryuf .gt_font_italic {
+#sbazvnahym .gt_font_italic {
   font-style: italic;
 }
 
-#ukuaanryuf .gt_super {
+#sbazvnahym .gt_super {
   font-size: 65%;
 }
 
-#ukuaanryuf .gt_footnote_marks {
+#sbazvnahym .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#ukuaanryuf .gt_asterisk {
+#sbazvnahym .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ukuaanryuf .gt_slash_mark {
+#sbazvnahym .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#ukuaanryuf .gt_fraction_numerator {
+#sbazvnahym .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#ukuaanryuf .gt_fraction_denominator {
+#sbazvnahym .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -593,8 +593,8 @@ gt_table</code></pre>
 </div>
 <div id="ui" class="section level2">
 <h2>UI</h2>
-<p>The following code creates the UI interface that the user interacts with. For those familiar to Shiny Apps, the structure will be similar. The actual functions used will be different but usually their names will just have the ‘dashboard’ prefix. For those not familiar with Shiny Apps, the ui is created by a nesting of a series of functions. The notation can get a little difficult as you need to remember to use ‘,’ when passing multiple functions. Though not used in this dashboard, UI interfaces can be used to control elements of the display. These controls create variables that need to be saved as <code>input$"variable_name"</code>. This allows the transfer of information from the UI to the server side. Likewise, plots and figures from the server side need to be saved as <code>output$"variable_name"</code>. When a output variable is referenced in the UI, such as the <code>plotOutput</code> function for displaying plots, they are referenced as “variable_name” in quotes.</p>
-<p>Again the syntax can be difficult to learn and use but the R Studio post on <a href="https://rstudio.github.io/shinydashboard/get_started.html">Shiny Dashboards</a> provide the basic skeleton to learn from. My biggest issue is keeping track of all the ‘)’ and ‘,’ used.</p>
+<p>The following code creates the UI interface that the user interacts with. For those familiar to Shiny Apps, the structure will be similar. The actual functions used will be different, but usually their names will just have the ‘dashboard’ prefix. For those not familiar with Shiny Apps, the UI is created by a nesting of a series of functions. The notation can get a little difficult as you need to remember to use ‘,’ when passing multiple functions. Though not used in this dashboard, UI interfaces can be used to control elements of the display. These controls create variables that need to be saved as <code>input$"variable_name"</code>. This allows the transfer of information from the UI to the server side. Likewise, plots and figures from the server side need to be saved as <code>output$"variable_name"</code>. When an output variable is referenced in the UI, such as the <code>plotOutput</code> function for displaying plots, they are referenced as “variable_name” in quotes.</p>
+<p>Again, the syntax can be difficult to learn and use, but the R Studio post on <a href="https://rstudio.github.io/shinydashboard/get_started.html">Shiny Dashboards</a> provide the basic skeleton to learn from. My biggest issue is keeping track of all the ‘)’ and ‘,’ used.</p>
 <pre class="r"><code># The main page structure is the dashboardPage
 ui &lt;- dashboardPage(
         
@@ -618,7 +618,7 @@ ui &lt;- dashboardPage(
 # Each previous mentioned tab, will have a separate tabItem.
                         tabItem(tabName = &quot;dashboard&quot;,
 
-# The fluidRow function is used to align the elements on the page. Through trail and error, I have found this to be the element for changing the size of plots.
+# The fluidRow function is used to align the elements on the page. Through trial and error, I have found this to be the element for changing the size of plots.
                                 fluidRow(
                                         
 # A box is drawn around each plot. Each plot/figure/element is referenced here with the plotOutput function or a likewise function. In the server side, I will transform the ggplots into plotly plots to create interactive plots so the plotlyOutput function is used. 
@@ -648,7 +648,7 @@ ui &lt;- dashboardPage(
 </div>
 <div id="server" class="section level2">
 <h2>Server</h2>
-<p>The server is the second major function in the Shiny App. Rather than using the output series of functions, it requires the paired version of the render function. Any controls from the UI would need to be pass as part of the <code>input</code> variable.</p>
+<p>The server is the second major function in the Shiny App. Rather than using the output series of functions, it requires the paired version of the render function. Any controls from the UI would need to be passed as part of the <code>input</code> variable.</p>
 <pre class="r"><code># The same structure for any other Shiny App
 server &lt;- function(input, output) {
 
@@ -671,9 +671,9 @@ server &lt;- function(input, output) {
 </div>
 <div id="finalized-dashboard" class="section level2">
 <h2>Finalized Dashboard</h2>
-<p>The finalized dashboard looks pretty good. The sidebar add a good level of control to the user and makes the data better organized. I also enjoy the default styling but I’m sure it can be changed.</p>
-<p>When compared to the dashboard created with <code>flexdashboard</code>, it much nicer looking. The flexdashboard however, has the advantage of being much easier to create with r markdown. It is also much more flexible as it produces an html file which is easy to manage. The shiny dashboard needs to be hosted which makes it slightly clunky.</p>
-<p>Speaking of the clunky nature of Shiny Apps, you also need to be concise of what needs to be reactive and what doesn’t. It is very easy to slow down a Shiny Dashboard with a bunch of unnecessary calculations. The writing of the application itself is also quite clunky. It doesn’t compare to the ease of writing in R markdown.</p>
-<p>So which dashboard do I prefer? Well I think for a quick solution, flex dashboard is a great but the amount of control and styling of a shiny dashboard is just better. I do think that there is a place for both, but if I had to choose I would go for a Shiny Dashboard.</p>
+<p>The finalized dashboard looks pretty good. The sidebar adds a good level of control to the user and makes the data better organized. I also enjoy the default styling, but I’m sure it can be changed.</p>
+<p>When compared to the dashboard created with <code>flexdashboard</code>, it is much nicer looking. The flex dashboard, however, has the advantage of being much easier to create with r markdown. It is also much more flexible as it produces an HTML file which is easy to manage. The shiny dashboard needs to be hosted, which makes it slightly clunky.</p>
+<p>Speaking of the clunky nature of Shiny Apps, you also need to be conscious of what needs to be reactive and what doesn’t. It is very easy to slow down a Shiny Dashboard with a bunch of unnecessary calculations. The writing of the application itself is also quite clunky. It doesn’t compare to the ease of writing in R markdown.</p>
+<p>So which dashboard do I prefer? Well I think for a quick solution, flex dashboard is great but the amount of control and styling of a shiny dashboard is just better. I do think that there is a place for both, but if I had to choose, I would go for a Shiny Dashboard.</p>
 <p><iframe title="Shiny Dashboard" width="100%" height="500" src="https://m2edney.shinyapps.io/ShinyDashboard/"></iframe></p>
 </div>
