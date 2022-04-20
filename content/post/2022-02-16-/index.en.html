@@ -16,7 +16,6 @@ archives:
 
 ---
 
-<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
 
 
 <blockquote>
@@ -29,16 +28,17 @@ course for the Data Science Specialization from Johns Hopkins University on Cour
 <div id="objective" class="section level2">
 <h2>Objective</h2>
 <p>This report plots the speed cameras in the Greater Toronto Area from the data provided
-by Open Toronto which can be found <a href="https://open.toronto.ca/dataset/automated-speed-enforcement-locations/">here</a>.</p>
+by Open Toronto, which can be found <a href="https://open.toronto.ca/dataset/automated-speed-enforcement-locations/">here</a>.</p>
 </div>
-<div id="inialization" class="section level2">
-<h2>Inialization</h2>
+<div id="initialization" class="section level2">
+<h2>Initialization</h2>
 <p>The following code is used to initialize the required libraries.</p>
-<pre class="r"><code>install.packages(&quot;opendatatoronto&quot;, repos = &quot;http://cran.us.r-project.org&quot;, dependencies = TRUE)</code></pre>
-<pre><code>## package &#39;opendatatoronto&#39; successfully unpacked and MD5 sums checked
+<pre class="r"><code>install.packages(&quot;opendatatoronto&quot;, repos = &quot;https://cran.us.r-project.org&quot;, dependencies = TRUE)</code></pre>
+<pre><code>## package &#39;ggiraph&#39; successfully unpacked and MD5 sums checked
+## package &#39;opendatatoronto&#39; successfully unpacked and MD5 sums checked
 ## 
 ## The downloaded binary packages are in
-##  C:\Users\Mark\AppData\Local\Temp\RtmpymM2E5\downloaded_packages</code></pre>
+##  C:\Users\Mark\AppData\Local\Temp\RtmpI5kGAB\downloaded_packages</code></pre>
 <pre class="r"><code>library(opendatatoronto)
 library(dplyr)
 library(leaflet)</code></pre>
@@ -57,7 +57,7 @@ data &lt;- filter(datastore_resources, row_number()==1) %&gt;% get_resource()</c
 </div>
 <div id="plotting-the-data" class="section level2">
 <h2>Plotting the Data</h2>
-<p>The geometry in the dataset can be used directly with leaflet and the longitude and
+<p>The geometry in the dataset can be used directly with Leaflet, and the longitude and
 latitude do not need to be separated.</p>
 <pre class="r"><code>df &lt;- data$geometry</code></pre>
 <p>Custom icons for the speed cameras can be used with the following code:</p>
@@ -65,7 +65,7 @@ latitude do not need to be separated.</p>
         iconUrl = &quot;https://www.flaticon.com/svg/static/icons/svg/2164/2164608.svg&quot;,
         iconWidth = 35, iconHeight = 35
 )</code></pre>
-<p>Finally all the data and options can be passed to the leaflet function.</p>
+<p>Finally, all the data and options can be passed to the leaflet function.</p>
 <pre class="r"><code>plt &lt;- df %&gt;%
         leaflet() %&gt;%
         addTiles() %&gt;%
