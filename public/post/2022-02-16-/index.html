@@ -2,6 +2,7 @@
 
 <html lang="en" class="dark">
 <head>
+<meta name="google-site-verification" content="sgjxKXCEE0r0JJtUOqKZKg61BiyTGEclPAMsZnHhrJw" />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4108863678822570"
      crossorigin="anonymous"></script>
 
@@ -39,13 +40,13 @@
 
 <meta name="description" content="Photo by Sepideh Golchin Rad on Unsplash
 This project was originally written on 02/01/2021 as part of the Data Productscourse for the Data Science Specialization from Johns Hopkins University on Coursera
-ObjectiveThis report plots the speed cameras in the Greater Toronto Area from the data providedby Open Toronto which can be found here.
-InializationThe following code is used to initialize the required libraries.">
+ObjectiveThis report plots the speed cameras in the Greater Toronto Area from the data providedby Open Toronto, which can be found here.
+InitializationThe following code is used to initialize the required libraries.">
 <meta property="og:site_name" content="The Data Sandbox">
 <meta property="og:description" content="Photo by Sepideh Golchin Rad on Unsplash
 This project was originally written on 02/01/2021 as part of the Data Productscourse for the Data Science Specialization from Johns Hopkins University on Coursera
-ObjectiveThis report plots the speed cameras in the Greater Toronto Area from the data providedby Open Toronto which can be found here.
-InializationThe following code is used to initialize the required libraries.">
+ObjectiveThis report plots the speed cameras in the Greater Toronto Area from the data providedby Open Toronto, which can be found here.
+InitializationThe following code is used to initialize the required libraries.">
 <meta property="og:url" content="https://datasandbox.netlify.app/post/2022-02-16-/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
@@ -56,8 +57,8 @@
 
 <meta name="twitter:description" content="Photo by Sepideh Golchin Rad on Unsplash
 This project was originally written on 02/01/2021 as part of the Data Productscourse for the Data Science Specialization from Johns Hopkins University on Coursera
-ObjectiveThis report plots the speed cameras in the Greater Toronto Area from the data providedby Open Toronto which can be found here.
-InializationThe following code is used to initialize the required libraries.">
+ObjectiveThis report plots the speed cameras in the Greater Toronto Area from the data providedby Open Toronto, which can be found here.
+InitializationThe following code is used to initialize the required libraries.">
 <meta property="article:published_time" content="2022-02-16T00:00:00&#43;00:00">
 <meta property="article:updated_time" content="2022-02-16T00:00:00&#43;00:00">
 
@@ -135,7 +136,27 @@
         mobileMenu.classList.toggle('active');
     });
 </script>
-<div class="container max-w-screen-xl mx-auto mt-4 flex-grow px-5 lg:px-0" id="content">
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <div class="container max-w-screen-xl mx-auto mt-4 flex-grow px-5 lg:px-0" id="content">
             <div class="lg:mx-5">
 <div class="grid grid-cols-3 gap-4">
     
@@ -166,7 +187,7 @@
             <img class="py-4" src="https://datasandbox.netlify.app/img/toronto_traffic.jpg">
             
             <div class="content mt-5">
-<script src="https://datasandbox.netlify.app/post/2022-02-16-/index.en_files/header-attrs/header-attrs.js"></script>
+
 
 
 <blockquote>
@@ -179,16 +200,17 @@ course for the Data Science Specialization from Johns Hopkins University on Cour
 <div id="objective" class="section level2">
 <h2>Objective</h2>
 <p>This report plots the speed cameras in the Greater Toronto Area from the data provided
-by Open Toronto which can be found <a href="https://open.toronto.ca/dataset/automated-speed-enforcement-locations/">here</a>.</p>
+by Open Toronto, which can be found <a href="https://open.toronto.ca/dataset/automated-speed-enforcement-locations/">here</a>.</p>
 </div>
-<div id="inialization" class="section level2">
-<h2>Inialization</h2>
+<div id="initialization" class="section level2">
+<h2>Initialization</h2>
 <p>The following code is used to initialize the required libraries.</p>
-<pre class="r"><code>install.packages(&quot;opendatatoronto&quot;, repos = &quot;http://cran.us.r-project.org&quot;, dependencies = TRUE)</code></pre>
-<pre><code>## package &#39;opendatatoronto&#39; successfully unpacked and MD5 sums checked
+<pre class="r"><code>install.packages(&quot;opendatatoronto&quot;, repos = &quot;https://cran.us.r-project.org&quot;, dependencies = TRUE)</code></pre>
+<pre><code>## package &#39;ggiraph&#39; successfully unpacked and MD5 sums checked
+## package &#39;opendatatoronto&#39; successfully unpacked and MD5 sums checked
 ## 
 ## The downloaded binary packages are in
-##  C:\Users\Mark\AppData\Local\Temp\RtmpymM2E5\downloaded_packages</code></pre>
+##  C:\Users\Mark\AppData\Local\Temp\RtmpI5kGAB\downloaded_packages</code></pre>
 <pre class="r"><code>library(opendatatoronto)
 library(dplyr)
 library(leaflet)</code></pre>
@@ -207,7 +229,7 @@ data &lt;- filter(datastore_resources, row_number()==1) %&gt;% get_resource()</c
 </div>
 <div id="plotting-the-data" class="section level2">
 <h2>Plotting the Data</h2>
-<p>The geometry in the dataset can be used directly with leaflet and the longitude and
+<p>The geometry in the dataset can be used directly with Leaflet, and the longitude and
 latitude do not need to be separated.</p>
 <pre class="r"><code>df &lt;- data$geometry</code></pre>
 <p>Custom icons for the speed cameras can be used with the following code:</p>
@@ -215,7 +237,7 @@ latitude do not need to be separated.</p>
         iconUrl = &quot;https://www.flaticon.com/svg/static/icons/svg/2164/2164608.svg&quot;,
         iconWidth = 35, iconHeight = 35
 )</code></pre>
-<p>Finally all the data and options can be passed to the leaflet function.</p>
+<p>Finally, all the data and options can be passed to the leaflet function.</p>
 <pre class="r"><code>plt &lt;- df %&gt;%
         leaflet() %&gt;%
         addTiles() %&gt;%
@@ -311,7 +333,7 @@ latitude do not need to be separated.</p>
         href="https://datasandbox.netlify.app//archives/2022/03">2022/03 (5)</a>
     
     <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
-        href="https://datasandbox.netlify.app//archives/2022/04">2022/04 (1)</a>
+        href="https://datasandbox.netlify.app//archives/2022/04">2022/04 (4)</a>
     
     
 </div>
@@ -386,48 +408,48 @@ latitude do not need to be separated.</p>
     <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Recent Posts</p>
     <div class="mx-6">
         
+        <a href="/post/2022-01-30-job-posting-analysis/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Job posting analysis</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/02/06</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-04-14-merging-pdfs-with-python/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Merging PDFs with Python</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/04/14</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-03-10-creating-dashboard-in-r/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Creating Dashboards in R</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/03/10</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-03-18-making-the-connection-with-crosstalk/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Making the Connection with Crosstalk</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/03/18</time>
+                    </p>
+                </div>
+            </div>
         <a href="/post/2022-02-11-fancy-tables-in-r/" class="">
             <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
                 <div class="px-2">
                     <div class="text-gray-900 font-bold text-xl dark:text-white">Fancy Tables in R</div>
                     <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
                         <time><span class="icon-access_time mr-1"></span>2022/02/11</time>
-                    </p>
-                </div>
-            </div>
-        <a href="/post/2022-04-11-r-bloggers-site/" class="">
-            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
-                <div class="px-2">
-                    <div class="text-gray-900 font-bold text-xl dark:text-white">R-Bloggers site</div>
-                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
-                        <time><span class="icon-access_time mr-1"></span>2022/04/11</time>
-                    </p>
-                </div>
-            </div>
-        <a href="/post/2022-03-20-simple-neural-networks-in-python/" class="">
-            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
-                <div class="px-2">
-                    <div class="text-gray-900 font-bold text-xl dark:text-white">Simple Neural Networks in Python</div>
-                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
-                        <time><span class="icon-access_time mr-1"></span>2022/03/20</time>
-                    </p>
-                </div>
-            </div>
-        <a href="/post/2022-03-31-underrated-cran-packages/" class="">
-            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
-                <div class="px-2">
-                    <div class="text-gray-900 font-bold text-xl dark:text-white">Underrated CRAN Packages</div>
-                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
-                        <time><span class="icon-access_time mr-1"></span>2022/03/31</time>
-                    </p>
-                </div>
-            </div>
-        <a href="/post/2022-02-16-/" class="">
-            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
-                <div class="px-2">
-                    <div class="text-gray-900 font-bold text-xl dark:text-white">Speed cameras in Toronto</div>
-                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
-                        <time><span class="icon-access_time mr-1"></span>2022/02/16</time>
                     </p>
                 </div>
             </div>

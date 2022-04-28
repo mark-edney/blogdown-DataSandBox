@@ -15,7 +15,7 @@
       <description>Photo by Maarten van den Heuvel on Unsplash
 This article is based on a project written on 01/14/2021
 Bike Rental Shiny AppThis application use the data collected from the Toronto Open Data to generate a histogram of the usage of rental bikes in Toronto during the month of June in 2020.
-install.packages(&amp;quot;opendatatoronto&amp;quot;, repos = &amp;quot;http://cran.us.r-project.org&amp;quot;,dependencies = TRUE)library(opendatatoronto)library(tidyverse)library(lubridate)library(shiny)UIThere are two user inputs on the UI side:</description>
+install.packages(&amp;quot;opendatatoronto&amp;quot;, repos = &amp;quot;https://cran.us.r-project.org&amp;quot;,dependencies = TRUE)library(opendatatoronto)library(tidyverse)library(lubridate)library(shiny)UIThere are two user inputs on the UI side:</description>
     </item>
     
     <item>
@@ -38,8 +38,8 @@ library(tidyverse)data(&amp;quot;morley&amp;quot;)morley |&amp;gt;group_by(Ex
       <guid>https://datasandbox.netlify.app/post/2022-02-16-/</guid>
       <description>Photo by Sepideh Golchin Rad on Unsplash
 This project was originally written on 02/01/2021 as part of the Data Productscourse for the Data Science Specialization from Johns Hopkins University on Coursera
-ObjectiveThis report plots the speed cameras in the Greater Toronto Area from the data providedby Open Toronto which can be found here.
-InializationThe following code is used to initialize the required libraries.</description>
+ObjectiveThis report plots the speed cameras in the Greater Toronto Area from the data providedby Open Toronto, which can be found here.
+InitializationThe following code is used to initialize the required libraries.</description>
     </item>
     
     <item>

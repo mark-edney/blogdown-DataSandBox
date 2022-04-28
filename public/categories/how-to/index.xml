@@ -6,7 +6,35 @@
     <description>Recent content in How-to on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 20 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/categories/how-to/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/categories/how-to/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dashboards in R with Shiny Dashboard</title>
+      <link>https://datasandbox.netlify.app/post/2022-04-20-dashboards-in-r-with-shiny-dashboard/</link>
+      <pubDate>Wed, 20 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-04-20-dashboards-in-r-with-shiny-dashboard/</guid>
+      <description>In a previous post, I explore the Flex dashboard library for the creation of a clean and interactive dashboard. That post can be found here. Unknown to me at the time, but I sort of skipped over the more natural progression of creating a dashboard with R Shiny. This is my attempt to recreate that dashboard and compare the ease of creation and functionality of the Shinydashboard library.</description>
+    </item>
+    
+    <item>
+      <title>Merging PDFs with Python</title>
+      <link>https://datasandbox.netlify.app/post/2022-04-14-merging-pdfs-with-python/</link>
+      <pubDate>Thu, 14 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-04-14-merging-pdfs-with-python/</guid>
+      <description>I am currently looking for a new job, which means I need to create many resumes and cover letters. When creating a resume, it is good practice to create a PDF file. PDFs cannot be edited, which can make them difficult to work with, but they retain their formatting. It is impossible to tell which version of Microsoft Word a hiring manager is using. So you have to risk a possible formatting error or create a compatible resumes without the latest features.</description>
+    </item>
+    
+    <item>
+      <title>Benchmarking Data Tables</title>
+      <link>https://datasandbox.netlify.app/post/2022-04-08-benchmarking-data-tables/</link>
+      <pubDate>Wed, 13 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-04-08-benchmarking-data-tables/</guid>
+      <description>When I started learning R, I heard vague tales of the use of Data Tables. Really just whisperers, of something to consider in the future after I’ve become more proficient. Well now is the time to learn what if anything I’ve been missing out on.
+IntroductionData Tables are a potential replacement for the common dataframe. It seeks to perform that same role but with improved performance. I would like to see the speed comparison between Data Frames, Data Tables and Tibbles.</description>
+    </item>
+    
     <item>
       <title>Simple Neural Networks in Python</title>
       <link>https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/</link>

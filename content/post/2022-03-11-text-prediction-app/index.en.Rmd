@@ -177,17 +177,60 @@ rm(corpus)
 
 ## Modeling
 
-The creation of a corpus is just the start. Models need to be created in order to do the actually prediction work. The main idea is to match the previous set of words with the words that make up the ngrams. The final word in the ngram is than the prediction. The prediction takes the form of a distribution as there are likely multiple matches in the corpus. Different models change the distribution and thus the propability of a word becoming the predicted word. This distributin is created by taking a count of all the matches in the corpus. Each count is than normalized by the total count of every possible match to produce a probabilty that adds to one. 
+The creation of a corpus is just the start. Models need to be created in order to do the actually prediction work. The main idea is to match the previous set of words with the words that make up the ngrams. The final word in the ngram is than the prediction. The prediction takes the form of a distribution as there are likely multiple matches in the corpus. Different models change the distribution and thus the probability of a word becoming the predicted word. This distribution is created by taking a count of all the matches in the corpus. Each count is than normalized by the total count of every possible match to produce a probabilty that adds to one. 
 
 ### Maximum Likelihood  Estimate
 
-`$SE = \sqrt{\frac{s_{1}^{2}}{n_{1}}+\frac{s_{2}^{2}}{n_{2}}}$`
+$$MLE = \frac{N_r}{N}$$
 
-The Maximum Likelihood Estimate (MLE) is the simplest algorithm for examining the distribution. It simply returns the value with the highest count/occurrences in the corpus. There are some issues with this method as for many words in the Vocabulary there are no occurrences and therefore no probability of the word being estimated. This is undesirable as we would like some probability assigned with every possible word.
+The Maximum Likelihood Estimate (MLE) is the simplest algorithm for examining the distribution. It simply returns the value with the highest count/occurrences in the corpus. $N_r$ represents the counts of a given word and $N$ represents that count for every word. This application can be extended to higher level ngrams, where previously typed words match the words in an ngram prior to the last value. The last value is than the predicted value. 
+
+There are some issues with this method as for many words in the Vocabulary there are no occurrences and therefore no probability of the word being estimated. This is undesirable as we would like some probability assigned with every possible word.
 
 ### Add One Smoothing
 
-Add one smoothing is 
+$$AddOne = \frac{N_r+1}{N+len(Vocab)}$$
+
+Add one smoothing (leplace smoothing) is a simple method to even out the distribution. Prior to calculating the MLE, each word in the vocabulary is given an extra count.
+
+### Good-Turing
+
+Good-Turing smoothing attempts to leverage the probability on lower ngram probabilities rather then fixed values. For a bigram model, the ngram probability (MLE) can provide more insight. 
+
+This introduce the notation of $N_C$  which represents the count of occurrences with the frequency of $C$. The probability of things that have never occurred are defined based on the probability of things that have occurred once. 
+
+$$P^*_{GT}(N_0) = \frac{N_1}{N}$$
+
+The newly modified counts are defined as the following:
+
+$$c^* = \frac{(c+1)N_{c+1}}{N_c}$$
+The adjusted count, $c^*$, is modified by the frequency of the of the actual count +1 occurring over the frequency of the count occurring. This does create an issue when there are gaps in the frequencies of counts, as suggested by the following plot:
+
+```{r freq, include=FALSE, eval=TRUE}
+library(tidyverse)
+df <- data.frame('Counts' = 1:9, 'Frequency' = c(100,50,42,30,15,10,4,0,1))
+g <- df %>%
+        ggplot(aes(x = Counts, y= Frequency)) +
+        geom_bar(stat = 'identity')
+```
+```{r examplot, eval=TRUE, echo=FALSE}
+plot(g)
+```
+From the plot, we can see that there is never an occurrence of a count of 8, but that there is one occurrence of a count of 9. To solve this issue, we can create regression model to fit over the frequency counts. Than, whenever the term $N_{c+1}$ is zero, the value can be replaced by the regression model. This model is generally a power model, fitting the log of the counts against the log of the frequencies, as described in the following plot:
+```{r freqmdl, eval=TRUE, echo=FALSE}
+g + geom_smooth(formula = y~x, data = df[is.finite(log(df$Frequency)),])
+```
+
+Through this method, any count over zero is decreased as the term $\frac{N_{c+1}}{N_c}$ is usually less than one as the count of ngrams decrease with the frequency of the count. This probability is transfer to ngrams with counts of zero.
+
+```{r discounts, eval=TRUE, echo=FALSE}
+library(gt)
+data.frame('Count c' = 0:9, 'Good Turing c*' = c(0.00270, 0.446, 1.26, 2.24, 3.24, 4.22, 4.19, 6.21, 7.24, 8.25)) %>% gt()
+
+```
+
+### Absolute Discounting Interpolation
+
 
 ## Application
 

@@ -5,10 +5,57 @@
     <description>Recent content in Python on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 20 Mar 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 Apr 2022 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://datasandbox.netlify.app/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Merging PDFs with Python</title>
+      <link>https://datasandbox.netlify.app/post/2022-04-14-merging-pdfs-with-python/</link>
+      <pubDate>Thu, 14 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-04-14-merging-pdfs-with-python/</guid>
+      <description>
+&lt;script src=&#34;https://datasandbox.netlify.app/post/2022-04-14-merging-pdfs-with-python/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;I am currently looking for a new job, which means I need to create many resumes and cover letters. When creating a resume, it is good practice to create a PDF file. PDFs cannot be edited, which can make them difficult to work with, but they retain their formatting. It is impossible to tell which version of Microsoft Word a hiring manager is using. So you have to risk a possible formatting error or create a compatible resumes without the latest features.&lt;/p&gt;
+&lt;p&gt;One issue with using PDFs is that employers will sometimes ask for a cover letter and resume to be submitted as a single PDF. This wouldn’t be an issue if they were both stored in the same document, but if you are like me, you have separate documents creating separate PDFs. You can always use free online PDF mergers, but they can have limitations, and it may not be desirable to give away your personal data. So I decided to create a small Python script that will merge my PDFs together.&lt;/p&gt;
+&lt;p&gt;The script will require the &lt;code&gt;PyPDF2&lt;/code&gt; package for dealing with PDFs and the &lt;code&gt;os&lt;/code&gt; package. The &lt;code&gt;os&lt;/code&gt; package is just used to automatically merge all PDFs in the root folder.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import PyPDF2, os&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The first step is to create a list of the PDFs in the current folder. It also ensures that the merged PDF is not in the list.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;pdfiles = []
+
+for filename in os.listdir(&amp;#39;.&amp;#39;):
+        if filename.endswith(&amp;#39;.pdf&amp;#39;):
+                if filename != &amp;#39;merged.pdf&amp;#39;:
+                        pdfiles.append(filename)
+                        
+pdfiles.sort(key = str.lower)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The file list is also sorted alphabetically to ensure the results are predictable and easy to control. The merged PDF will contain the PDFs in the same order.&lt;/p&gt;
+&lt;p&gt;The next step is to create a &lt;code&gt;PdfFileMerger&lt;/code&gt; object, which will be the destination for all the data in the PDFs. The first step is to open the first PDF file in the PDF file list. The &lt;code&gt;PdfFileMerger&lt;/code&gt; object will only accept a file object, so we need to create a &lt;code&gt;PdfFileReader&lt;/code&gt; object from the opened PDF. This &lt;code&gt;PdfFileReader&lt;/code&gt; object will then be appended to the &lt;code&gt;PdfFileMerger&lt;/code&gt; object. We proceed then to the next PDF. After all files are added, the write method is used on the merged object to create a merged PDF.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;pdfMerge = PyPDF2.PdfFileMerger()
+
+for filename in pdfiles:
+        pdfFile = open(filename, &amp;#39;rb&amp;#39;)
+        pdfReader = PyPDF2.PdfFileReader(pdfFile)
+        pdfMerge.append(pdfReader)
+
+pdfFile.close()
+pdfMerge.write(&amp;#39;merged.pdf&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And that’s everything, a simple Python script that creates a merged PDF from all PDFs in the root folder. It is important to remember that a PDF file needs to be opened, and then a file object can be created. Using the regular PDF file will not work.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Photo by &lt;a href=&#34;https://unsplash.com/@krakenimages?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;krakenimages&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/s/photos/union?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+      
+            <category>Python</category>
+      
+      
+            <category>How-to</category>
+      
+    </item>
     
     <item>
       <title>Simple Neural Networks in Python</title>

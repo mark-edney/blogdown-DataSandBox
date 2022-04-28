@@ -3,24 +3,48 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://datasandbox.netlify.app/</loc>
-    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
+    <lastmod>2022-04-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/categories/</loc>
-    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
+    <lastmod>2022-04-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-04-20-dashboards-in-r-with-shiny-dashboard/</loc>
+    <lastmod>2022-04-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/tags/ggplot/</loc>
+    <lastmod>2022-04-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/categories/how-to/</loc>
+    <lastmod>2022-04-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/tags/leaflet/</loc>
+    <lastmod>2022-04-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/</loc>
+    <lastmod>2022-04-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/tags/r/</loc>
+    <lastmod>2022-04-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/tags/shiny-app/</loc>
+    <lastmod>2022-04-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/tags/</loc>
+    <lastmod>2022-04-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-04-14-merging-pdfs-with-python/</loc>
+    <lastmod>2022-04-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/tags/python/</loc>
+    <lastmod>2022-04-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-04-08-benchmarking-data-tables/</loc>
+    <lastmod>2022-04-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/categories/general/</loc>
     <lastmod>2022-04-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://datasandbox.netlify.app/post/</loc>
-    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://datasandbox.netlify.app/tags/r/</loc>
-    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://datasandbox.netlify.app/post/2022-04-11-r-bloggers-site/</loc>
-    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://datasandbox.netlify.app/tags/</loc>
     <lastmod>2022-04-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/categories/project/</loc>
@@ -29,31 +53,16 @@
     <loc>https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/</loc>
     <lastmod>2022-03-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://datasandbox.netlify.app/categories/how-to/</loc>
-    <lastmod>2022-03-20T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://datasandbox.netlify.app/tags/nn/</loc>
-    <lastmod>2022-03-20T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://datasandbox.netlify.app/tags/python/</loc>
     <lastmod>2022-03-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/</loc>
     <lastmod>2022-03-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://datasandbox.netlify.app/tags/ggplot/</loc>
-    <lastmod>2022-03-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://datasandbox.netlify.app/tags/leaflet/</loc>
-    <lastmod>2022-03-18T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/</loc>
     <lastmod>2022-03-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/tags/rmarkdown/</loc>
-    <lastmod>2022-03-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://datasandbox.netlify.app/tags/shiny-app/</loc>
     <lastmod>2022-03-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/post/2022-03-10-creating-dashboard-in-r/</loc>
