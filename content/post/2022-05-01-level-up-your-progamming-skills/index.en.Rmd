@@ -21,15 +21,15 @@ How do you become a better programmer? Well, there is strong scientific evidence
 
 Deliberate Practice can be summarized to the following points:
 
-*  Talent is not enough, and to become great at a task requires a lot of practice and repetition.
+* Talent is not enough, and to become great at a task requires a lot of practice and repetition.
 
-*  Deliberate practice is hard-work, in order strengthen your skills through practice you need to be challenged. This means that repetition by itself will not develop skill. This also means you need to constantly increase the challenge of your practice as you become better at it. 
+* Deliberate practice is hard-work, in order strengthen your skills through practice you need to be challenged. This means that repetition by itself will not develop skill. This also means you need to constantly increase the challenge of your practice as you become better at it. 
 
-*  Focus plays a large role in deliberate practice. This connects to the previous point for the required challenge of practice. This can also tie into the principles of flow, as best described by Mihaly Csikszentmihalyi in his book "Flow: The Psychology of Optimal Experience".
+* Focus plays a large role in deliberate practice. This connects to the previous point for the required challenge of practice. This can also tie into the principles of flow, as best described by Mihaly Csikszentmihalyi in his book "Flow: The Psychology of Optimal Experience".
 
-*  Setting goals becomes a powerful motivator. With the completion of a goal, there is a release of endorphins, which cause a sense of satisfaction. Goals are can also be utilized to increase the difficulty of practice, making an otherwise easy task a challenge.
+* Setting goals becomes a powerful motivator. With the completion of a goal, there is a release of endorphins, which cause a sense of satisfaction. Goals are can also be utilized to increase the difficulty of practice, making an otherwise easy task a challenge.
 
-*  Feedback is important. Feedback provides motivation by comparing current to previous performance. 
+* Feedback is important. Feedback provides motivation by comparing current to previous performance. 
 
 ## Application for programmers
 
