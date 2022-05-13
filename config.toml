@@ -6,7 +6,7 @@ math = true
 DefaultContentLanguage = "en"
 enableInlineShortcodes = true
 theme = "Blonde"
-enableRobotsTXT = true
+enableRobotsTXT = false
 
 # Please enable this feature if the site is available in Japanese, Chinese or Korean.
 #hasCJKLanguage = true

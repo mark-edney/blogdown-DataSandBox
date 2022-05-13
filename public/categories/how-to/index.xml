@@ -6,7 +6,16 @@
     <description>Recent content in How-to on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 20 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/categories/how-to/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/categories/how-to/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Formatting our output with Python&#39;s F strings</title>
+      <link>https://datasandbox.netlify.app/post/2022-05-09-formatting-our-outout-with-python-s-f-strings/</link>
+      <pubDate>Mon, 09 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-05-09-formatting-our-outout-with-python-s-f-strings/</guid>
+      <description>I have recently been on a tear of different challenges on the site HackerRank. I am about halfway through their 30 days of code and 10 days of statistics. These challenges often require to output number to a certain a number of significant digits. I’ve always thought that the round function can be used for this, but I am wrong. The F string seems to be a powerful tool to accomplish this, and worth your time learning if you are unfamiliar.</description>
+    </item>
+    
     <item>
       <title>Dashboards in R with Shiny Dashboard</title>
       <link>https://datasandbox.netlify.app/post/2022-04-20-dashboards-in-r-with-shiny-dashboard/</link>

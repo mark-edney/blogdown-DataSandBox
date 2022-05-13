@@ -5,10 +5,128 @@
     <description>Recent content in Python on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 14 Apr 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 May 2022 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://datasandbox.netlify.app/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Formatting our output with Python&#39;s F strings</title>
+      <link>https://datasandbox.netlify.app/post/2022-05-09-formatting-our-outout-with-python-s-f-strings/</link>
+      <pubDate>Mon, 09 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-05-09-formatting-our-outout-with-python-s-f-strings/</guid>
+      <description>
+
+
+&lt;p&gt;I have recently been on a tear of different challenges on the site &lt;a href=&#34;hackerrank.com&#34;&gt;HackerRank&lt;/a&gt;. I am about halfway through their 30 days of code and 10 days of statistics. These challenges often require to output number to a certain a number of significant digits. I’ve always thought that the &lt;code&gt;round&lt;/code&gt; function can be used for this, but I am wrong. The F string seems to be a powerful tool to accomplish this, and worth your time learning if you are unfamiliar.&lt;/p&gt;
+&lt;div id=&#34;structure-of-an-f-string&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Structure of an F string&lt;/h2&gt;
+&lt;p&gt;The formatting of an F string starts with a &lt;code&gt;f&lt;/code&gt; prior to quotations, whether they be single or double quotes. Any variable can then be included within a series of &lt;code&gt;{}&lt;/code&gt;. This formatting can make it easier than turning values into strings and concatenating all strings into a single line of text. This is easily demonstrated with a large mix of values and strings.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;x = 1/3
+y = 1/6
+
+print(&amp;quot;The value is &amp;quot; + str(x) + &amp;quot; is greater than &amp;quot; + str(y))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The value is 0.3333333333333333 is greater than 0.16666666666666666&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(f&amp;quot;The value is {x} is greater than {y}&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The value is 0.3333333333333333 is greater than 0.16666666666666666&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The values can then be formatted with &lt;code&gt;:&lt;/code&gt; after the variable name. The number of digits prior and post the decimal can then be specified. The &lt;code&gt;f&lt;/code&gt; is added after the decimal formatting to ensure the value is treated as a float.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(f&amp;quot;The value is {x:.3f} is greater than {y:.2f}&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The value is 0.333 is greater than 0.17&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The values passed are not specific to the number of digits, but the minimum number of spaces. This means you can ensure specific space aligned, such as for a table, by including these values.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;z = [10000, 500, 10, 0.001, .1]
+for i in z:
+        print(f&amp;quot;the value is: {i:5}&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## the value is: 10000
+## the value is:   500
+## the value is:    10
+## the value is: 0.001
+## the value is:   0.1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Additionally, we can add leading zeros by adding zero prior to the number of digits.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;for i in z:
+        print(f&amp;quot;the value is: {i:05}&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## the value is: 10000
+## the value is: 00500
+## the value is: 00010
+## the value is: 0.001
+## the value is: 000.1&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;alternative-formatting&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Alternative formatting&lt;/h2&gt;
+&lt;p&gt;There are a few alternative methods for f strings. From my understanding, they are not as fast when it comes to performance. I don’t think that is of particular importance. If your script needs a high level of performance, than you probably don’t want many print statements.&lt;/p&gt;
+&lt;div id=&#34;format-method&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Format Method()&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;format&lt;/code&gt; method is very similar to &lt;code&gt;f strings&lt;/code&gt; with the use of the &lt;code&gt;{}&lt;/code&gt;. The string is not preceded by f and the &lt;code&gt;{}&lt;/code&gt; can remain empty or contain position indexing. The values are then added in the &lt;code&gt;.format&lt;/code&gt; function after the string. The order of the variable in the string will correspond with the number used in the &lt;code&gt;{}&lt;/code&gt;, if used at all.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(&amp;quot;The value is {} is greater than {}&amp;quot;.format(1/3, 1/6))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The value is 0.3333333333333333 is greater than 0.16666666666666666&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;old-method&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Old % Method&lt;/h3&gt;
+&lt;p&gt;The Old % operator (modulo) replaces the value in the string. Formatting details, such as those previously discussed, are entered after the &lt;code&gt;%&lt;/code&gt;. The variables or values are then entered after the string when preceded by another &lt;code&gt;%&lt;/code&gt;. Multiple values can be passed.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(&amp;quot;The value is %5.3f is greater than %5.3f&amp;quot; %(x,y))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The value is 0.333 is greater than 0.167&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;Whichever method you decide, it probably won’t make a huge difference. The important part is to understand is the actual formatting. F strings also seem to make it easier to understand the code, as the actual values are inline with the string and the formatting.&lt;/p&gt;
+&lt;p&gt;Photo by &lt;a href=&#34;https://unsplash.com/@sigmund?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Sigmund&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/s/photos/output?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>Python</category>
+      
+      
+            <category>How-to</category>
+      
+    </item>
+    
+    <item>
+      <title>Level up your programming skills</title>
+      <link>https://datasandbox.netlify.app/post/2022-05-01-level-up-your-progamming-skills/</link>
+      <pubDate>Sun, 01 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-05-01-level-up-your-progamming-skills/</guid>
+      <description>
+
+
+&lt;p&gt;How do you become a better programmer? Well, there is strong scientific evidence for the support of the principle of deliberate practice. Deliberate practice is a method of skill development first written by Anders Ericsson in the book “Peak: Secrets from the New Science of Expertise”. I would also recommend reading “Talent Is Overrated: What Really Separates World-Class Performers from Everybody Else” by Geoff Colvin.&lt;/p&gt;
+&lt;div id=&#34;deliberate-practice&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Deliberate Practice&lt;/h2&gt;
+&lt;p&gt;Deliberate Practice can be summarized to the following points:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Talent is not enough, and to become great at a task requires a lot of practice and repetition.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Deliberate practice is hard-work, in order strengthen your skills through practice you need to be challenged. This means that repetition by itself will not develop skill. This also means you need to constantly increase the challenge of your practice as you become better at it.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Focus plays a large role in deliberate practice. This connects to the previous point for the required challenge of practice. This can also tie into the principles of flow, as best described by Mihaly Csikszentmihalyi in his book “Flow: The Psychology of Optimal Experience”.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Setting goals becomes a powerful motivator. With the completion of a goal, there is a release of endorphins, which cause a sense of satisfaction. Goals are can also be utilized to increase the difficulty of practice, making an otherwise easy task a challenge.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Feedback is important. Feedback provides motivation by comparing current to previous performance.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;application-for-programmers&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Application for programmers&lt;/h2&gt;
+&lt;p&gt;So, how can programmers incorporate the principles of deliberate practice? I’ve recently been recommended the site &lt;a href=&#34;https://www.hackerrank.com&#34;&gt;Hacker Rank&lt;/a&gt; and I can say it is fantastic.
+The Hacker Rank site provides a wide array of challenges for programmers of varying skills levels. There is a selection of different topics from Algorithms to Regular Expressions.&lt;/p&gt;
+&lt;p&gt;So how does Hacker Rank fit in with deliberate practice? Well, there certainly are a good level of challenges to work through. There a three different levels per topic, with challenges in the same difficulty having nothing in common.&lt;/p&gt;
+&lt;p&gt;The design of the site is quite simple, with very little to distract you from your challenge. There is the option for a dark theme if you are, like me, a person of sophistication. It also pretty easy to have the problem on one side of your screen with your programming on the other.&lt;/p&gt;
+&lt;p&gt;There are multiple built-in goals to work on. Certifications for each topic to test your current skill level and to advertise to potential employers. There a preparation kits for interviews with time frames between 1 and 12 weeks, which ever is most convenient for you.&lt;/p&gt;
+&lt;p&gt;There is immediate feedback from assignments, with automated program testing. A leader board is provided for the most competitive, who are interested in their global ranking. You also get feedback from the built-in IDE on your programming errors.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;site-criticisms&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Site Criticisms&lt;/h2&gt;
+&lt;p&gt;I do enjoy the site, but I still have some minor issues. To its credit, the site does support multiple programming languages, even different versions of the same programming language. This does, however, make it difficult to following along with the tutorials if they are done in a language that you are not familiar with.&lt;/p&gt;
+&lt;p&gt;Also, at this time, there doesn’t seem to be support to retake certification exams for some topics. I myself, had failed the R basic certification as I am more used to using the &lt;code&gt;tidyverse&lt;/code&gt; package rather than base &lt;code&gt;R&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I can’t really speak on behalf of the incorporation of potential employers in it. But that does seem like a very promising idea. I still think it is a great to tool for the programming community, and I will continue to utilize it for my personal skill development, as it can easily provide a source of deliberate practice.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>Python</category>
+      
+            <category>R</category>
+      
+      
+            <category>General</category>
+      
+    </item>
     
     <item>
       <title>Merging PDFs with Python</title>

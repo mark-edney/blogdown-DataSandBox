@@ -16,7 +16,7 @@
   gtag('config', 'G-VNSWDG9ZWF');
 </script>
 
-<title>The Data Sandbox | Underrated CRAN Packages</title>
+<title>The Data Sandbox | Formatting our output with Python&#39;s F strings</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <link rel="apple-touch-icon" sizes="180x180" href='/favicon/apple-touch-icon.png'>
@@ -26,7 +26,7 @@
     <link rel="mask-icon" href=' /favicon/safari-pinned-tab.svg' color="#5bbad5" />
     <link rel="shortcut icon" href='/favicon/favicon.ico' />
     <meta name="theme-color" content="#ffffff">
-    <meta property="og:title" content="The Data Sandbox | Underrated CRAN Packages" />
+    <meta property="og:title" content="The Data Sandbox | Formatting our output with Python&#39;s F strings" />
     
     
     
@@ -38,28 +38,28 @@
 
 
 
-<meta name="description" content="A search for popular R packages, that I would would otherwise miss.">
+<meta name="description" content="Using F string to format the output from Python">
 <meta property="og:site_name" content="The Data Sandbox">
-<meta property="og:description" content="A search for popular R packages, that I would would otherwise miss.">
-<meta property="og:url" content="https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/">
+<meta property="og:description" content="Using F string to format the output from Python">
+<meta property="og:url" content="https://datasandbox.netlify.app/post/2022-05-09-formatting-our-outout-with-python-s-f-strings/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="">
 
-<link rel="canonical" href="https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/">
+<link rel="canonical" href="https://datasandbox.netlify.app/post/2022-05-09-formatting-our-outout-with-python-s-f-strings/">
 
-<meta name="twitter:description" content="A search for popular R packages, that I would would otherwise miss.">
-<meta property="article:published_time" content="2022-03-31T00:00:00&#43;00:00">
-<meta property="article:updated_time" content="2022-03-31T00:00:00&#43;00:00">
+<meta name="twitter:description" content="Using F string to format the output from Python">
+<meta property="article:published_time" content="2022-05-09T00:00:00&#43;00:00">
+<meta property="article:updated_time" content="2022-05-09T00:00:00&#43;00:00">
 
 
 
 
 
     
-<meta property="og:image" content="https://datasandbox.netlify.app/img/Rlogo.svg">
-<meta property="og:image:url" content="https://datasandbox.netlify.app/img/Rlogo.svg">
+<meta property="og:image" content="https://datasandbox.netlify.app/img/format.jpg">
+<meta property="og:image:url" content="https://datasandbox.netlify.app/img/format.jpg">
     
 
     
@@ -154,18 +154,18 @@
     <div class="col-span-3 lg:col-span-2 dark:text-white">
     
         <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
-            <h1 class="title text-4xl">Underrated CRAN Packages</h1>
+            <h1 class="title text-4xl">Formatting our output with Python&#39;s F strings</h1>
             <hr class="my-2">
             <aside id="meta">
                 <div>
                     <section>
-                        <h4 id="date"><span class="icon-access_time mr-2"></span>2022/03/31 </h4>
+                        <h4 id="date"><span class="icon-access_time mr-2"></span>2022/05/09 </h4>
                     </section>
                     
                     <div id="tags">
                         <span class="icon-local_offer mr-1"></span>
                         
-                        <a href="https://datasandbox.netlify.app/tags/r">R</a> |
+                        <a href="https://datasandbox.netlify.app/tags/python">Python</a> |
                         
                     </div>
                     
@@ -173,70 +173,63 @@
             </aside>
             <hr class="my-2">
             
-            <img class="py-4" src="https://datasandbox.netlify.app/img/Rlogo.svg">
+            <img class="py-4" src="https://datasandbox.netlify.app/img/format.jpg">
             
             <div class="content mt-5">
-<script src="https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/index.en_files/header-attrs/header-attrs.js"></script>
 
 
-<p>I sit here looking for inspiration, nothing interesting to write about. Perhaps there are some popular R packages on CRAN that I don’t know about? You can explore the data on downloads from CRAN with the <code>cranlogs</code> package.</p>
-<div id="top-cran-downloads" class="section level2">
-<h2>Top CRAN downloads</h2>
-<p>With the following code we can get the most popular packages from CRAN. The CRAN directory doesn’t represent all R packages but a good amount of them.</p>
-<pre class="r"><code>library(tidyverse)
-library(cranlogs)
-top100 &lt;- cran_top_downloads(when = &#39;last-month&#39;, count = 100)
-top100 %&gt;% head()</code></pre>
-<pre><code>##   rank package   count       from         to
-## 1    1 ggplot2 2344057 2022-03-04 2022-04-02
-## 2    2   rlang 2239228 2022-03-04 2022-04-02
-## 3    3    glue 1800420 2022-03-04 2022-04-02
-## 4    4      sf 1704701 2022-03-04 2022-04-02
-## 5    5     cli 1665769 2022-03-04 2022-04-02
-## 6    6   dplyr 1665023 2022-03-04 2022-04-02</code></pre>
-<p>From this list, we can see that the <code>tidyverse</code> represents a large amount of the top downloads with <code>ggplot2</code>, <code>rlang</code> and <code>dplyr</code>. The list includes the <code>sf</code> package for geo-spacial data, the <code>glue</code> package for string manipulation and the <code>cli</code> package which is used to create a command line interface for packages. Most of these packages I already have a good understanding of, so I need to narrow down the search.</p>
+<p>I have recently been on a tear of different challenges on the site <a href="hackerrank.com">HackerRank</a>. I am about halfway through their 30 days of code and 10 days of statistics. These challenges often require to output number to a certain a number of significant digits. I’ve always thought that the <code>round</code> function can be used for this, but I am wrong. The F string seems to be a powerful tool to accomplish this, and worth your time learning if you are unfamiliar.</p>
+<div id="structure-of-an-f-string" class="section level2">
+<h2>Structure of an F string</h2>
+<p>The formatting of an F string starts with a <code>f</code> prior to quotations, whether they be single or double quotes. Any variable can then be included within a series of <code>{}</code>. This formatting can make it easier than turning values into strings and concatenating all strings into a single line of text. This is easily demonstrated with a large mix of values and strings.</p>
+<pre class="python"><code>x = 1/3
+y = 1/6
+
+print(&quot;The value is &quot; + str(x) + &quot; is greater than &quot; + str(y))</code></pre>
+<pre><code>## The value is 0.3333333333333333 is greater than 0.16666666666666666</code></pre>
+<pre class="python"><code>print(f&quot;The value is {x} is greater than {y}&quot;)</code></pre>
+<pre><code>## The value is 0.3333333333333333 is greater than 0.16666666666666666</code></pre>
+<p>The values can then be formatted with <code>:</code> after the variable name. The number of digits prior and post the decimal can then be specified. The <code>f</code> is added after the decimal formatting to ensure the value is treated as a float.</p>
+<pre class="python"><code>print(f&quot;The value is {x:.3f} is greater than {y:.2f}&quot;)</code></pre>
+<pre><code>## The value is 0.333 is greater than 0.17</code></pre>
+<p>The values passed are not specific to the number of digits, but the minimum number of spaces. This means you can ensure specific space aligned, such as for a table, by including these values.</p>
+<pre class="python"><code>z = [10000, 500, 10, 0.001, .1]
+for i in z:
+        print(f&quot;the value is: {i:5}&quot;)</code></pre>
+<pre><code>## the value is: 10000
+## the value is:   500
+## the value is:    10
+## the value is: 0.001
+## the value is:   0.1</code></pre>
+<p>Additionally, we can add leading zeros by adding zero prior to the number of digits.</p>
+<pre class="python"><code>for i in z:
+        print(f&quot;the value is: {i:05}&quot;)</code></pre>
+<pre><code>## the value is: 10000
+## the value is: 00500
+## the value is: 00010
+## the value is: 0.001
+## the value is: 000.1</code></pre>
 </div>
-<div id="packages-installed" class="section level2">
-<h2>Packages installed</h2>
-<p>You can get a list of your installed packages with the installed_packages function. You can than filter the top 100 list and remove anything you already have installed to find new packages.</p>
-<pre class="r"><code>mine &lt;- installed.packages() %&gt;%
-        data.frame() %&gt;%
-        select(Package)
-new &lt;- top100 %&gt;%
-        filter(!package %in% mine$Package)
-new</code></pre>
-<pre><code>##   rank   package   count       from         to
-## 1   17      ragg 1161019 2022-03-04 2022-04-02
-## 2   21       rgl 1148721 2022-03-04 2022-04-02
-## 3   23     rgeos 1128166 2022-03-04 2022-04-02
-## 4   38       zoo  832762 2022-03-04 2022-04-02
-## 5   48   pkgdown  766019 2022-03-04 2022-04-02
-## 6   81    nloptr  565042 2022-03-04 2022-04-02
-## 7   88     Hmisc  542890 2022-03-04 2022-04-02
-## 8   89      lme4  538878 2022-03-04 2022-04-02
-## 9   93 RcppEigen  513045 2022-03-04 2022-04-02</code></pre>
-<p>From some quick research, I have found the following about the new packages:</p>
-<ul>
-<li><code>ragg</code> - a 2D library as an alternative to the RStudio default</li>
-<li><code>rgl</code> - functions for 3D interactive graphics</li>
-<li><code>rgeos</code> - a geometry package but is currently planned to be retired at the end of 2023 for the <code>sf</code> package</li>
-<li><code>zoo</code> - a library to deal with time series</li>
-<li><code>pkgdown</code> - a library fro building blog website, I use blogdown</li>
-<li><code>nloptr</code> - a library for solving non-linear optimization problems</li>
-<li><code>Hmisc</code> - an assortment of different data analysis tools</li>
-<li><code>lme4</code> - for fitting linear and generalized linear mixed-effects models</li>
-<li><code>RcppEigen</code> - integration of the <code>eigen</code> library in R for linear algebra</li>
-</ul>
+<div id="alternative-formatting" class="section level2">
+<h2>Alternative formatting</h2>
+<p>There are a few alternative methods for f strings. From my understanding, they are not as fast when it comes to performance. I don’t think that is of particular importance. If your script needs a high level of performance, than you probably don’t want many print statements.</p>
+<div id="format-method" class="section level3">
+<h3>Format Method()</h3>
+<p>The <code>format</code> method is very similar to <code>f strings</code> with the use of the <code>{}</code>. The string is not preceded by f and the <code>{}</code> can remain empty or contain position indexing. The values are then added in the <code>.format</code> function after the string. The order of the variable in the string will correspond with the number used in the <code>{}</code>, if used at all.</p>
+<pre class="python"><code>print(&quot;The value is {} is greater than {}&quot;.format(1/3, 1/6))</code></pre>
+<pre><code>## The value is 0.3333333333333333 is greater than 0.16666666666666666</code></pre>
 </div>
-<div id="take-away" class="section level2">
-<h2>Take-away</h2>
-<p>Hopefully your take-way is a simple method to explore R library that you have never heard about. I know that a few of the libraries seem interesting and worth further exploring.</p>
-<p>While we are at it, might as well find the daily values for the new packages and plot them for the last month.</p>
-<pre class="r"><code>new$package %&gt;%
-        cran_downloads(when = &quot;last-month&quot;) %&gt;%
-        ggplot(aes(x = date, y = count, color = package)) +
-        geom_line()</code></pre>
-<p><img src="https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/index.en_files/figure-html/plot-1.png" width="672" /></p>
+<div id="old-method" class="section level3">
+<h3>Old % Method</h3>
+<p>The Old % operator (modulo) replaces the value in the string. Formatting details, such as those previously discussed, are entered after the <code>%</code>. The variables or values are then entered after the string when preceded by another <code>%</code>. Multiple values can be passed.</p>
+<pre class="python"><code>print(&quot;The value is %5.3f is greater than %5.3f&quot; %(x,y))</code></pre>
+<pre><code>## The value is 0.333 is greater than 0.167</code></pre>
+</div>
+</div>
+<div id="conclusions" class="section level2">
+<h2>Conclusions</h2>
+<p>Whichever method you decide, it probably won’t make a huge difference. The important part is to understand is the actual formatting. F strings also seem to make it easier to understand the code, as the actual values are inline with the string and the formatting.</p>
+<p>Photo by <a href="https://unsplash.com/@sigmund?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Sigmund</a> on <a href="https://unsplash.com/s/photos/output?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
 </div>
 </div>
             <aside id="meta">
@@ -247,7 +240,7 @@ new</code></pre>
                     
                     <span
                         class="inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-200 justify-center h-8 px-3 text-blue-500 duration-200 hover:text-black dark:bg-warmgray-800"><a
-                            href="https://datasandbox.netlify.app/categories/project">Project</a></span>
+                            href="https://datasandbox.netlify.app/categories/how-to">How-to</a></span>
                     
                 </div>
                 
@@ -257,21 +250,14 @@ new</code></pre>
             <div class="grid grid-cols-2">
                 <div class="col-span-1">
                     
-                    <a class="previous lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/">
+                    <a class="previous lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-05-01-level-up-your-progamming-skills/">
                         <div
                             class="transition-colors duration-300 border border-gray-600 hover:border-black h-auto m-3 text-center py-3 lg:py-1">
-                            <span class="icon-keyboard_arrow_left"></span> Simple Neural Networks in Python
+                            <span class="icon-keyboard_arrow_left"></span> Level up your programming skills
                         </div>
                     </a>
                     
                 </div>
-                
-                <a class="next lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-04-11-r-bloggers-site/">
-                    <div
-                        class="transition-colors duration-300 col-span-1 border border-gray-600 hover:border-black h-auto m-3 text-center py-3 lg:py-1">
-                        R-Bloggers site <span class="icon-keyboard_arrow_right"></span>
-                    </div>
-                </a>
                 
             </div>
         </div>
@@ -404,6 +390,15 @@ new</code></pre>
     <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Recent Posts</p>
     <div class="mx-6">
         
+        <a href="/post/2022-01-29-fitness-tracker-modeling-ml/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Fitness Tracker Modeling: ML</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/01/29</time>
+                    </p>
+                </div>
+            </div>
         <a href="/post/2022-02-23-new-features-in-r/" class="">
             <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
                 <div class="px-2">
@@ -413,12 +408,21 @@ new</code></pre>
                     </p>
                 </div>
             </div>
-        <a href="/post/2022-02-27-bike-shares-in-toronto/" class="">
+        <a href="/post/2022-04-14-merging-pdfs-with-python/" class="">
             <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
                 <div class="px-2">
-                    <div class="text-gray-900 font-bold text-xl dark:text-white">Bike shares in Toronto</div>
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Merging PDFs with Python</div>
                     <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
-                        <time><span class="icon-access_time mr-1"></span>2022/02/27</time>
+                        <time><span class="icon-access_time mr-1"></span>2022/04/14</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-02-16-/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Speed cameras in Toronto</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/02/16</time>
                     </p>
                 </div>
             </div>
@@ -428,24 +432,6 @@ new</code></pre>
                     <div class="text-gray-900 font-bold text-xl dark:text-white">Fancy Tables in R</div>
                     <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
                         <time><span class="icon-access_time mr-1"></span>2022/02/11</time>
-                    </p>
-                </div>
-            </div>
-        <a href="/post/2022-04-11-r-bloggers-site/" class="">
-            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
-                <div class="px-2">
-                    <div class="text-gray-900 font-bold text-xl dark:text-white">R-Bloggers site</div>
-                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
-                        <time><span class="icon-access_time mr-1"></span>2022/04/11</time>
-                    </p>
-                </div>
-            </div>
-        <a href="/post/2022-03-18-making-the-connection-with-crosstalk/" class="">
-            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
-                <div class="px-2">
-                    <div class="text-gray-900 font-bold text-xl dark:text-white">Making the Connection with Crosstalk</div>
-                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
-                        <time><span class="icon-access_time mr-1"></span>2022/03/18</time>
                     </p>
                 </div>
             </div>

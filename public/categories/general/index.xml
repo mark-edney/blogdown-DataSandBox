@@ -6,7 +6,17 @@
     <description>Recent content in General on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 11 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/categories/general/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 01 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/categories/general/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Level up your programming skills</title>
+      <link>https://datasandbox.netlify.app/post/2022-05-01-level-up-your-progamming-skills/</link>
+      <pubDate>Sun, 01 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-05-01-level-up-your-progamming-skills/</guid>
+      <description>How do you become a better programmer? Well, there is strong scientific evidence for the support of the principle of deliberate practice. Deliberate practice is a method of skill development first written by Anders Ericsson in the book “Peak: Secrets from the New Science of Expertise”. I would also recommend reading “Talent Is Overrated: What Really Separates World-Class Performers from Everybody Else” by Geoff Colvin.
+Deliberate PracticeDeliberate Practice can be summarized to the following points:</description>
+    </item>
+    
     <item>
       <title>R-Bloggers site</title>
       <link>https://datasandbox.netlify.app/post/2022-04-11-r-bloggers-site/</link>

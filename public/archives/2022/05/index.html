@@ -16,7 +16,7 @@
   gtag('config', 'G-VNSWDG9ZWF');
 </script>
 
-<title>The Data Sandbox | Underrated CRAN Packages</title>
+<title>The Data Sandbox | 2022/05</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <link rel="apple-touch-icon" sizes="180x180" href='/favicon/apple-touch-icon.png'>
@@ -26,7 +26,7 @@
     <link rel="mask-icon" href=' /favicon/safari-pinned-tab.svg' color="#5bbad5" />
     <link rel="shortcut icon" href='/favicon/favicon.ico' />
     <meta name="theme-color" content="#ffffff">
-    <meta property="og:title" content="The Data Sandbox | Underrated CRAN Packages" />
+    <meta property="og:title" content="The Data Sandbox | 2022/05" />
     
     
     
@@ -37,30 +37,28 @@
     
 
 
+	
 
-<meta name="description" content="A search for popular R packages, that I would would otherwise miss.">
+<meta name="description" content="A playground of Data Science Projects">
 <meta property="og:site_name" content="The Data Sandbox">
-<meta property="og:description" content="A search for popular R packages, that I would would otherwise miss.">
-<meta property="og:url" content="https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/">
+<meta property="og:description" content="A playground of Data Science Projects">
+<meta property="og:url" content="https://datasandbox.netlify.app/archives/2022/05/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="">
 
-<link rel="canonical" href="https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/">
+<link rel="canonical" href="https://datasandbox.netlify.app/archives/2022/05/">
 
-<meta name="twitter:description" content="A search for popular R packages, that I would would otherwise miss.">
-<meta property="article:published_time" content="2022-03-31T00:00:00&#43;00:00">
-<meta property="article:updated_time" content="2022-03-31T00:00:00&#43;00:00">
-
+<meta name="twitter:description" content="A playground of Data Science Projects">
+<meta property="article:published_time" content="">
 
 
 
 
-    
-<meta property="og:image" content="https://datasandbox.netlify.app/img/Rlogo.svg">
-<meta property="og:image:url" content="https://datasandbox.netlify.app/img/Rlogo.svg">
-    
+
+<meta property="og:image" content="https://datasandbox.netlify.app/">
+<meta property="og:image:url" content="https://datasandbox.netlify.app/">
 
     
     <link rel="stylesheet" href='/css/custom.css'>
@@ -150,159 +148,65 @@
     <div class="container max-w-screen-xl mx-auto mt-4 flex-grow px-5 lg:px-0" id="content">
             <div class="lg:mx-5">
 <div class="grid grid-cols-3 gap-4">
-    
-    <div class="col-span-3 lg:col-span-2 dark:text-white">
-    
-        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
-            <h1 class="title text-4xl">Underrated CRAN Packages</h1>
-            <hr class="my-2">
-            <aside id="meta">
-                <div>
-                    <section>
-                        <h4 id="date"><span class="icon-access_time mr-2"></span>2022/03/31 </h4>
-                    </section>
-                    
-                    <div id="tags">
-                        <span class="icon-local_offer mr-1"></span>
-                        
-                        <a href="https://datasandbox.netlify.app/tags/r">R</a> |
-                        
-                    </div>
-                    
-                </div>
-            </aside>
-            <hr class="my-2">
-            
-            <img class="py-4" src="https://datasandbox.netlify.app/img/Rlogo.svg">
-            
-            <div class="content mt-5">
-<script src="https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/index.en_files/header-attrs/header-attrs.js"></script>
-
-
-<p>I sit here looking for inspiration, nothing interesting to write about. Perhaps there are some popular R packages on CRAN that I don’t know about? You can explore the data on downloads from CRAN with the <code>cranlogs</code> package.</p>
-<div id="top-cran-downloads" class="section level2">
-<h2>Top CRAN downloads</h2>
-<p>With the following code we can get the most popular packages from CRAN. The CRAN directory doesn’t represent all R packages but a good amount of them.</p>
-<pre class="r"><code>library(tidyverse)
-library(cranlogs)
-top100 &lt;- cran_top_downloads(when = &#39;last-month&#39;, count = 100)
-top100 %&gt;% head()</code></pre>
-<pre><code>##   rank package   count       from         to
-## 1    1 ggplot2 2344057 2022-03-04 2022-04-02
-## 2    2   rlang 2239228 2022-03-04 2022-04-02
-## 3    3    glue 1800420 2022-03-04 2022-04-02
-## 4    4      sf 1704701 2022-03-04 2022-04-02
-## 5    5     cli 1665769 2022-03-04 2022-04-02
-## 6    6   dplyr 1665023 2022-03-04 2022-04-02</code></pre>
-<p>From this list, we can see that the <code>tidyverse</code> represents a large amount of the top downloads with <code>ggplot2</code>, <code>rlang</code> and <code>dplyr</code>. The list includes the <code>sf</code> package for geo-spacial data, the <code>glue</code> package for string manipulation and the <code>cli</code> package which is used to create a command line interface for packages. Most of these packages I already have a good understanding of, so I need to narrow down the search.</p>
-</div>
-<div id="packages-installed" class="section level2">
-<h2>Packages installed</h2>
-<p>You can get a list of your installed packages with the installed_packages function. You can than filter the top 100 list and remove anything you already have installed to find new packages.</p>
-<pre class="r"><code>mine &lt;- installed.packages() %&gt;%
-        data.frame() %&gt;%
-        select(Package)
-new &lt;- top100 %&gt;%
-        filter(!package %in% mine$Package)
-new</code></pre>
-<pre><code>##   rank   package   count       from         to
-## 1   17      ragg 1161019 2022-03-04 2022-04-02
-## 2   21       rgl 1148721 2022-03-04 2022-04-02
-## 3   23     rgeos 1128166 2022-03-04 2022-04-02
-## 4   38       zoo  832762 2022-03-04 2022-04-02
-## 5   48   pkgdown  766019 2022-03-04 2022-04-02
-## 6   81    nloptr  565042 2022-03-04 2022-04-02
-## 7   88     Hmisc  542890 2022-03-04 2022-04-02
-## 8   89      lme4  538878 2022-03-04 2022-04-02
-## 9   93 RcppEigen  513045 2022-03-04 2022-04-02</code></pre>
-<p>From some quick research, I have found the following about the new packages:</p>
-<ul>
-<li><code>ragg</code> - a 2D library as an alternative to the RStudio default</li>
-<li><code>rgl</code> - functions for 3D interactive graphics</li>
-<li><code>rgeos</code> - a geometry package but is currently planned to be retired at the end of 2023 for the <code>sf</code> package</li>
-<li><code>zoo</code> - a library to deal with time series</li>
-<li><code>pkgdown</code> - a library fro building blog website, I use blogdown</li>
-<li><code>nloptr</code> - a library for solving non-linear optimization problems</li>
-<li><code>Hmisc</code> - an assortment of different data analysis tools</li>
-<li><code>lme4</code> - for fitting linear and generalized linear mixed-effects models</li>
-<li><code>RcppEigen</code> - integration of the <code>eigen</code> library in R for linear algebra</li>
-</ul>
-</div>
-<div id="take-away" class="section level2">
-<h2>Take-away</h2>
-<p>Hopefully your take-way is a simple method to explore R library that you have never heard about. I know that a few of the libraries seem interesting and worth further exploring.</p>
-<p>While we are at it, might as well find the daily values for the new packages and plot them for the last month.</p>
-<pre class="r"><code>new$package %&gt;%
-        cran_downloads(when = &quot;last-month&quot;) %&gt;%
-        ggplot(aes(x = date, y = count, color = package)) +
-        geom_line()</code></pre>
-<p><img src="https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/index.en_files/figure-html/plot-1.png" width="672" /></p>
-</div>
-</div>
-            <aside id="meta">
-                
-                <hr class="py-2">
-                <div id="categories">
-                    <span class="icon-folder text-xl mr-1"></span>
-                    
-                    <span
-                        class="inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-200 justify-center h-8 px-3 text-blue-500 duration-200 hover:text-black dark:bg-warmgray-800"><a
-                            href="https://datasandbox.netlify.app/categories/project">Project</a></span>
-                    
-                </div>
-                
-            </aside>
-            </div>
-        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
-            <div class="grid grid-cols-2">
-                <div class="col-span-1">
-                    
-                    <a class="previous lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/">
-                        <div
-                            class="transition-colors duration-300 border border-gray-600 hover:border-black h-auto m-3 text-center py-3 lg:py-1">
-                            <span class="icon-keyboard_arrow_left"></span> Simple Neural Networks in Python
-                        </div>
-                    </a>
-                    
-                </div>
-                
-                <a class="next lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-04-11-r-bloggers-site/">
-                    <div
-                        class="transition-colors duration-300 col-span-1 border border-gray-600 hover:border-black h-auto m-3 text-center py-3 lg:py-1">
-                        R-Bloggers site <span class="icon-keyboard_arrow_right"></span>
-                    </div>
-                </a>
-                
-            </div>
-        </div>
-        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
-            <div class="mb-3">
-                <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
+  
+  <div class="col-span-3 lg:col-span-2 mb-3">
+  
+    <h2 class="text-4xl dark:text-white">2022 05</h2>
     
     
     
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "data-sandbox" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-            </div>
-        </div>
+    
+    
+    <a href="/post/2022-05-09-formatting-our-outout-with-python-s-f-strings/">
+      <div
+    class="bg-white w-full p-3 lg:max-w-full lg:flex mt-5 transform hover:-translate-y-1 hover:shadow-md duration-500 dark:bg-warmgray-900">
+    
+    
+    <img alt="thumbnail" id="thumb"
+        class="lg:w-auto lg:h-44"
+        src="/img/format.jpg" />
+    
+    
+    <div class="relative pl-4 p-2 justify-between leading-normal max-w-full w-full">
+        <div class="text-gray-900 font-bold text-xl mb-2 dark:text-white">Formatting our output with Python&#39;s F strings</div>
+        <p class="text-gray-700 text-base pb-5 dark:text-gray-300">I have recently been on a tear of different challenges on the site HackerRank. I am about halfway through their 30 days of code an...</p>
+        <p class="text-sm text-gray-600 absolute items-center right-0 bottom-0 dark:text-gray-400">
+            <time><span class="icon-access_time mr-1"></span>2022/05/09</time>
+        </p>
     </div>
+</div>
+    </a>
     
+    <a href="/post/2022-05-01-level-up-your-progamming-skills/">
+      <div
+    class="bg-white w-full p-3 lg:max-w-full lg:flex mt-5 transform hover:-translate-y-1 hover:shadow-md duration-500 dark:bg-warmgray-900">
+    
+    
+    <img alt="thumbnail" id="thumb"
+        class="lg:w-auto lg:h-44"
+        src="/img/hackerrank.png" />
+    
+    
+    <div class="relative pl-4 p-2 justify-between leading-normal max-w-full w-full">
+        <div class="text-gray-900 font-bold text-xl mb-2 dark:text-white">Level up your programming skills</div>
+        <p class="text-gray-700 text-base pb-5 dark:text-gray-300">How do you become a better programmer? Well, there is strong scientific evidence for the support of the principle of deliberate pr...</p>
+        <p class="text-sm text-gray-600 absolute items-center right-0 bottom-0 dark:text-gray-400">
+            <time><span class="icon-access_time mr-1"></span>2022/05/01</time>
+        </p>
+    </div>
+</div>
+    </a>
+    
+    
+
+
+  </div>
+  
     <div class="hidden lg:block lg:col-span-1">
-        <div class="mb-3">
+    
+    
+            
+            <div class="mb-3">
     <form class="widget-search__form" role="search" method="get" action="https://google.com/search">
         <label>
             <input class="w-full p-3 focus:outline-none dark:bg-warmgray-900 dark:text-white placeholder-gray-700 dark:placeholder-gray-300" type="search"
@@ -312,7 +216,9 @@ new</code></pre>
         <input type="hidden" name="sitesearch" value="https://datasandbox.netlify.app/" />
     </form>
 </div>
-        <div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+        
+            
+            <div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
     <p class="text-xl text-center text-gray-700 py-3 px-3 dark:text-gray-300">Archives</p>
     
     
@@ -334,6 +240,8 @@ new</code></pre>
     
 </div>
         
+            
+            
 <div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
     <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Categories</p>
     
@@ -352,6 +260,8 @@ new</code></pre>
 </div>
 
         
+            
+            
 <div class="bg-white panel mb-3 dark:bg-warmgray-900">
     <p class="text-xl text-center text-gray-700 py-3 pl-3 dark:text-gray-300">Tags</p>
     <div class="panel-block p-2">
@@ -399,35 +309,46 @@ new</code></pre>
 </div>
 
         
+            
+            
 
 <div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
     <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Recent Posts</p>
     <div class="mx-6">
         
-        <a href="/post/2022-02-23-new-features-in-r/" class="">
+        <a href="/post/2022-02-08-professional-tables/" class="">
             <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
                 <div class="px-2">
-                    <div class="text-gray-900 font-bold text-xl dark:text-white">New features in R</div>
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Professional Tables with Stargazer</div>
                     <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
-                        <time><span class="icon-access_time mr-1"></span>2022/02/23</time>
+                        <time><span class="icon-access_time mr-1"></span>2022/02/08</time>
                     </p>
                 </div>
             </div>
-        <a href="/post/2022-02-27-bike-shares-in-toronto/" class="">
+        <a href="/post/2022-05-09-formatting-our-outout-with-python-s-f-strings/" class="">
             <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
                 <div class="px-2">
-                    <div class="text-gray-900 font-bold text-xl dark:text-white">Bike shares in Toronto</div>
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Formatting our output with Python&#39;s F strings</div>
                     <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
-                        <time><span class="icon-access_time mr-1"></span>2022/02/27</time>
+                        <time><span class="icon-access_time mr-1"></span>2022/05/09</time>
                     </p>
                 </div>
             </div>
-        <a href="/post/2022-02-11-fancy-tables-in-r/" class="">
+        <a href="/post/2022-02-16-/" class="">
             <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
                 <div class="px-2">
-                    <div class="text-gray-900 font-bold text-xl dark:text-white">Fancy Tables in R</div>
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Speed cameras in Toronto</div>
                     <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
-                        <time><span class="icon-access_time mr-1"></span>2022/02/11</time>
+                        <time><span class="icon-access_time mr-1"></span>2022/02/16</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-05-01-level-up-your-progamming-skills/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Level up your programming skills</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/05/01</time>
                     </p>
                 </div>
             </div>
@@ -440,20 +361,13 @@ new</code></pre>
                     </p>
                 </div>
             </div>
-        <a href="/post/2022-03-18-making-the-connection-with-crosstalk/" class="">
-            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
-                <div class="px-2">
-                    <div class="text-gray-900 font-bold text-xl dark:text-white">Making the Connection with Crosstalk</div>
-                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
-                        <time><span class="icon-access_time mr-1"></span>2022/03/18</time>
-                    </p>
-                </div>
-            </div>
         </a>
     </div>
 </div>
-    </div>
+        
     
+</div>
+  
 </div>
 
             </div>
