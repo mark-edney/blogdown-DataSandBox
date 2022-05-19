@@ -1,0 +1,18 @@
+---
+title: The beauty of List comprehensions in Python
+author: Mark Edney
+date: '2022-05-16'
+slug: []
+categories:
+  - How-to
+tags:
+  - Python
+draft: yes
+description: ''
+archives:
+  - 2022/05
+---
+
+I have spent awhile learning Python and I was a little perplexed when it came to list comprehensions. Why would you use them? Isn't there just an easier why?
+
+As my proficiency increase, I have found them to be an incredibly usefull tool. They save you lines of code, are easy to understand and are usually better for performance. A good list comprehension, is truly a work of beauty. 
