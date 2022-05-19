@@ -8,7 +8,8 @@ categories:
 tags:
   - Python
 draft: yes
-description: ''
+image: '/img/beauty-list.jpg'
+description: 'List Comprehensions are an elegent and useful tool in Python, that ever Python coder should know about.'
 archives:
   - 2022/05
 ---
@@ -16,4 +17,63 @@ archives:
 
 
 <p>I have spent awhile learning Python and I was a little perplexed when it came to list comprehensions. Why would you use them? Isn’t there just an easier why?</p>
-<p>As my proficiency increase, I have found them to be an incredibly usefull tool. They save you lines of code, are easy to understand and are usually better for performance. A good list comprehension, is truly a work of beauty.</p>
+<p>As my proficiency increase, I have found them to be an incredibly useful tool. They save you lines of code, are easy to understand and are usually better for performance. A good list comprehension, is truly a work of beauty.</p>
+<div id="structure" class="section level2">
+<h2>Structure</h2>
+<p>The basic structure of a list comprehension is pretty simple, you contain an expression and an iterable within a set of <code>[]</code>. Depending on the type of brackets used, you can create a list, a generator, set or a dictionary.</p>
+<pre class="python"><code>[i for i in range(5)]</code></pre>
+<pre><code>## [0, 1, 2, 3, 4]</code></pre>
+<pre class="python"><code>(i for i in range(5))</code></pre>
+<pre><code>## &lt;generator object &lt;genexpr&gt; at 0x000000002B126430&gt;</code></pre>
+<pre class="python"><code>{i for i in range(5)}</code></pre>
+<pre><code>## {0, 1, 2, 3, 4}</code></pre>
+<p>It may appear from first impressions that a list comprehension is a simple one line for loop, but it is much more powerful then that.</p>
+<div id="conditions" class="section level3">
+<h3>Conditions</h3>
+<p>Much more complicated lists can be created with an included if statement. The if statement fits right at the end of the statement.</p>
+<pre class="python"><code>[a for a in range(10) if a % 2 == 0]</code></pre>
+<pre><code>## [0, 2, 4, 6, 8]</code></pre>
+<p>But what if you need create an even more complicated list, one that requires an else statement along with the if statement. Then the structure of the list comprehension changes a little, the iterable statement is moved to the end.</p>
+<pre class="python"><code>[a if a % 2 == 0 else 0 for a in range(10)]</code></pre>
+<pre><code>## [0, 0, 2, 0, 4, 0, 6, 0, 8, 0]</code></pre>
+</div>
+<div id="expressions" class="section level3">
+<h3>Expressions</h3>
+<p>Of course expressions can be more complicated then returning single values. One common issue I find is when I have a list of a value type and I need them to be of a different type. This conversion is easy with list comprehensions.</p>
+<pre class="python"><code>a = [&#39;0&#39;, &#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;]
+[int(x) for x in a]</code></pre>
+<pre><code>## [0, 1, 2, 3, 4]</code></pre>
+<p>There is nearly an unlimited potential of different expressions you can use.</p>
+</div>
+<div id="more-iterables" class="section level3">
+<h3>More Iterables</h3>
+<p>List comprehensions are not limited to a single iterable. Far warning however, increasing the number of iterables will reduce readability. At some level of complication, it will be a better idea to separate steps.</p>
+<pre class="python"><code>a = range(5)
+b = [5,10,15]
+[x*y for x in a for y in b]</code></pre>
+<pre><code>## [0, 0, 0, 5, 10, 15, 10, 20, 30, 15, 30, 45, 20, 40, 60]</code></pre>
+<p>The results are an element-wise evaluation across multiple iterables. These iterables don’t need to be the same size.</p>
+</div>
+<div id="dictionary-comprehensions" class="section level3">
+<h3>Dictionary Comprehensions</h3>
+<p>As previously mentioned, by changing the structure, we can generate dictionaries.</p>
+<pre class="python"><code>{char : num for num, char in enumerate([&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;,&#39;e&#39;])}</code></pre>
+<pre><code>## {&#39;a&#39;: 0, &#39;b&#39;: 1, &#39;c&#39;: 2, &#39;d&#39;: 3, &#39;e&#39;: 4}</code></pre>
+<p>Likewise, you can create a set rather then a list. Sets can be useful if you don’t need the data to be in an order and you don’t want any duplicate values.</p>
+</div>
+<div id="other-applicatons" class="section level3">
+<h3>Other Applicatons</h3>
+<p>There is great potential in list comprehensions. Often I find the I need to create a list of zeroes or of boolen logic of the same size of a current list. This is easy to create, just dont refer to to the iterable within the expression.</p>
+<pre class="python"><code>a = range(5)
+[True for x in a]</code></pre>
+<pre><code>## [True, True, True, True, True]</code></pre>
+<p>While it may not be best practice, you can nest a list comprehension within another list comprehension.</p>
+<pre class="python"><code>[x for x in [b for b in range(20) if b %2 == 0] if x %3 == 0]</code></pre>
+<pre><code>## [0, 6, 12, 18]</code></pre>
+</div>
+<div id="conclusions" class="section level3">
+<h3>Conclusions</h3>
+<p>Hopefully I have won you over with the beauty of list comprehensions. They are simple and clean to create yet extremely flexible in their design. So take a minute, to really appreciate the beauty of list comprehensions.</p>
+<p>Photo by <a href="https://unsplash.com/@kellysikkema?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Kelly Sikkema</a> on <a href="https://unsplash.com/s/photos/lists?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+</div>
+</div>
