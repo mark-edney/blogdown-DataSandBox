@@ -23,3 +23,4 @@ This website is created in *R* with the *blogdown* package. All assets are store
 A collection of interesting and related blogs:
 
 *  [r-bloggers](http://www.r-bloggers.com/)
+*  [python-bloggers](https://python-bloggers.com/)
