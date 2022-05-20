@@ -16,7 +16,7 @@
   gtag('config', 'G-VNSWDG9ZWF');
 </script>
 
-<title>The Data Sandbox | Simple Neural Networks in Python</title>
+<title>The Data Sandbox | The beauty of List comprehensions in Python</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <link rel="apple-touch-icon" sizes="180x180" href='/favicon/apple-touch-icon.png'>
@@ -26,7 +26,7 @@
     <link rel="mask-icon" href=' /favicon/safari-pinned-tab.svg' color="#5bbad5" />
     <link rel="shortcut icon" href='/favicon/favicon.ico' />
     <meta name="theme-color" content="#ffffff">
-    <meta property="og:title" content="The Data Sandbox | Simple Neural Networks in Python" />
+    <meta property="og:title" content="The Data Sandbox | The beauty of List comprehensions in Python" />
     
     
     
@@ -38,28 +38,28 @@
 
 
 
-<meta name="description" content="An outline for creating a simple Neural Network in Python">
+<meta name="description" content="List Comprehensions are an elegent and useful tool in Python, that ever Python coder should know about.">
 <meta property="og:site_name" content="The Data Sandbox">
-<meta property="og:description" content="An outline for creating a simple Neural Network in Python">
-<meta property="og:url" content="https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/">
+<meta property="og:description" content="List Comprehensions are an elegent and useful tool in Python, that ever Python coder should know about.">
+<meta property="og:url" content="https://datasandbox.netlify.app/post/2022-05-16-the-beauty-of-list-comprehensions-in-python/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="">
 
-<link rel="canonical" href="https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/">
+<link rel="canonical" href="https://datasandbox.netlify.app/post/2022-05-16-the-beauty-of-list-comprehensions-in-python/">
 
-<meta name="twitter:description" content="An outline for creating a simple Neural Network in Python">
-<meta property="article:published_time" content="2022-03-20T00:00:00&#43;00:00">
-<meta property="article:updated_time" content="2022-03-20T00:00:00&#43;00:00">
+<meta name="twitter:description" content="List Comprehensions are an elegent and useful tool in Python, that ever Python coder should know about.">
+<meta property="article:published_time" content="2022-05-16T00:00:00&#43;00:00">
+<meta property="article:updated_time" content="2022-05-16T00:00:00&#43;00:00">
 
 
 
 
 
     
-<meta property="og:image" content="https://datasandbox.netlify.app/img/network.jpg">
-<meta property="og:image:url" content="https://datasandbox.netlify.app/img/network.jpg">
+<meta property="og:image" content="https://datasandbox.netlify.app/img/beauty-list.jpg">
+<meta property="og:image:url" content="https://datasandbox.netlify.app/img/beauty-list.jpg">
     
 
     
@@ -154,12 +154,12 @@
     <div class="col-span-3 lg:col-span-2 dark:text-white">
     
         <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
-            <h1 class="title text-4xl">Simple Neural Networks in Python</h1>
+            <h1 class="title text-4xl">The beauty of List comprehensions in Python</h1>
             <hr class="my-2">
             <aside id="meta">
                 <div>
                     <section>
-                        <h4 id="date"><span class="icon-access_time mr-2"></span>2022/03/20 </h4>
+                        <h4 id="date"><span class="icon-access_time mr-2"></span>2022/05/16 </h4>
                     </section>
                     
                     <div id="tags">
@@ -167,128 +167,77 @@
                         
                         <a href="https://datasandbox.netlify.app/tags/python">Python</a> |
                         
-                        <a href="https://datasandbox.netlify.app/tags/nn">NN</a> |
-                        
                     </div>
                     
                 </div>
             </aside>
             <hr class="my-2">
             
-            <img class="py-4" src="https://datasandbox.netlify.app/img/network.jpg">
+            <img class="py-4" src="https://datasandbox.netlify.app/img/beauty-list.jpg">
             
             <div class="content mt-5">
-<script src="https://datasandbox.netlify.app/post/2022-03-20-simple-neural-networks-in-python/index.en_files/header-attrs/header-attrs.js"></script>
 
 
-<p>Neural Networks (NN) have become incredibly popular due to their high level of accuracy. The creation of a NN can be complicated and have a high level of customization. I wanted to explore just the simplest NN that you could create. A framework as a workhorse for developing new NN.</p>
-<p>The <code>SciKitlearn</code> provides the easiest solution with the Multi-Layer Perceptron series of functions. It doesn’t provide a bunch of the more advanced features of <code>TensorFlow</code>, like GPU support, but that is not what I’m looking for.</p>
-<div id="initialization" class="section level2">
-<h2>Initialization</h2>
-<p>For the demonstration, I decided to use a data set on faults found in <a href="https://www.openml.org/d/1504">steel plates</a> from the OpenML website. The data set includes 27 features with 7 binary predictors.</p>
-<pre class="python"><code>import pandas as pd
-import numpy as np
-from sklearn.model_selection import train_test_split
-
-df = pd.read_csv(&#39;https://www.openml.org/data/get_csv/1592296/php9xWOpn&#39;)
-
-predictors = [&#39;V28&#39;, &#39;V29&#39;, &#39;V30&#39;, &#39;V31&#39;, &#39;V32&#39;, &#39;V33&#39;, &#39;Class&#39;]
-df[&#39;Class&#39;] -= 1 </code></pre>
-<p>Since there are multiple binary predictors, I needed to create a single class variable to represent each class. The <code>Class</code> variable doesn’t currently represent this, it represents all faults that don’t fit in the categories of <code>V28</code> to <code>V33</code>. The single variable class was created with the <code>np.argmax</code> function which returns the index of the highest value between all the predictors.</p>
-<pre class="python"><code>y = np.argmax(df[predictors].values, axis =1)
-X = df.drop(predictors, axis = 1)
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)</code></pre>
+<p>I have spent awhile learning Python, and I was a little perplexed when it came to list comprehensions. Why would you use them? Isn’t there just an easier why?</p>
+<p>As my proficiency increase, I have found them to be an incredibly useful tool. They save you lines of code, are easy to understand, and are usually better for performance. A good list comprehension, is truly a work of beauty.</p>
+<div id="structure" class="section level2">
+<h2>Structure</h2>
+<p>The basic structure of a list comprehension is pretty simple, you contain an expression and an iterable within a set of <code>[]</code>. Depending on the type of brackets used, you can create a list, a generator, set or a dictionary.</p>
+<pre class="python"><code>[i for i in range(5)]</code></pre>
+<pre><code>## [0, 1, 2, 3, 4]</code></pre>
+<pre class="python"><code>(i for i in range(5))</code></pre>
+<pre><code>## &lt;generator object &lt;genexpr&gt; at 0x000000002B116430&gt;</code></pre>
+<pre class="python"><code>{i for i in range(5)}</code></pre>
+<pre><code>## {0, 1, 2, 3, 4}</code></pre>
+<p>It may appear from first impressions that a list comprehension is a simple one line for loop, but it is much more powerful than that.</p>
+<div id="conditions" class="section level3">
+<h3>Conditions</h3>
+<p>Much more complicated lists can be created with an included if statement. The if statement fits right at the end of the statement.</p>
+<pre class="python"><code>[a for a in range(10) if a % 2 == 0]</code></pre>
+<pre><code>## [0, 2, 4, 6, 8]</code></pre>
+<p>But what if you need to create an even more complicated list, one that requires an else statement along with the if statement. Then the structure of the list comprehension changes a little, the iterable statement is moved to the end.</p>
+<pre class="python"><code>[a if a % 2 == 0 else 0 for a in range(10)]</code></pre>
+<pre><code>## [0, 0, 2, 0, 4, 0, 6, 0, 8, 0]</code></pre>
 </div>
-<div id="modelling" class="section level2">
-<h2>Modelling</h2>
-<p>This is the most basic model that I would like to evaluate. I’ve used the <code>GridSearch</code> function, so all combinations of parameters are tested. The only parameter I wanted to examine was the size of the hidden layers. Each hidden layer provided is a tuple, where each number represents the number of nodes in a singled layer. Multiple numbers represent additional layers.</p>
-<pre class="python"><code>from sklearn.neural_network import MLPClassifier
-from sklearn.model_selection import GridSearchCV
-
-parameters = {&#39;hidden_layer_sizes&#39;:[(1),(100), (100,100), (100,100,100), 
-(100,100,100,100), 
-(100,100,100,100,100), 
-(100,100,100,100,100,100), 
-(100,100,100,100,100,100,100),
-(100,100,100,100,100,100,100,100),
-(100,100,100,100,100,100,100,100,100),
-(100,100,100,100,100,100,100,100,100,100)]}
-model = MLPClassifier(random_state = 1,max_iter = 10000, 
-solver = &#39;adam&#39;, learning_rate = &#39;adaptive&#39;)
-
-grid = GridSearchCV(estimator = model, param_grid = parameters)
-grid.fit(X_train, y_train)</code></pre>
-<pre><code>## GridSearchCV(estimator=MLPClassifier(learning_rate=&#39;adaptive&#39;, max_iter=10000,
-##                                      random_state=1),
-##              param_grid={&#39;hidden_layer_sizes&#39;: [1, 100, (100, 100),
-##                                                 (100, 100, 100),
-##                                                 (100, 100, 100, 100),
-##                                                 (100, 100, 100, 100, 100),
-##                                                 (100, 100, 100, 100, 100, 100),
-##                                                 (100, 100, 100, 100, 100, 100,
-##                                                  100),
-##                                                 (100, 100, 100, 100, 100, 100,
-##                                                  100, 100),
-##                                                 (100, 100, 100, 100, 100, 100,
-##                                                  100, 100, 100),
-##                                                 (100, 100, 100, 100, 100, 100,
-##                                                  100, 100, 100, 100)]})</code></pre>
-<pre class="python"><code>print(grid.best_score_)</code></pre>
-<pre><code>## 0.4213058419243986</code></pre>
-<p>The performance of the best model in the grid is not impressive. It took me awhile to realize that I had forgotten to scale the features. I included this error to show the importance of scaling on model performance.</p>
+<div id="expressions" class="section level3">
+<h3>Expressions</h3>
+<p>Of course, expressions can be more complicated than returning single values. One common issue I find is when I have a list of a value type and I need them to be of a different type. This conversion is easy with list comprehensions.</p>
+<pre class="python"><code>a = [&#39;0&#39;, &#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;]
+[int(x) for x in a]</code></pre>
+<pre><code>## [0, 1, 2, 3, 4]</code></pre>
+<p>There is nearly an unlimited potential of different expressions you can use.</p>
 </div>
-<div id="feature-scaling" class="section level2">
-<h2>Feature Scaling</h2>
-<p>The features are simply scaled with the <code>StandardScaler</code> function. The same model is used on the scaled features.</p>
-<pre class="python"><code>from sklearn.preprocessing import StandardScaler
-
-sc = StandardScaler()
-scaler = sc.fit(X_train)
-X_train_sc = scaler.transform(X_train)
-X_test_sc = scaler.transform(X_test)
-
-parameters = {&#39;hidden_layer_sizes&#39;:[(1),(100), (100,100), (100,100,100), 
-(100,100,100,100), 
-(100,100,100,100,100), 
-(100,100,100,100,100,100), 
-(100,100,100,100,100,100,100),
-(100,100,100,100,100,100,100,100),
-(100,100,100,100,100,100,100,100,100),
-(100,100,100,100,100,100,100,100,100,100)]}
-model = MLPClassifier(random_state = 1,max_iter = 10000, 
-solver = &#39;adam&#39;, learning_rate = &#39;adaptive&#39;)
-
-grid = GridSearchCV(estimator = model, param_grid = parameters, cv=3)
-grid.fit(X_train_sc, y_train)</code></pre>
-<pre><code>## GridSearchCV(cv=3,
-##              estimator=MLPClassifier(learning_rate=&#39;adaptive&#39;, max_iter=10000,
-##                                      random_state=1),
-##              param_grid={&#39;hidden_layer_sizes&#39;: [1, 100, (100, 100),
-##                                                 (100, 100, 100),
-##                                                 (100, 100, 100, 100),
-##                                                 (100, 100, 100, 100, 100),
-##                                                 (100, 100, 100, 100, 100, 100),
-##                                                 (100, 100, 100, 100, 100, 100,
-##                                                  100),
-##                                                 (100, 100, 100, 100, 100, 100,
-##                                                  100, 100),
-##                                                 (100, 100, 100, 100, 100, 100,
-##                                                  100, 100, 100),
-##                                                 (100, 100, 100, 100, 100, 100,
-##                                                  100, 100, 100, 100)]})</code></pre>
-<pre class="python"><code>grid.best_score_</code></pre>
-<pre><code>## 0.7553264604810996</code></pre>
-<p>The performance of the scaled model is much more impressive. After the <code>GridSearch</code> function finds the parameters for the best model, it retrains the model on the entire dataset. This is because the function utilize cross validation, so some data was withheld for comparing the different models on test data.</p>
+<div id="more-iterables" class="section level3">
+<h3>More Iterables</h3>
+<p>List comprehensions are not limited to a single iterable. Far warning, however, increasing the number of iterables will reduce readability. At some level of complication, it will be a better idea to separate steps.</p>
+<pre class="python"><code>a = range(5)
+b = [5,10,15]
+[x*y for x in a for y in b]</code></pre>
+<pre><code>## [0, 0, 0, 5, 10, 15, 10, 20, 30, 15, 30, 45, 20, 40, 60]</code></pre>
+<p>The results are an element-wise evaluation across multiple iterables. These iterables don’t need to be the same size.</p>
 </div>
-<div id="conclusion" class="section level2">
-<h2>Conclusion</h2>
-<p>With our model constructed, we can now test its performance on the original test set. It is important to remember to use the scaled test features, as that is what the model is expecting.</p>
-<pre class="python"><code>grid.score(X_test_sc, y_test)</code></pre>
-<pre><code>## 0.7304526748971193</code></pre>
-<p>The results are pretty satisfactory. A decent level of accuracy without a lot of complicated code. Default values were used, whenever they were appropriate. Additional steps could be taken, but this remains a good foundation for future exploratory analysis.</p>
-<blockquote>
-<p>Photo by <a href="https://unsplash.com/@alinnnaaaa?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Alina Grubnyak</a> on <a href="https://unsplash.com/s/photos/neural-networks?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
-</blockquote>
+<div id="dictionary-comprehensions" class="section level3">
+<h3>Dictionary Comprehensions</h3>
+<p>As previously mentioned, by changing the structure, we can generate dictionaries.</p>
+<pre class="python"><code>{char : num for num, char in enumerate([&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;,&#39;e&#39;])}</code></pre>
+<pre><code>## {&#39;a&#39;: 0, &#39;b&#39;: 1, &#39;c&#39;: 2, &#39;d&#39;: 3, &#39;e&#39;: 4}</code></pre>
+<p>Likewise, you can create a set rather than a list. Sets can be useful if you don’t need the data to be in order, and you don’t want any duplicate values.</p>
+</div>
+<div id="other-applications" class="section level3">
+<h3>Other Applications</h3>
+<p>There is great potential in list comprehensions. Often I find that I need to create a list of zeroes or of boolean logic of the same size as a current list. This is easy to create, just don’t refer to the iterable within the expression.</p>
+<pre class="python"><code>a = range(5)
+[True for x in a]</code></pre>
+<pre><code>## [True, True, True, True, True]</code></pre>
+<p>While it may not be best practice, you can nest a list comprehension within another list comprehension.</p>
+<pre class="python"><code>[x for x in [b for b in range(20) if b %2 == 0] if x %3 == 0]</code></pre>
+<pre><code>## [0, 6, 12, 18]</code></pre>
+</div>
+<div id="conclusions" class="section level3">
+<h3>Conclusions</h3>
+<p>Hopefully I have won you over with the beauty of list comprehensions. They are simple and clean to create yet extremely flexible in their design. So take a minute, to really appreciate the beauty of list comprehensions.</p>
+<p>Photo by <a href="https://unsplash.com/@kellysikkema?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Kelly Sikkema</a> on <a href="https://unsplash.com/s/photos/lists?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+</div>
 </div>
 </div>
             <aside id="meta">
@@ -309,21 +258,14 @@ grid.fit(X_train_sc, y_train)</code></pre>
             <div class="grid grid-cols-2">
                 <div class="col-span-1">
                     
-                    <a class="previous lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-03-18-making-the-connection-with-crosstalk/">
+                    <a class="previous lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-05-09-formatting-our-outout-with-python-s-f-strings/">
                         <div
                             class="transition-colors duration-300 border border-gray-600 hover:border-black h-auto m-3 text-center py-3 lg:py-1">
-                            <span class="icon-keyboard_arrow_left"></span> Making the Connection with Crosstalk
+                            <span class="icon-keyboard_arrow_left"></span> Formatting our output with Python&#39;s F strings
                         </div>
                     </a>
                     
                 </div>
-                
-                <a class="next lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-03-31-underrated-cran-packages/">
-                    <div
-                        class="transition-colors duration-300 col-span-1 border border-gray-600 hover:border-black h-auto m-3 text-center py-3 lg:py-1">
-                        Underrated CRAN Packages <span class="icon-keyboard_arrow_right"></span>
-                    </div>
-                </a>
                 
             </div>
         </div>
@@ -456,21 +398,30 @@ grid.fit(X_train_sc, y_train)</code></pre>
     <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Recent Posts</p>
     <div class="mx-6">
         
-        <a href="/post/2022-01-30-job-posting-analysis/" class="">
+        <a href="/post/2022-04-14-merging-pdfs-with-python/" class="">
             <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
                 <div class="px-2">
-                    <div class="text-gray-900 font-bold text-xl dark:text-white">Job posting analysis</div>
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Merging PDFs with Python</div>
                     <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
-                        <time><span class="icon-access_time mr-1"></span>2022/02/06</time>
+                        <time><span class="icon-access_time mr-1"></span>2022/04/14</time>
                     </p>
                 </div>
             </div>
-        <a href="/post/2022-02-16-/" class="">
+        <a href="/post/2022-05-01-level-up-your-progamming-skills/" class="">
             <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
                 <div class="px-2">
-                    <div class="text-gray-900 font-bold text-xl dark:text-white">Speed cameras in Toronto</div>
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Level up your programming skills</div>
                     <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
-                        <time><span class="icon-access_time mr-1"></span>2022/02/16</time>
+                        <time><span class="icon-access_time mr-1"></span>2022/05/01</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-01-29-fitness-tracker-modeling-ml/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Fitness Tracker Modeling: ML</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/01/29</time>
                     </p>
                 </div>
             </div>
@@ -480,15 +431,6 @@ grid.fit(X_train_sc, y_train)</code></pre>
                     <div class="text-gray-900 font-bold text-xl dark:text-white">Making the Connection with Crosstalk</div>
                     <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
                         <time><span class="icon-access_time mr-1"></span>2022/03/18</time>
-                    </p>
-                </div>
-            </div>
-        <a href="/post/2022-02-23-new-features-in-r/" class="">
-            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
-                <div class="px-2">
-                    <div class="text-gray-900 font-bold text-xl dark:text-white">New features in R</div>
-                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
-                        <time><span class="icon-access_time mr-1"></span>2022/02/23</time>
                     </p>
                 </div>
             </div>

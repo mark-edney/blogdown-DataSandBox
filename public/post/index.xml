@@ -6,7 +6,17 @@
     <description>Recent content in Posts on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 09 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 16 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The beauty of List comprehensions in Python</title>
+      <link>https://datasandbox.netlify.app/post/2022-05-16-the-beauty-of-list-comprehensions-in-python/</link>
+      <pubDate>Mon, 16 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-05-16-the-beauty-of-list-comprehensions-in-python/</guid>
+      <description>I have spent awhile learning Python, and I was a little perplexed when it came to list comprehensions. Why would you use them? Isn’t there just an easier why?
+As my proficiency increase, I have found them to be an incredibly useful tool. They save you lines of code, are easy to understand, and are usually better for performance. A good list comprehension, is truly a work of beauty.</description>
+    </item>
+    
     <item>
       <title>Formatting our output with Python&#39;s F strings</title>
       <link>https://datasandbox.netlify.app/post/2022-05-09-formatting-our-outout-with-python-s-f-strings/</link>

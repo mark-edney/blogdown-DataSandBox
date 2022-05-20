@@ -3,24 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://datasandbox.netlify.app/</loc>
-    <lastmod>2022-05-09T00:00:00+00:00</lastmod>
+    <lastmod>2022-05-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/categories/</loc>
-    <lastmod>2022-05-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://datasandbox.netlify.app/post/2022-05-09-formatting-our-outout-with-python-s-f-strings/</loc>
-    <lastmod>2022-05-09T00:00:00+00:00</lastmod>
+    <lastmod>2022-05-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/categories/how-to/</loc>
-    <lastmod>2022-05-09T00:00:00+00:00</lastmod>
+    <lastmod>2022-05-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/post/</loc>
-    <lastmod>2022-05-09T00:00:00+00:00</lastmod>
+    <lastmod>2022-05-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/tags/python/</loc>
-    <lastmod>2022-05-09T00:00:00+00:00</lastmod>
+    <lastmod>2022-05-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/tags/</loc>
+    <lastmod>2022-05-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-05-16-the-beauty-of-list-comprehensions-in-python/</loc>
+    <lastmod>2022-05-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://datasandbox.netlify.app/post/2022-05-09-formatting-our-outout-with-python-s-f-strings/</loc>
     <lastmod>2022-05-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://datasandbox.netlify.app/categories/general/</loc>
