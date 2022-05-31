@@ -24,8 +24,8 @@ latex: true
 </blockquote>
 <div id="description" class="section level2">
 <h2>Description</h2>
-<p>The goal of this project was to create a N-gram based model to predict the word to follow the users input. This project was to complete the Capstone project for the Johns Hopkins University Data science program on coursera. The data for this project was provided by swiftkey.</p>
-<p>This project will be broken down to multiple parts as the entire project is quite large. This first part will deal with the creation of the corpus. This corpus will require additional filtering to remove words that are not English, contractions and words that are considered profanity.</p>
+<p>The goal of this project was to create an N-gram based model to predict the word to follow the user’s input. This project was to complete the Capstone project for the Johns Hopkins University Data science program on Coursera. The data for this project was provided by Swiftkey.</p>
+<p>This project will be broken down to multiple parts as the entire project is quite large. The first part will deal with the creation of the corpus. This corpus will require additional filtering to remove words that are not English, contractions and words that are considered profanity.</p>
 </div>
 <div id="initialization" class="section level2">
 <h2>Initialization</h2>
@@ -61,7 +61,7 @@ if(file.exists(&quot;~/R/Capestone/data/data.zip&quot;) == FALSE|
 </div>
 <div id="creating-a-corpus" class="section level2">
 <h2>Creating a Corpus</h2>
-<p>The project requires a Corpus, or a large body of text to create models. At this stage, the files are opened and joined. The Corpus is so large and requires so much ram that a sample of 10% is taken.</p>
+<p>The project requires a Corpus, or a large body of text, to create models. At this stage, the files are opened and joined. The Corpus is so large and requires so much ram that a sample of 10% is taken.</p>
 <pre class="r"><code>blog &lt;- read_lines(&quot;~/R/Capestone/data/final/en_US/en_US.blogs.txt&quot;)
 news &lt;- read_lines(&quot;~/R/Capestone/data/final/en_US/en_US.news.txt&quot;)
 twitter &lt;- read_lines(&quot;~/R/Capestone/data/final/en_US/en_US.twitter.txt&quot;)
@@ -76,7 +76,7 @@ corpus &lt;- bind_rows(blog,twitter,news) %&gt;%
 </div>
 <div id="corpus-filtering" class="section level2">
 <h2>Corpus filtering</h2>
-<p>Here the corpus filter is created to remove profanity and any word that is not in the English dictionary.</p>
+<p>Here, the corpus filter is created to remove profanity and any word that is not in the English dictionary.</p>
 <pre class="r"><code>prof &lt;- read_lines(&quot;~/R/Capestone/data/facebook-bad-words-list_comma-separated-text-file_2021_01_18.txt&quot;)[15]
 prof &lt;- prof %&gt;% 
         str_split(&quot;, &quot;) %&gt;% 
@@ -102,9 +102,9 @@ unigram &lt;- corpus %&gt;% unnest_tokens(ngram, text, token = &quot;ngrams&quot
 #decreases the voc size
 voc &lt;- tibble(word = unique(unigram$ngram))</code></pre>
 </div>
-<div id="corpus-exploratoin" class="section level2">
-<h2>Corpus Exploratoin</h2>
-<p>Now that the corpus is created, we can do some exploration into the text.</p>
+<div id="corpus-exploration" class="section level2">
+<h2>Corpus Exploration</h2>
+<p>Now that the corpus is created, we can do some exploration into the text. There are some lines of text that have some odd behaviour, but on the whole it mostly makes sense.</p>
 <pre class="r"><code>corpus %&gt;% 
         head()</code></pre>
 <pre><code>## # A tibble: 6 x 2
@@ -117,9 +117,9 @@ voc &lt;- tibble(word = unique(unigram$ngram))</code></pre>
 ## 5 i know its a tough world out there the secret to succeeding isn&#39;t stepp~     5
 ## 6 we&#39;re wishing for the cure too good luck                                     6</code></pre>
 </div>
-<div id="vocabulary-exporation" class="section level2">
-<h2>Vocabulary Exporation</h2>
-<p>By using the arrange function, we can sort the unigrams by their counts. This provides some insight on which words come up the most frequently. It is not surprisingly that the most common word is “the”. These frequencies will play an important role in the test prediction so its important to consider them. It is very common to filter out “Stop Words” as the likely add little value to predictions.</p>
+<div id="vocabulary-exploration" class="section level2">
+<h2>Vocabulary Exploration</h2>
+<p>By using the <code>arrange</code> function, we can sort the unigrams by their counts. This provides some insight on which words come up the most frequently. It is not surprisingly that the most common word is “the”. These frequencies will play an important role in the test prediction, so it is important to consider them. It is very common to filter out “Stop Words” as they likely add little value to predictions.</p>
 <pre class="r"><code>unigram %&gt;%
         arrange(desc(n)) %&gt;%
         head()</code></pre>

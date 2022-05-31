@@ -21,9 +21,9 @@ latex: true
 
 ## Description
 
-The goal of this project was to create a N-gram based model to predict the word to follow the users input. This project was to complete the Capstone project for the Johns Hopkins University Data science program on coursera. The data for this project was provided by swiftkey.
+The goal of this project was to create an N-gram based model to predict the word to follow the user's input. This project was to complete the Capstone project for the Johns Hopkins University Data science program on Coursera. The data for this project was provided by Swiftkey.
 
-This project will be broken down to multiple parts as the entire project is quite large. This first part will deal with the creation of the corpus. This corpus will require additional filtering to remove words that are not English, contractions and words that are considered profanity. 
+This project will be broken down to multiple parts as the entire project is quite large. The first part will deal with the creation of the corpus. This corpus will require additional filtering to remove words that are not English, contractions and words that are considered profanity. 
 
 ## Initialization
 
@@ -66,7 +66,7 @@ if(file.exists("~/R/Capestone/data/data.zip") == FALSE|
 
 ## Creating a Corpus
 
-The project requires a Corpus, or a large body of text to create models. At this stage, the files are opened and joined. The Corpus is so large and requires so much ram that a sample of 10% is taken.
+The project requires a Corpus, or a large body of text, to create models. At this stage, the files are opened and joined. The Corpus is so large and requires so much ram that a sample of 10% is taken.
 
 ```{r corpus}
 
@@ -85,7 +85,7 @@ corpus <- bind_rows(blog,twitter,news) %>%
 
 ## Corpus filtering
 
-Here the corpus filter is created to remove profanity and any word that is not in the English dictionary.
+Here, the corpus filter is created to remove profanity and any word that is not in the English dictionary.
 
 ```{r filter}
 prof <- read_lines("~/R/Capestone/data/facebook-bad-words-list_comma-separated-text-file_2021_01_18.txt")[15]
@@ -117,7 +117,7 @@ unigram <- corpus %>% unnest_tokens(ngram, text, token = "ngrams", n = 1) %>%
 voc <- tibble(word = unique(unigram$ngram))
 ```
 
-## Corpus Exploratoin
+## Corpus Exploration
 
 ```{r corpusload, include=FALSE, eval=TRUE}
 library(tidyverse)
@@ -125,14 +125,14 @@ corpus = read_rds('corpus10.rds')
 unigram = read_rds('unigram10.rds')
 voc <- tibble(word = unique(unigram$ngram))
 ```
-Now that the corpus is created, we can do some exploration into the text. 
+Now that the corpus is created, we can do some exploration into the text. There are some lines of text that have some odd behaviour, but on the whole it mostly makes sense. 
 
 ```{r expore, eval=TRUE}
 corpus %>% 
         head()
 ```
-## Vocabulary Exporation
-By using the arrange function, we can sort the unigrams by their counts. This provides some insight on which words come up the most frequently. It is not surprisingly that the most common word is "the". These frequencies will play an important role in the test prediction so its important to consider them. It is very common to filter out "Stop Words" as the likely add little value to predictions. 
+## Vocabulary Exploration
+By using the `arrange` function, we can sort the unigrams by their counts. This provides some insight on which words come up the most frequently. It is not surprisingly that the most common word is "the". These frequencies will play an important role in the test prediction, so it is important to consider them. It is very common to filter out "Stop Words" as they likely add little value to predictions. 
 ```{r vocabtest, eval=TRUE}
 unigram %>%
         arrange(desc(n)) %>%
