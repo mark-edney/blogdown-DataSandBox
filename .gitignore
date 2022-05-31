@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
+content\post\2022-03-11-text-prediction-app\corpus10.rds
+content\post\2022-03-11-text-prediction-app\unigram10.rds
