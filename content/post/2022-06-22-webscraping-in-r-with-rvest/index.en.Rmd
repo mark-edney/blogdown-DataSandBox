@@ -15,7 +15,7 @@ image: "img/harvest.jpg"
 archives:
   - 2022/06
 ---
-Web scraping has become an incredibly important tool in data science, 
+Web scraping has become an incredibly important tool in data science, as an easy way to generate new data. The main advantage is the automation of some pretty repetitive tasks. Web scrapping can also be a good way of keeping up with new data on a website, assuming it doesn't have a big change in its html structure.  
 
 ## Introduction 
 This project is inspired from a Youtube video created by [Thu Vu](https://www.youtube.com/watch?v=RuNolAh_4bU) about at data scraping project about the Witcher books series. Her project utilizes `python` and the `Selenium`. I love the book series and I loved the project idea. I've also had it on my backlog to learn the `Rvest` library for a while so it seems like a great opportunity combine these two interests.
