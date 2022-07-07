@@ -81,6 +81,7 @@ We can see that the scrapped data is in much better condition. There is still ad
 names <- str_remove_all(names," .*") 
 
 print(head(names, 10))
+names <- names[!names %in% c("Word","She", "User:Thurin")]
 ```
 
 Now we can see that the final list is in condition that we can use to better explore the relationships. 
