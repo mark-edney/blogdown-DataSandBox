@@ -7,6 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language><atom:link href="https://datasandbox.netlify.app/archives/2022/05/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Text Prediction Shiny App pt 1</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-11-text-prediction-app/</link>
+      <pubDate>Tue, 31 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-11-text-prediction-app/</guid>
+      <description>This Shiny App was first written in May of 2021
+DescriptionThe goal of this project was to create an N-gram based model to predict the word to follow the user’s input. This project was to complete the Capstone project for the Johns Hopkins University Data science program on Coursera. The data for this project was provided by Swiftkey.
+This project will be broken down to multiple parts as the entire project is quite large.</description>
+    </item>
+    
+    <item>
       <title>The beauty of List comprehensions in Python</title>
       <link>https://datasandbox.netlify.app/post/2022-05-16-the-beauty-of-list-comprehensions-in-python/</link>
       <pubDate>Mon, 16 May 2022 00:00:00 +0000</pubDate>

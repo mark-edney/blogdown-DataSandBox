@@ -5,17 +5,17 @@
     <description>Recent content in Tags on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 16 May 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 Jul 2022 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://datasandbox.netlify.app/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Python</title>
-      <link>https://datasandbox.netlify.app/tags/python/</link>
-      <pubDate>Mon, 16 May 2022 00:00:00 +0000</pubDate>
+      <title>NLP</title>
+      <link>https://datasandbox.netlify.app/tags/nlp/</link>
+      <pubDate>Mon, 04 Jul 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://datasandbox.netlify.app/tags/python/</guid>
+      <guid>https://datasandbox.netlify.app/tags/nlp/</guid>
       <description></description>
       
       
@@ -24,9 +24,31 @@
     <item>
       <title>R</title>
       <link>https://datasandbox.netlify.app/tags/r/</link>
-      <pubDate>Sun, 01 May 2022 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 04 Jul 2022 00:00:00 +0000</pubDate>
       
       <guid>https://datasandbox.netlify.app/tags/r/</guid>
+      <description></description>
+      
+      
+    </item>
+    
+    <item>
+      <title>Shiny App</title>
+      <link>https://datasandbox.netlify.app/tags/shiny-app/</link>
+      <pubDate>Wed, 08 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/tags/shiny-app/</guid>
+      <description></description>
+      
+      
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://datasandbox.netlify.app/tags/python/</link>
+      <pubDate>Mon, 16 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/tags/python/</guid>
       <description></description>
       
       
@@ -49,17 +71,6 @@
       <pubDate>Wed, 20 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://datasandbox.netlify.app/tags/leaflet/</guid>
-      <description></description>
-      
-      
-    </item>
-    
-    <item>
-      <title>Shiny App</title>
-      <link>https://datasandbox.netlify.app/tags/shiny-app/</link>
-      <pubDate>Wed, 20 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://datasandbox.netlify.app/tags/shiny-app/</guid>
       <description></description>
       
       

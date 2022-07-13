@@ -6,7 +6,49 @@
     <description>Recent content on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 16 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 04 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://datasandbox.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Relationship Extraction with Spacyr</title>
+      <link>https://datasandbox.netlify.app/post/2022-07-04-relationship-analysis-with-spacyr/</link>
+      <pubDate>Mon, 04 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-07-04-relationship-analysis-with-spacyr/</guid>
+      <description>This is the continuation of the previous project were we scrapped the Cooper Mind website with the rvest package. Please refer to that posting for the necessary steps to obtain the verified character names.
+As a reminder, this project was inspired by the work of Thu Vu were she created a network mapping of the characters in the Witcher series. I thought it would be interesting to do some recreation of this project but in R and with the Stormlight Archive book series.</description>
+    </item>
+    
+    <item>
+      <title>Webscraping in R with Rvest</title>
+      <link>https://datasandbox.netlify.app/post/2022-06-22-webscraping-in-r-with-rvest/</link>
+      <pubDate>Wed, 22 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-06-22-webscraping-in-r-with-rvest/</guid>
+      <description>Web scraping has become an incredibly important tool in data science, as an easy way to generate new data. The main advantage is the automation of some pretty repetitive tasks. Web scrapping can also be a good way of keeping up with new data on a website, assuming it doesn’t have a big change in its HTML structure.
+IntroductionThis project is inspired from a YouTube video created by Thu Vu about at data scraping project about the Witcher books series.</description>
+    </item>
+    
+    <item>
+      <title>Text Prediction Shiny App pt 2</title>
+      <link>https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/</link>
+      <pubDate>Wed, 08 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/</guid>
+      <description>DescriptionThis is the second part for the creation of a text prediction Shiny Application. From the previous post, we have developed and Corpus of text to start creating text prediction applications.
+We have also explored the corpus, looking at the frequency of words in the vocabulary. It is now time to start to develop ngram models.
+N-gram modelsA ngram is a continuous sequence of tokens, where the order is determined by how many tokens are in the sequence.</description>
+    </item>
+    
+    <item>
+      <title>Text Prediction Shiny App pt 1</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-11-text-prediction-app/</link>
+      <pubDate>Tue, 31 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-11-text-prediction-app/</guid>
+      <description>This Shiny App was first written in May of 2021
+DescriptionThe goal of this project was to create an N-gram based model to predict the word to follow the user’s input. This project was to complete the Capstone project for the Johns Hopkins University Data science program on Coursera. The data for this project was provided by Swiftkey.
+This project will be broken down to multiple parts as the entire project is quite large.</description>
+    </item>
+    
     <item>
       <title>The beauty of List comprehensions in Python</title>
       <link>https://datasandbox.netlify.app/post/2022-05-16-the-beauty-of-list-comprehensions-in-python/</link>

@@ -5,10 +5,645 @@
     <description>Recent content in R on The Data Sandbox</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 01 May 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 Jul 2022 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://datasandbox.netlify.app/tags/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Relationship Extraction with Spacyr</title>
+      <link>https://datasandbox.netlify.app/post/2022-07-04-relationship-analysis-with-spacyr/</link>
+      <pubDate>Mon, 04 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-07-04-relationship-analysis-with-spacyr/</guid>
+      <description>
+
+
+&lt;p&gt;This is the continuation of the previous project were we scrapped the Cooper Mind website with the &lt;code&gt;rvest&lt;/code&gt; package. Please refer to that posting for the necessary steps to obtain the verified character names.&lt;/p&gt;
+&lt;p&gt;As a reminder, this project was inspired by the work of &lt;a href=&#34;https://www.youtube.com/watch?v=RuNolAh_4bU&#34;&gt;Thu Vu&lt;/a&gt; were she created a network mapping of the characters in the Witcher series. I thought it would be interesting to do some recreation of this project but in &lt;code&gt;R&lt;/code&gt; and with the &lt;strong&gt;Stormlight Archive&lt;/strong&gt; book series.&lt;/p&gt;
+&lt;p&gt;For those unfamiliar with the series, it is an epic fantasy story sprawling over four main books at the time of the publishing of this post. Sanderson is a fantastic author and I feel that the &lt;strong&gt;Stormlight Archive&lt;/strong&gt; is his best work.&lt;/p&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;So in a previous post, we created a list of characters which will represent the nodes in our network graph. The next step in project is to create the edges. The edges represent the relationships between characters. In our graph, we are going to have the edges represent that strength of the relationships between characters. In order to determine these edge values, we will need to perform relationship extraction from the text with the &lt;code&gt;spacyr&lt;/code&gt; package.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;spacyr&lt;/code&gt; package is simply a wrapper for the python &lt;code&gt;spaCy&lt;/code&gt; library, with the following functionality:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;tokenization&lt;/li&gt;
+&lt;li&gt;lemmatizing tokens&lt;/li&gt;
+&lt;li&gt;parsing dependencies (to determine grammatical structure)&lt;/li&gt;
+&lt;li&gt;extracting form named entities&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It uses the &lt;code&gt;reticulate&lt;/code&gt; to create the python environment. I have previously written a post about using the &lt;code&gt;reticulate&lt;/code&gt; package for using python code in RMarkdown.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;inialization&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Inialization&lt;/h2&gt;
+&lt;p&gt;We start with the loading of the necessary libraries to complete the project.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(spacyr)
+library(tidyverse)
+library(data.table)
+#necessary to create a corpus object
+library(readtext)
+library(quanteda)
+library(rainette)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you have an environment of python with a version a &lt;code&gt;spaCy&lt;/code&gt;, you can pass the destination into the &lt;code&gt;spacy_intialize&lt;/code&gt; function. If not, you need to use the &lt;code&gt;spacy_install&lt;/code&gt; function to create a Conda environment that will also include the &lt;code&gt;spaCy&lt;/code&gt; package. For this project, I let &lt;code&gt;spacyr&lt;/code&gt; create the Conda environment for me. This process did take a while for me, so don’t be surprised if its the same for you.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;spacy_install()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I have the name list from the web scraping post saved as a RDS files. RDS files are compressed text files which load quicker and take up much less space than a csv file.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;names &amp;lt;- read_rds(&amp;quot;data/names.RDS&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;text-reading&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Text Reading&lt;/h2&gt;
+&lt;p&gt;The first step is to read all the text files into the system. I found this interesting little snippet of code that allows you to create a list of all the text files in a specific folder. For this project, all the books were stored in a single data folder.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;list_of_files &amp;lt;- list.files(path = &amp;quot;.&amp;quot;, recursive = TRUE,
+                            pattern = &amp;quot;\\.txt$&amp;quot;, 
+                            full.names = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With the list of files, we can use the &lt;code&gt;map_df&lt;/code&gt; function from the &lt;code&gt;purr&lt;/code&gt; package. The &lt;code&gt;purr&lt;/code&gt; package is part of the &lt;code&gt;tidyverse&lt;/code&gt; package, so we don’t need to load it separately. The &lt;code&gt;map&lt;/code&gt; series of functions allows use to pass a vector of values and a function. Each value will than be passed to that function. The &lt;code&gt;_df&lt;/code&gt; part of the function is just the requirement that the output be in the format of a dataframe.&lt;/p&gt;
+&lt;p&gt;The same task can be completed with a for loop but it is much faster in the &lt;code&gt;map&lt;/code&gt; function as it utilize vectorization. Vectorization is the strategy of performing multiple operations rather than a single operation at the same time. I am not very familiar with the &lt;code&gt;purr&lt;/code&gt; package so I plan to write a new article on the topic in the near future.&lt;/p&gt;
+&lt;p&gt;After all the books are read into memory, we need to create a corpus. A corpus is a large body of text, much like a library for the sorting and organization of books. This is completed with the &lt;code&gt;corpus&lt;/code&gt; function from the &lt;code&gt;quanteda&lt;/code&gt; package. This corpus structure is necessary to utilize functions from the &lt;code&gt;spacyr&lt;/code&gt; package.&lt;/p&gt;
+&lt;p&gt;This organisational structure in the Corpus is why I needed to load the books in with the &lt;code&gt;readtext&lt;/code&gt; function from the &lt;code&gt;readtext&lt;/code&gt; package. I’ve tried many different methods to read the text(&lt;code&gt;readlines&lt;/code&gt;, &lt;code&gt;read_Lines&lt;/code&gt;, &lt;code&gt;readfile&lt;/code&gt;) but none of the performed the proper way for the &lt;code&gt;corpus&lt;/code&gt; function. There were plenty of issues, hours of difficulty which resulted in me referring to the &lt;code&gt;quanteda&lt;/code&gt; package website. There I learnt about the &lt;code&gt;readtext&lt;/code&gt; function and I worked flawlessly on the first time. Well I did find an issue with the default encoding not interpreting characters correctly, but this is was corrected easily.&lt;/p&gt;
+&lt;p&gt;When the time came to modeling, issues arose with the size of the Corpus. There is a limitation in &lt;code&gt;spaCy&lt;/code&gt;, it will only work with text files less than 100,000,000 characters long. I think that each book was a little over twice that size. So i needed to batch the process by breaking the corpus up into smaller sections. This was done with the &lt;code&gt;split_segments&lt;/code&gt; function from the &lt;code&gt;rainette&lt;/code&gt; package. The function only accepts a split based on number of sentences, so I arrived at a value of 100,000 sentences per document.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;corpus &amp;lt;- list_of_files %&amp;gt;% 
+        map_df(readtext, encoding=&amp;#39;utf-8&amp;#39;) %&amp;gt;%
+        corpus() %&amp;gt;%
+        rainette::split_segments(segment_size = 100000)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##   Splitting...&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##   Done.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With the books read into file, the corpus created and the corpus split into sections, we now have 18 documents. We can proceed to entity modeling with the &lt;code&gt;spaCy&lt;/code&gt; functions.&lt;/p&gt;
+&lt;p&gt;Unfortunately, we still have size issues as passing the entire Corpus to be parsed is unaffected by the number of documents. So I needed to create simple for loop to analyze each document one at a time and bind the results to a data table. Data tables are like dataframes but the have some unique notation and increased performance.&lt;/p&gt;
+&lt;p&gt;The Corpus is parsed with the &lt;code&gt;spacy_parse&lt;/code&gt; function. Setting &lt;code&gt;pos&lt;/code&gt; and &lt;code&gt;lemma&lt;/code&gt; to false should reduce performance time as the function doesn’t need to return dependency POS tagset and lemmatized tokens. The POS tagset refers to the type of word such as Noun, while the lemmatized token is the basis of a word such as for the toke “am” would be to token “be”. The parsing of the corpus takes a very long time.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df &amp;lt;- corpus[[1]] %&amp;gt;%
+        spacy_parse(pos = FALSE, lemma = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Found &amp;#39;spacy_condaenv&amp;#39;. spacyr will use this environment&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## successfully initialized (spaCy Version: 3.1.3, language model: en_core_web_sm)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## (python options: type = &amp;quot;condaenv&amp;quot;, value = &amp;quot;spacy_condaenv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;for (i in 2:length(corpus)){
+        temp &amp;lt;- corpus[[i]] %&amp;gt;%
+        spacy_parse(pos = FALSE, lemma = FALSE) 
+        
+        df &amp;lt;- rbind(df,temp)}
+rm(temp)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The parsing creates a object that acts very similarly as a data table. There is an entry for each word, which is more than what is required for this project. The original data table is preserved, in case we would like to reference a sentence in the corpus, and we create a filtered data table. The data table is filters the tokens in the names list and by the identified entity making sure it starts with person.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dfclean &amp;lt;- df %&amp;gt;% 
+        filter(token %in% names,
+               str_starts(entity, &amp;quot;PERSON&amp;quot;)) &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;relationship-modelling&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Relationship modelling&lt;/h2&gt;
+&lt;p&gt;The final step is to create a model that will connect people in the data table. I have decided to use a sentence windows that creates a connection when two names are mentioned within that window.&lt;/p&gt;
+&lt;p&gt;This is another very time consuming tasks the requires two for loops. The first loop goes through all 17747 rows and its sentence id. A second for loop that excludes all rows all ready used in the first loop is used to compare a second sentence id. If the difference between the senetence ids is less than the windows, the tokens for these rows is added to a empty data table. If the difference is greater than the window size, we break the second for loop as all the sentence ids are incremental. It is not a very clear or smooth method but it works.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;window_size &amp;lt;- 5
+related &amp;lt;- data.table(&amp;quot;Person1&amp;quot; = character(), &amp;quot;Person2&amp;quot; = character())
+
+for(i in 1: (nrow(dfclean)-1)){
+        for(j in (i + 1):nrow(dfclean)){
+                if((dfclean$sentence_id[j] - dfclean$sentence_id[i]) &amp;lt; window_size){
+                        
+                        related &amp;lt;- rbindlist(list(related, list(dfclean$token[i], dfclean$token[j])))
+                }
+                
+                else{
+                        break
+                }
+        }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The following is a sample of the data table we have created to build the relationships.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;related %&amp;gt;% head()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Person1 Person2
+## 1: Jezrien Jezrien
+## 2: Jezrien Jezrien
+## 3: Jezrien Jezrien
+## 4: Jezrien Jezrien
+## 5: Jezrien   Kalak
+## 6: Jezrien   Kalak&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can identify to issues with this sample. The first issue is when two of the same names are within the same window. We will have to filter out when ‘Person1’ is equal to ‘Person2’. The second issue is that we would actually like to aggregate the data. We would like a count of when two different names are in the same window. Both of these tasks are easy enough to solve using the built in data table notation. For more information on data tables, please refer to my previous post on the topic.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;relatedagg &amp;lt;- related[Person1 != Person2,.N,by = c(&amp;quot;Person1&amp;quot;, &amp;quot;Person2&amp;quot;)]
+
+relatedagg %&amp;gt;% head()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##        Person1     Person2  N
+## 1:     Jezrien       Kalak 10
+## 2:       Kalak     Jezrien  9
+## 3:        Cenn Stormfather  3
+## 4: Stormfather        Cenn 20
+## 5:     Kaladin        Cenn 76
+## 6:        Cenn     Kaladin 64&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The final issue is for the relationships for ‘Person1’ and ‘Person2’ when their places are switched but that will be dealt with in the next post.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;With some hard-work, we were able to create an organized Corpus of all the current 4 &lt;strong&gt;Stormlight Archive&lt;/strong&gt; books. We were able to split this Corpus into smaller sized documents, making them easier to manage. The &lt;code&gt;spacyr&lt;/code&gt; library was than used to model entities within the Corpus, identifying the tokens that represent people. The next step was to clean up the results, keeping only the verified characters names as tokens. We than used a model to developed relationships using a window. A relationship was created whenever two character names were mentioned in the same window. We than filtered out characters relationships to themselves and aggregated the data. The clear next step is to actually build the graphs with the characters as nodes and their relationships as edges. But that is a post for another day.&lt;/p&gt;
+Photo by &lt;a href=&#34;https://unsplash.com/@alecfavale?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText&#34;&gt;Alec Favale&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/s/photos/relationships?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText&#34;&gt;Unsplash&lt;/a&gt;
+  
+&lt;/div&gt;
+</description>
+      
+            <category>NLP</category>
+      
+            <category>r</category>
+      
+      
+            <category>How-to</category>
+      
+            <category>Project</category>
+      
+    </item>
+    
+    <item>
+      <title>Webscraping in R with Rvest</title>
+      <link>https://datasandbox.netlify.app/post/2022-06-22-webscraping-in-r-with-rvest/</link>
+      <pubDate>Wed, 22 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-06-22-webscraping-in-r-with-rvest/</guid>
+      <description>
+
+
+&lt;p&gt;Web scraping has become an incredibly important tool in data science, as an easy way to generate new data. The main advantage is the automation of some pretty repetitive tasks. Web scrapping can also be a good way of keeping up with new data on a website, assuming it doesn’t have a big change in its HTML structure.&lt;/p&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;This project is inspired from a YouTube video created by &lt;a href=&#34;https://www.youtube.com/watch?v=RuNolAh_4bU&#34;&gt;Thu Vu&lt;/a&gt; about at data scraping project about the Witcher books series. Her project utilizes &lt;code&gt;python&lt;/code&gt; and &lt;code&gt;Selenium&lt;/code&gt;. I love the book series and I loved the project idea. I’ve also had it on my backlog to learn the &lt;code&gt;Rvest&lt;/code&gt; library for a while, so it seems like a great opportunity to combine these two interests.&lt;/p&gt;
+&lt;p&gt;Rather than completing the project on the Witcher series, I thought it would be interesting to explore another book series that I love in the &lt;strong&gt;Stormlight Archive&lt;/strong&gt; by Brandon Sanderson. If you are not familiar with the series, it is an epic fantasy story sprawling over four main books at the time of the publishing of this post. Sanderson is a fantastic author and I feel that the &lt;strong&gt;Stormlight Archive&lt;/strong&gt; is his best work.&lt;/p&gt;
+&lt;p&gt;For this project, I will scrap the Coppermind website for all the character names in the series. The Coppermind is a fan made Wiki site that covers the work of Brandon Sanderson. After retrieving all the character names, I will create a graph outlining the relationships between each character. This work will be done in a future post, so please look forward to it.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;inializaton&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Inializaton&lt;/h2&gt;
+&lt;p&gt;The first step is to download the &lt;code&gt;Rvest&lt;/code&gt; library. This is done with the following code.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;install.packages(&amp;quot;rvest&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;rvest&lt;/code&gt; package is also installed if you have the &lt;code&gt;tidyverse&lt;/code&gt; package installed. Loading the &lt;code&gt;tidyverse&lt;/code&gt; package however will not load the &lt;code&gt;rvest&lt;/code&gt; package, so they both need to be loaded separately.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;tidyverse&amp;quot;)
+library(&amp;quot;rvest&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;datascraping&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Datascraping&lt;/h2&gt;
+&lt;p&gt;To start the data scraping exercise, we need to save the URL of the website we would like to scrape. This is the URL for the character page for the Stormlight Archives series.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;site &amp;lt;- read_html(&amp;quot;https://coppermind.net/wiki/Category:Rosharans&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;While on the website in your own browser, you right-click on the specific element you’re interested in scrapping and select inspect. This is at least the method used for Firefox, but it should be similar to other browsers.&lt;/p&gt;
+&lt;p&gt;From here, you have to do a little digging and a little experimentation to determine which HTML elements are important for the character list. It is pretty useful to have a strong understanding of HTML at this point. From my experimentation, I found that the list was contained within a div with the class “mw-category-group”. A div is a generic divider tag in HTML and can represent many things. I selected the elements with the following code:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;names &amp;lt;- site %&amp;gt;% 
+        html_elements(&amp;quot;div.mw-category-group&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You use the &lt;code&gt;html_elements&lt;/code&gt; command to select the all the elements for a specific HTML tag you pass. The addition of the “.mw-category-group”, specifies the selection to only divs with the specific &lt;code&gt;class&lt;/code&gt;. The &lt;code&gt;class&lt;/code&gt; is an attribute of the HTML tags, used to identify and group HTML elements together. I have found that this notation is the best way to filter elements.&lt;/p&gt;
+&lt;p&gt;Within the div elements, there is a further sub-structure for an element in the character list. The characters are contained within an &lt;code&gt;&amp;lt;li&amp;gt;&lt;/code&gt; tag as a list item and as an &lt;code&gt;&amp;lt;a&amp;gt;&lt;/code&gt; tag as a hyperlink within that list item. We can explore further into the HTML structure by selecting these elements. After the final structure is selected, we can use the &lt;code&gt;html_attr&lt;/code&gt; function to return an attribute of the selected elements. The ‘title’ attribute stores the character name in the HTML. We could also the &lt;code&gt;html_text2&lt;/code&gt; function to return the text of the hyperlink, but I’ve found that the ‘title’ attribute is better structured.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;names &amp;lt;- names %&amp;gt;%
+        html_elements(&amp;quot;li&amp;quot;) %&amp;gt;%
+        html_elements(&amp;quot;a&amp;quot;) %&amp;gt;%
+        html_attr(&amp;quot;title&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-cleaning&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Data Cleaning&lt;/h2&gt;
+&lt;p&gt;We can start exploring the results of the scrapping&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(head(names))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Category:Aimians&amp;quot;    &amp;quot;Category:Alethi&amp;quot;     &amp;quot;Category:Azish&amp;quot;     
+## [4] &amp;quot;Category:Emuli&amp;quot;      &amp;quot;Category:Herdazians&amp;quot; &amp;quot;Category:Iriali&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Oops, the program has captured an additional list that precedes the character list. Through my testing, I have not found a way to distinguish between the two lists from the HTML structure. Thankfully, we can rely on Regular Expressions to complete the job. The unwanted list items all start with “Category:”, so with a single expression of the &lt;code&gt;str_starts&lt;/code&gt; from the &lt;code&gt;stringr&lt;/code&gt; package we can remove these elements.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;names &amp;lt;- names[!str_starts(names, &amp;quot;Category:&amp;quot;)]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The list still requires some additional work, as there are “()” used throughout the list to give additional context. These “()” will not appear in the text, so we need to remove them with a second Regular Expression. Although it is not clear to me, the “(” needs to be double escaped with two “\” rather than just one.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;names &amp;lt;- str_remove_all(names,&amp;quot; \\(.*\\)&amp;quot;)
+
+print(head(names, 10))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;Abaray&amp;quot;        &amp;quot;Abiajan&amp;quot;       &amp;quot;Abrial&amp;quot;        &amp;quot;Abrobadar&amp;quot;    
+##  [5] &amp;quot;Abronai&amp;quot;       &amp;quot;Abry&amp;quot;          &amp;quot;Acis&amp;quot;          &amp;quot;Adin&amp;quot;         
+##  [9] &amp;quot;Adis&amp;quot;          &amp;quot;Adolin Kholin&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can see that the scrapped data is in much better condition. There is still additional work we can do, as the names will sometimes include first and last names. The last names are not particularly important, so we can drop them altogether.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;names &amp;lt;- str_remove_all(names,&amp;quot; .*&amp;quot;) 
+
+print(head(names, 10))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;Abaray&amp;quot;    &amp;quot;Abiajan&amp;quot;   &amp;quot;Abrial&amp;quot;    &amp;quot;Abrobadar&amp;quot; &amp;quot;Abronai&amp;quot;   &amp;quot;Abry&amp;quot;     
+##  [7] &amp;quot;Acis&amp;quot;      &amp;quot;Adin&amp;quot;      &amp;quot;Adis&amp;quot;      &amp;quot;Adolin&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;names &amp;lt;- names[!names %in% c(&amp;quot;Word&amp;quot;,&amp;quot;She&amp;quot;, &amp;quot;User:Thurin&amp;quot;)]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we can see that the final list is in condition that we can use to better explore the relationships.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;We have scraped the &lt;strong&gt;Stormlight Archive&lt;/strong&gt; character wiki website with the &lt;code&gt;rvest&lt;/code&gt; package. We loaded the website with &lt;code&gt;read_html&lt;/code&gt; function. Furthermore, we were then able to sort through the different HTML elements with the &lt;code&gt;html_elements&lt;/code&gt; to find where the character list is stored. We then obtained the actual names with the &lt;code&gt;html_attr&lt;/code&gt; function. The data collected still contained some unwanted data. We were able to remove an additional list, data in parentheses and the last names of all characters. We can now move forward with scrapping the books to identify the strength of relationships between each character.&lt;/p&gt;
+Photo by &lt;a href=&#34;https://unsplash.com/@pazarando?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText&#34;&gt;Paz Arando&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/s/photos/harvest?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText&#34;&gt;Unsplash&lt;/a&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>NLP</category>
+      
+            <category>R</category>
+      
+      
+            <category>How-to</category>
+      
+            <category>Projects</category>
+      
+    </item>
+    
+    <item>
+      <title>Text Prediction Shiny App pt 2</title>
+      <link>https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/</link>
+      <pubDate>Wed, 08 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/</guid>
+      <description>
+
+
+&lt;div id=&#34;description&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Description&lt;/h2&gt;
+&lt;p&gt;This is the second part for the creation of a text prediction Shiny Application. From the previous post, we have developed and Corpus of text to start creating text prediction applications.&lt;/p&gt;
+&lt;p&gt;We have also explored the corpus, looking at the frequency of words in the vocabulary. It is now time to start to develop ngram models.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;n-gram-models&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;N-gram models&lt;/h2&gt;
+&lt;p&gt;A ngram is a continuous sequence of tokens, where the order is determined by how many tokens are in the sequence. For our purpose, a token is created for each word in a sentence. Other tokens can be created, such as sentence in a paragraph or letters in a word. It really depends on your application needs.&lt;/p&gt;
+&lt;p&gt;A line of text can be broken down into ngrams in many ways. For example, the following text:&lt;/p&gt;
+&lt;p&gt;“The quick brown fox”&lt;/p&gt;
+&lt;p&gt;can be broken down to the following unigrams:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(“the”)(“quick”)(“brown”)(“fox”)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;or to the following bigrams:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(“the quick”)(“quick brown”)(“brown fox”)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;or to the following trigrams:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(“the quick brown”)(“quick brown fox”)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;or to the single tetragram:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(“the quick brown fox”)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The process for creating tokens from text, tokenization, drops the text to lower case and removes all punctuation. For this application, I would recommend the &lt;code&gt;unnest_tokens&lt;/code&gt; function from the &lt;code&gt;tidytext&lt;/code&gt; package.&lt;/p&gt;
+&lt;p&gt;Ngrams can be used for predictive text by reserving the last word in the ngram as the predicted word.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;models&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Models&lt;/h2&gt;
+&lt;div id=&#34;stupid-back-off&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Stupid Back-off&lt;/h3&gt;
+&lt;p&gt;A higher level of n-gram should provide a better predictive quality for our models. However, these higher n-grams have lower levels of occurrences. Each additional word included in the created n-grams, reduce the different possible solutions but should have a higher level of accuracy as there is more context provided to the model.&lt;/p&gt;
+&lt;p&gt;We need to create some shiny functions to help use determine the highest possible ngram model that we can use. The first function, turns the user input in unigram tokens, which does a lot of pre-processing for us. For words not in the vocabulary, we change the values to the ‘&lt;unk&gt;’ token, which the models already have included in the ngrams.&lt;/p&gt;
+&lt;p&gt;The final function simply finds the minimum between the length of the user input and the highest level of ngram models. The result will be the highest degree of ngram that we can use. This is often refereed to as the “Stupid Back-off” method, as a higher order ngram is “backed-offed” to a lower level ngram.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;truetext &amp;lt;- reactive({
+        truetext &amp;lt;- input$text %&amp;gt;%
+                tibble(text=.) %&amp;gt;%
+                unnest_tokens(word, text, token=&amp;quot;ngrams&amp;quot;, n=1)
+        
+        truetext[!truetext$word %in% voc$word,] &amp;lt;- &amp;quot;unk&amp;quot;
+        truetext})
+        
+        maxuse &amp;lt;- reactive({
+                min(nrow(truetext()) + 1,maxn)
+                })&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;maximum-likelihood-estimation&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Maximum Likelihood Estimation&lt;/h3&gt;
+&lt;p&gt;The maximum likelihood estimation (MLE) is the simplest model to examine. We simply count all the occurrence where the all values from the user input match with the ngrams to the final word in the n-gram. The final for in the ngram is reserved for the predicted estimation.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[p_x = \frac{C_x}{C}
+\]&lt;/span&gt;
+Where &lt;span class=&#34;math inline&#34;&gt;\(p_x\)&lt;/span&gt; is the probability that the word x will be predicted, &lt;span class=&#34;math inline&#34;&gt;\(C_x\)&lt;/span&gt; is the count of the word x occurring, and &lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt; is the count of all words.&lt;/p&gt;
+&lt;p&gt;The MLE model produces an unbalanced model, where there a many values from the vocabulary that have zero probability of being predicted. We would like to address this issue by developing more complicated models.&lt;/p&gt;
+&lt;p&gt;The following plot is a sample distribution created with the MLE model. The predicted values are sorted into bins based on the first letter of the predicted value. Some bins/letters have no value and therefore will have no probability assigned to them.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df &amp;lt;- ngrams$three %&amp;gt;%
+        filter(word1 ==&amp;quot;what&amp;quot;, word2 == &amp;quot;is&amp;quot;) %&amp;gt;%
+        select(word3, n) %&amp;gt;% 
+        right_join(voc, by = c(&amp;quot;word3&amp;quot; = &amp;quot;word&amp;quot;)) %&amp;gt;%
+        mutate(bin = substr(word3,1,1)) %&amp;gt;% 
+        group_by(bin)
+
+df$n[is.na(df$n)] &amp;lt;- 0
+
+df %&amp;gt;%
+        ggplot(aes(x = bin, y = n)) +
+        geom_bar(stat = &amp;quot;identity&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/index.en_files/figure-html/mleplot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;add-one-smoothing&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Add One Smoothing&lt;/h3&gt;
+&lt;p&gt;The simplest way to deal with the issue of zero probability values is to add one to all unseen counts. This is also referred to as Laplace Smoothing.
+&lt;span class=&#34;math display&#34;&gt;\[p_x = \begin{cases}
+\frac{C_x}{C} &amp;amp; C_x &amp;gt; 0 \\
+\frac{1}{C} &amp;amp; C_x = 0
+\end{cases}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;The plot for the add one model is pretty easy to create from the previous sample. It is clear that there are some values now in each bin, so there is some probability to every word in the vocabulary. The heights of the bins are also increased, as there previously were words in each bin that had 0 occurrences now occurring once.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df &amp;lt;- ngrams$three %&amp;gt;%
+        filter(word1 ==&amp;quot;what&amp;quot;, word2 == &amp;quot;is&amp;quot;) %&amp;gt;%
+        select(word3, n) %&amp;gt;% 
+        right_join(voc, by = c(&amp;quot;word3&amp;quot; = &amp;quot;word&amp;quot;)) %&amp;gt;%
+        mutate(bin = substr(word3,1,1)) %&amp;gt;% 
+        group_by(bin)
+
+df$n[is.na(df$n)] &amp;lt;- 1
+
+df %&amp;gt;%
+        ggplot(aes(x = bin, y = n)) +
+        geom_bar(stat = &amp;quot;identity&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/index.en_files/figure-html/addplot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;good-turing&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Good Turing&lt;/h3&gt;
+&lt;p&gt;In order to understand the Good Turing Smoothing, we need to introduce some new notation, &lt;span class=&#34;math inline&#34;&gt;\(N_C\)&lt;/span&gt;, to represent the frequency of frequencies. The frequency of frequencies represents how often a number of occurrences will happen in or distribution. For example, &lt;span class=&#34;math inline&#34;&gt;\(N_0\)&lt;/span&gt; represents the word count in our vocabulary where there are no occurrences of that word in the distribution. &lt;span class=&#34;math inline&#34;&gt;\(N_1\)&lt;/span&gt; then represents the count of the words that have one occurrence. The frequency of frequencies is a one layer of abstraction from our counts. It is helpful to consider our previous plots where we created bins based on the first letter of the predicted word, but instead we are creating bins one how often our predicted words occur.&lt;/p&gt;
+&lt;p&gt;To create these &lt;span class=&#34;math inline&#34;&gt;\(N_C\)&lt;/span&gt; values, we can use the count function. The original values for ‘n’ were created with the count function, we can repeat it over the values of ‘n’ to create a count of counts which I have called ‘nn’. The plot is as expected, there are many words with a low number of counts and a few high count values.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df &amp;lt;- ngrams$three %&amp;gt;%
+        filter(word1 ==&amp;quot;what&amp;quot;, word2 == &amp;quot;is&amp;quot;) %&amp;gt;%
+        select(word3, n) %&amp;gt;% 
+        right_join(voc, by = c(&amp;quot;word3&amp;quot; = &amp;quot;word&amp;quot;))
+
+df$n[is.na(df$n)] &amp;lt;- 0
+
+Nr &amp;lt;- count(df, n, name = &amp;quot;nn&amp;quot;)
+
+
+Nr %&amp;gt;%
+        head()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 2
+##       n    nn
+##   &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt;
+## 1     0 64330
+## 2     2    51
+## 3     3    28
+## 4     4    13
+## 5     5     2
+## 6     6     7&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The first intuition of the Good Turing is that the probability of something new, a word with a count of zero, should be assigned the probability for an event that occurred once. For this example, we have the very unlikely event that there are no counts of words that appear once, so we use the next available count(X). This will give the probability of all words with zero count, we will later divide it by the number of words with the count 0.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[P_0 = \frac{C_1}{C} = \frac{C_x\cdot N_x}{\Sigma C_N\cdot N_N}
+\]&lt;/span&gt;
+Since we have grouped the words by frequencies, we can use the product of all frequency of the frequencies by their count.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;total &amp;lt;- sum(Nr$nn*Nr$n)
+total&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1449&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Good Turing requires some additional calculations, so it is beneficial to add some columns to the dataframe at this point.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;Nr &amp;lt;- Nr %&amp;gt;%
+        arrange(n) %&amp;gt;% 
+        mutate(c= 0) %&amp;gt;%
+        mutate(sc = 0) %&amp;gt;%
+        mutate(GT = 0)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This snippet of code is used to determine the probability for a word with zero count.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#the probability for unseen matches is set to the next value probability
+Nr$GT[Nr$n==0] &amp;lt;- Nr$nn[2]*Nr$n[2]/total&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;All other counts are to be adjusted. The Good Turing Smoothing is defined by the following equation:
+&lt;span class=&#34;math display&#34;&gt;\[C^*=\frac{(C+1)N_{C+1}}{N_C}\]&lt;/span&gt;
+Where &lt;span class=&#34;math inline&#34;&gt;\(C^*\)&lt;/span&gt; is the adjusted count number. Since the general trend is that the frequencies decrease as the count increases, the term &lt;span class=&#34;math inline&#34;&gt;\(\frac{N_{C+1}}{N_C}\)&lt;/span&gt; will decrease the value for the count. This is the desired behaviour, as we want that probability to be distributed to zero counts.&lt;/p&gt;
+&lt;p&gt;One major issue that need to be addressed is that the frequency table is not continuous. There are holes as not all counts exist. To overcome this obstacle, we can create a regression model to fill in the missing values. A logistics regression model fits the values much better than a linear model.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;Zn &amp;lt;- Nr[-1,] %&amp;gt;% add_row(n=Nr$n[nrow(Nr)]+1)
+Zr &amp;lt;- Nr[-1,] %&amp;gt;% lm(log(nn)~log(n), data=.) %&amp;gt;% predict(newdata=Zn)
+Zr &amp;lt;- exp(Zr)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The next code chunk can look quite complicated. In this chunk, the corrected count, &lt;span class=&#34;math inline&#34;&gt;\(C^*\)&lt;/span&gt;, are calculated. The variable j is used to control whether the regression model is used to substitute the value for &lt;span class=&#34;math inline&#34;&gt;\(N_{C+1}\)&lt;/span&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#creates the new adjusted counts
+j &amp;lt;- 0 
+for (i in 2:nrow(Nr)) {
+        Nr$c[i] &amp;lt;-  (Nr$n[i]+1)*Nr$nn[i+1]/Nr$nn[i]
+        Nr$c[i][is.na(Nr$c[i])] &amp;lt;- 0
+        Nr$sc[i] &amp;lt;-  (Nr$n[i]+1)*Zr[i]/Zr[i-1]
+        if(Nr$n[i+1]-Nr$n[i] &amp;gt; 1 | i == nrow(Nr)){
+                j &amp;lt;- 1}
+        Nr$GT[i] &amp;lt;-  Nr$c[i]*(1-j) + Nr$sc[i]*j
+        }&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The probabilities at this time need two additional modifications, they need to be normalized as the regression model skews the overall probability and the probabilities need to be divided by the frequency counts to get a word specific probability.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#the specific prop from words with the same count
+Nr$GT[Nr$GT &amp;lt; 0] &amp;lt;- Nr$nn[2]/total
+Nr$GT &amp;lt;- Nr$GT/sum(Nr$GT)
+Nr$GT2 &amp;lt;- Nr$GT/Nr$nn&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can now plot the completed ngram prediction for the Good Turing Smoothing. The plot looks similar to previous plots, but we plot the probabilities rather than the count values ‘n’.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df &amp;lt;- ngrams$three %&amp;gt;%
+        filter(word1 ==&amp;quot;what&amp;quot;, word2 == &amp;quot;is&amp;quot;) %&amp;gt;%
+        select(word3, n) %&amp;gt;% 
+        right_join(voc, by = c(&amp;quot;word3&amp;quot; = &amp;quot;word&amp;quot;)) %&amp;gt;%
+        mutate(bin = substr(word3,1,1)) %&amp;gt;% 
+        group_by(bin)
+
+df$n[is.na(df$n)] &amp;lt;- 0
+
+df %&amp;gt;%
+        left_join(select(Nr,n,GT2), by = &amp;quot;n&amp;quot;) %&amp;gt;%
+        ggplot(aes(x = bin, y = GT2)) +
+        geom_bar(stat = &amp;quot;identity&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/index.en_files/figure-html/gtplot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;absolute-discounting&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Absolute Discounting&lt;/h3&gt;
+&lt;p&gt;Good Turing Smoothing is an effective model, but man can it be complicated. One observation that you can make when looking at the values for &lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(C^*\)&lt;/span&gt; is that there is nearly constant discounting. The distribution in our example is skewed, but we can see that the most common value is between 0 and 1.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;Nr %&amp;gt;%
+        select(c,sc) %&amp;gt;%
+        mutate(diff = c-sc) %&amp;gt;%
+        ggplot(aes(x=diff)) +
+        geom_histogram()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/index.en_files/figure-html/adinsight-1.png&#34; width=&#34;672&#34; /&gt;
+This would suggest that we could significantly simplify the adjusted counts calculations by subtracting a constant value. The algorithm is described by the following equation:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[p_x = \frac{C_x - d}{C} + \lambda \cdot p_{unigram}
+\]&lt;/span&gt;
+where ‘d’ is the discounting amount, &lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt; is the Interpolation rate and &lt;span class=&#34;math inline&#34;&gt;\(p_{unigram}\)&lt;/span&gt; is the unigram probability based on the MLE.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;discount &amp;lt;- 0.75
+ADI &amp;lt;- df %&amp;gt;%
+        ungroup() %&amp;gt;%
+        select(word3, n) %&amp;gt;%
+        mutate(ADI = (n - discount)/sum(n))
+                
+ADI$ADI[ADI$ADI &amp;lt; 0 ] &amp;lt;- 0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As previously mentioned, the unigram probability is calculated by applying the MLE to the unigram counts.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;unigram.prop &amp;lt;- ngrams$one %&amp;gt;%
+        mutate(prop = n / sum(n))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The interpolated weight (&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;) can be found by finding the probability that was discounted.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;uni.wt &amp;lt;- 1 - sum(ADI$ADI)
+
+ADI &amp;lt;- ADI %&amp;gt;% 
+        add_column(uni = unigram.prop$prop*uni.wt) %&amp;gt;% 
+        mutate(ADI = ADI + uni, .keep = &amp;quot;unused&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can see that the plot of the probabilities for the absolute discounting is very similar to the Good Turing plot, but it was much easier to understand and calculate.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ADI %&amp;gt;%
+        mutate(bin = substr(word3,1,1)) %&amp;gt;% 
+        group_by(bin) %&amp;gt;%
+        ggplot(aes(x = bin, y = ADI)) +
+        geom_bar(stat = &amp;quot;identity&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/index.en_files/figure-html/adiplot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;kneser-ney&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Kneser-Ney&lt;/h3&gt;
+&lt;p&gt;The issue with Absolute Discounting is the reliance on the unigram probabilities. The unigram probability doesn’t provide any contextual information. We would rather rely on the continuation probability. Rather than looking at how often the word occurs, the continuation probability looks at how many bigrams the word completes. The Kneser-Ney model follows this equation:
+&lt;span class=&#34;math display&#34;&gt;\[p_x = \frac{max(C_x - d, 0)}{C} + \lambda \cdot p_{continuation}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;The next chunk of code is very similar to the code used in the absolute discounting model.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;KNS &amp;lt;- df %&amp;gt;%
+        ungroup %&amp;gt;%
+        select(word3, n) %&amp;gt;%
+        mutate(KNS = (n - discount)/sum(n))
+
+KNS$KNS[KNS$KNS &amp;lt; 0 ] &amp;lt;- 0
+cont.wt &amp;lt;- 1 - sum(KNS$KNS)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;continuation-probabilities&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Continuation Probabilities&lt;/h4&gt;
+&lt;p&gt;The following code is used to determine the continuation probabilities. Since the highest order ngram is six, the continuation probability needs to be calculated for six different ngram series.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cont.prop.func &amp;lt;- function(word, ngrams){
+        out &amp;lt;- ngrams %&amp;gt;% 
+                filter(.[,ncol(ngrams)-1] == word) %&amp;gt;%
+                nrow() 
+        out / nrow(ngrams)
+}
+cont.prop &amp;lt;- list()
+cont.prop$one &amp;lt;- tibble(word=voc$word, prop = ngrams$one$n/sum(ngrams$one$n))
+cont.prop$two &amp;lt;- tibble(word=voc$word, prop = map_dbl(word, cont.prop.func, ngrams=ngrams$two))
+cont.prop$three &amp;lt;- tibble(word=voc$word, prop = map_dbl(word, cont.prop.func, ngrams=ngrams$three))
+cont.prop$four &amp;lt;- tibble(word=voc$word, prop = map_dbl(word, cont.prop.func, ngrams=ngrams$four))
+cont.prop$five &amp;lt;- tibble(word=voc$word, prop = map_dbl(word, cont.prop.func, ngrams=ngrams$five))
+cont.prop$six &amp;lt;- tibble(word=voc$word, prop = map_dbl(word, cont.prop.func, ngrams=ngrams$six))
+saveRDS(cont.prop, &amp;quot;cont.prop.rds&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The difficulty is with finding the continuation probability. After they are found, it is pretty easy to add them to the model.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;KNS$KNS &amp;lt;- KNS$KNS + cont.prop$three$prop*cont.wt
+
+KNS %&amp;gt;%
+        mutate(bin = substr(word3,1,1)) %&amp;gt;% 
+        group_by(bin) %&amp;gt;%
+        ggplot(aes(x = bin, y = KNS)) +
+        geom_bar(stat = &amp;quot;identity&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/index.en_files/figure-html/kn2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;shiny-app&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Shiny App&lt;/h2&gt;
+&lt;p&gt;With all the models created, we can bundle it together in a single Shiny Application. This Shiny Application retrieves the user’s input and attempts to predict the next word. A table is generated to summarize the most highly predicted word. Since there are five different models, there are five different rows. A plot is generated for each model where the predicted words are in bins with other words with the same first letter.&lt;/p&gt;
+&lt;p&gt;&lt;iframe title=&#34;Text Prediction&#34; width=&#34;100%&#34; height=&#34;500&#34; src=&#34;https://m2edney.shinyapps.io/Text_Predictive_Model/?_ga=2.265904783.1867833987.1655568288-1341333380.1645206372&#34;&gt;&lt;/iframe&gt;
+Photo by &lt;a href=&#34;https://unsplash.com/@jareddc?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Jaredd Craig&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/s/photos/book?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>R</category>
+      
+            <category>NLP</category>
+      
+            <category>Shiny App</category>
+      
+      
+            <category>Project</category>
+      
+    </item>
+    
+    <item>
+      <title>Text Prediction Shiny App pt 1</title>
+      <link>https://datasandbox.netlify.app/post/2022-03-11-text-prediction-app/</link>
+      <pubDate>Tue, 31 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-03-11-text-prediction-app/</guid>
+      <description>
+
+
+&lt;blockquote&gt;
+&lt;p&gt;This Shiny App was first written in May of 2021&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div id=&#34;description&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Description&lt;/h2&gt;
+&lt;p&gt;The goal of this project was to create an N-gram based model to predict the word to follow the user’s input. This project was to complete the Capstone project for the Johns Hopkins University Data science program on Coursera. The data for this project was provided by Swiftkey.&lt;/p&gt;
+&lt;p&gt;This project will be broken down to multiple parts as the entire project is quite large. The first part will deal with the creation of the corpus. This corpus will require additional filtering to remove words that are not English, contractions and words that are considered profanity.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;initialization&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Initialization&lt;/h2&gt;
+&lt;p&gt;The initial step that loads the required libraries and downloads the data sets if not all read on file.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+library(tidytext)
+library(pryr)
+
+#downloads the corpus files, profanity filter and English dictionary
+
+url &amp;lt;- &amp;quot;https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip&amp;quot;
+url2 &amp;lt;- &amp;quot;https://www.freewebheaders.com/download/files/facebook-bad-words-list_comma-separated-text-file_2021_01_18.zip&amp;quot;
+url3 &amp;lt;- &amp;quot;https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt&amp;quot;
+url4 &amp;lt;- &amp;quot;https://raw.githubusercontent.com/mark-edney/Capestone/1c143b40dd71f0564c3248df2a8638d08af10440/data/contractions.txt&amp;quot;
+
+# I have added this if statement for testing, if the files are found than they will not be downloaded again
+if(dir.exists(&amp;quot;~/R/Capestone/data/&amp;quot;) == FALSE){
+       dir.create(&amp;quot;~/R/Capestone/data/&amp;quot;)}
+
+if(file.exists(&amp;quot;~/R/Capestone/data/data.zip&amp;quot;) == FALSE|
+   file.exists(&amp;quot;~/R/Capestone/data/prof.zip&amp;quot;)==FALSE|
+   file.exists(&amp;quot;~/R/Capestone/data/diction.txt&amp;quot;)==FALSE|
+    file.exists(&amp;quot;~/R/Capestone/data/contractions.txt&amp;quot;)==FALSE){
+        download.file(url,destfile = &amp;quot;~/R/Capestone/data/data.zip&amp;quot;)
+        download.file(url2,destfile = &amp;quot;~/R/Capestone/data/prof.zip&amp;quot;)
+        download.file(url3,destfile = &amp;quot;~/R/Capestone/data/diction.txt&amp;quot;)
+        download.file(url4,destfile = &amp;quot;~/R/Capestone/data/contractions.txt&amp;quot;)
+        setwd(&amp;quot;~/R/Capestone/data/&amp;quot;)
+        unzip(&amp;quot;~/R/Capestone/data/prof.zip&amp;quot;)
+        unzip(&amp;quot;~/R/Capestone/data/data.zip&amp;quot;)
+        setwd(&amp;quot;~/R/Capestone&amp;quot;)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;creating-a-corpus&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Creating a Corpus&lt;/h2&gt;
+&lt;p&gt;The project requires a Corpus, or a large body of text, to create models. At this stage, the files are opened and joined. The Corpus is so large and requires so much ram that a sample of 10% is taken.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;blog &amp;lt;- read_lines(&amp;quot;~/R/Capestone/data/final/en_US/en_US.blogs.txt&amp;quot;)
+news &amp;lt;- read_lines(&amp;quot;~/R/Capestone/data/final/en_US/en_US.news.txt&amp;quot;)
+twitter &amp;lt;- read_lines(&amp;quot;~/R/Capestone/data/final/en_US/en_US.twitter.txt&amp;quot;)
+blog &amp;lt;- tibble(text = blog) 
+news &amp;lt;- tibble(text = news)
+twitter &amp;lt;- tibble(text = twitter)
+
+set.seed(90210)
+corpus &amp;lt;- bind_rows(blog,twitter,news) %&amp;gt;% 
+        slice_sample(prop = 0.10) %&amp;gt;%
+        mutate(line = row_number())&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;corpus-filtering&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Corpus filtering&lt;/h2&gt;
+&lt;p&gt;Here, the corpus filter is created to remove profanity and any word that is not in the English dictionary.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;prof &amp;lt;- read_lines(&amp;quot;~/R/Capestone/data/facebook-bad-words-list_comma-separated-text-file_2021_01_18.txt&amp;quot;)[15]
+prof &amp;lt;- prof %&amp;gt;% 
+        str_split(&amp;quot;, &amp;quot;) %&amp;gt;% 
+        flatten() %&amp;gt;% 
+        unlist()
+prof &amp;lt;- tibble(&amp;quot;word&amp;quot; = prof)
+
+english &amp;lt;- read_lines(&amp;quot;~/R/Capestone/data/diction.txt&amp;quot;)
+english &amp;lt;- tibble(&amp;quot;word&amp;quot; = english[!english==&amp;quot;&amp;quot;])
+
+contract &amp;lt;- read_lines(&amp;quot;~/R/Capestone/data/contractions.txt&amp;quot;)
+contract &amp;lt;- tibble(&amp;quot;word&amp;quot; = contract) %&amp;gt;% unnest_tokens(word,word)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;vocabulary&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Vocabulary&lt;/h2&gt;
+&lt;p&gt;A vocabulary of words is created from the unique words with the applied filters.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#clean up ram
+rm(blog,news,twitter)
+voc &amp;lt;- bind_rows(english, contract) %&amp;gt;% anti_join(prof)
+
+unigram &amp;lt;- corpus %&amp;gt;% unnest_tokens(ngram, text, token = &amp;quot;ngrams&amp;quot;, n = 1) %&amp;gt;%
+        semi_join(voc, by = c(&amp;quot;ngram&amp;quot;=&amp;quot;word&amp;quot;)) 
+#decreases the voc size
+voc &amp;lt;- tibble(word = unique(unigram$ngram))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;corpus-exploration&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Corpus Exploration&lt;/h2&gt;
+&lt;p&gt;Now that the corpus is created, we can do some exploration into the text. There are some lines of text that have some odd behaviour, but on the whole it mostly makes sense.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;corpus %&amp;gt;% 
+        head()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 2
+##   text                                                                      line
+##   &amp;lt;chr&amp;gt;                                                                    &amp;lt;int&amp;gt;
+## 1 no we don&amp;#39;t just kidding yes we do d                                         1
+## 2 it sounds like a man walking on snow but it&amp;#39;s my heartbeat cara on how ~     2
+## 3 they thought about it but you&amp;#39;re too short                                   3
+## 4 indeed dear to my heart want to go see                                       4
+## 5 i know its a tough world out there the secret to succeeding isn&amp;#39;t stepp~     5
+## 6 we&amp;#39;re wishing for the cure too good luck                                     6&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;vocabulary-exploration&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Vocabulary Exploration&lt;/h2&gt;
+&lt;p&gt;By using the &lt;code&gt;arrange&lt;/code&gt; function, we can sort the unigrams by their counts. This provides some insight on which words come up the most frequently. It is not surprisingly that the most common word is “the”. These frequencies will play an important role in the test prediction, so it is important to consider them. It is very common to filter out “Stop Words” as they likely add little value to predictions.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;unigram %&amp;gt;%
+        arrange(desc(n)) %&amp;gt;%
+        head()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 2
+##   ngram      n
+##   &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt;
+## 1 the   476750
+## 2 to    277081
+## 3 and   242032
+## 4 a     238301
+## 5 of    201539
+## 6 in    165645&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Photo by &lt;a href=&#34;https://unsplash.com/@sandym10?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Sandy Millar&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/s/photos/predictive-text?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+</description>
+      
+            <category>Shiny App</category>
+      
+            <category>NLP</category>
+      
+            <category>R</category>
+      
+      
+            <category>Project</category>
+      
+    </item>
     
     <item>
       <title>Level up your programming skills</title>
