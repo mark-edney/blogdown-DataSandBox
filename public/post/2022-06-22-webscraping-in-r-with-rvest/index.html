@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+
+<html lang="en" class="dark">
+<head>
+<meta name="google-site-verification" content="sgjxKXCEE0r0JJtUOqKZKg61BiyTGEclPAMsZnHhrJw" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4108863678822570"
+     crossorigin="anonymous"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VNSWDG9ZWF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VNSWDG9ZWF');
+</script>
+
+<title>The Data Sandbox | Webscraping in R with Rvest</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <link rel="apple-touch-icon" sizes="180x180" href='/favicon/apple-touch-icon.png'>
+    <link rel="icon" type="image/png" sizes="32x32" href='/favicon/favicon-32x32.png'>
+    <link rel="icon" type="image/png" sizes="16x16" href='/favicon/favicon-16x16.png'>
+    <link rel="manifest" href='/favicon/site.webmanifest' />
+    <link rel="mask-icon" href=' /favicon/safari-pinned-tab.svg' color="#5bbad5" />
+    <link rel="shortcut icon" href='/favicon/favicon.ico' />
+    <meta name="theme-color" content="#ffffff">
+    <meta property="og:title" content="The Data Sandbox | Webscraping in R with Rvest" />
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.min.8e7bcdffab6bbed366372e694f634ed1ccdeae445b32dfeaf0395832323641f0.css" />
+    
+    <link href=' /css/blonde.min.css' rel="stylesheet" type="text/css" media="print"
+        onload="this.media=' all'">
+    
+
+
+
+<meta name="description" content="A tutorial on the Rvest package in R">
+<meta property="og:site_name" content="The Data Sandbox">
+<meta property="og:description" content="A tutorial on the Rvest package in R">
+<meta property="og:url" content="https://datasandbox.netlify.app/post/2022-06-22-webscraping-in-r-with-rvest/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="">
+
+<link rel="canonical" href="https://datasandbox.netlify.app/post/2022-06-22-webscraping-in-r-with-rvest/">
+
+<meta name="twitter:description" content="A tutorial on the Rvest package in R">
+<meta property="article:published_time" content="2022-06-22T00:00:00&#43;00:00">
+<meta property="article:updated_time" content="2022-06-22T00:00:00&#43;00:00">
+
+
+
+
+
+    
+<meta property="og:image" content="https://datasandbox.netlify.app/img/harvest.jpg">
+<meta property="og:image:url" content="https://datasandbox.netlify.app/img/harvest.jpg">
+    
+
+    
+    <link rel="stylesheet" href='/css/custom.css'>
+            <i class="dark hidden"></i>
+</head><body class="font-sans">
+    <div class="min-h-screen flex flex-col bg-gray-100 dark:bg-warmgray-800"><div class="bg-gray-800">
+    <div class="container max-w-screen-xl mr-auto ml-auto">
+        <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6">
+            <div class="flex items-center flex-no-shrink bg-gray-800 text-white mr-6">
+                <a href="https://datasandbox.netlify.app/"><span class="font-semibold text-2xl tracking-tight">The Data Sandbox</span></a>
+            </div>
+            <div class="flex md:hidden">
+                <div class="py-2">
+                    <button onclick="toggleDarkMode()" class="focus:outline-none mr-1" aria-label="Darkmode Toggle Button"><i id="icon"
+                            class="icon-moon inline-flex align-middle leading-normal text-lg text-white"></i></button>
+                    <span class="text-white">|</span>
+                </div>
+                <button id="hamburgerbtn" class="flex items-center px-3 py-1 text-white hover:opacity-50" aria-label="Hamburger Button">
+                    <span class="icon-menu text-2xl"></span>
+                </button>
+            </div>
+            <div class="hidden w-full md:flex md:flex-row sm:items-center md:w-auto" id="mobileMenu">
+                <div class="text-sm lg:flex-grow">
+                </div>
+                <div class="navmenu">
+                    
+                    <a href="/"
+                        class="no-underline duration-200 block mt-4 sm:inline-block sm:mt-0 text-white hover:opacity-50 mr-4">
+                        Home
+                    </a>
+                    
+                    <a href="/about/"
+                        class="no-underline duration-200 block mt-4 sm:inline-block sm:mt-0 text-white hover:opacity-50 mr-4">
+                        About
+                    </a>
+                    
+                    <a href="/contact/"
+                        class="no-underline duration-200 block mt-4 sm:inline-block sm:mt-0 text-white hover:opacity-50 mr-4">
+                        Contact
+                    </a>
+                    
+                </div>
+                <div class="text-white invisible md:visible">
+                    <span>|</span>
+                    <button onclick="toggleDarkMode()" class="focus:outline-none" aria-label="Darkmode Toggle Button"><i id="icon2"
+                            class="icon-moon hover:opacity-50 duration-200 inline-flex align-middle leading-normal text-lg ml-2"></i></button>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<style>
+    .active {
+        display: block;
+    }
+</style>
+
+<script>
+    let hamburger = document.getElementById('hamburgerbtn');
+
+    let mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', function () {
+        mobileMenu.classList.toggle('active');
+    });
+</script>
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <div class="container max-w-screen-xl mx-auto mt-4 flex-grow px-5 lg:px-0" id="content">
+            <div class="lg:mx-5">
+<div class="grid grid-cols-3 gap-4">
+    
+    <div class="col-span-3 lg:col-span-2 dark:text-white">
+    
+        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
+            <h1 class="title text-4xl">Webscraping in R with Rvest</h1>
+            <hr class="my-2">
+            <aside id="meta">
+                <div>
+                    <section>
+                        <h4 id="date"><span class="icon-access_time mr-2"></span>2022/06/22 </h4>
+                    </section>
+                    
+                    <div id="tags">
+                        <span class="icon-local_offer mr-1"></span>
+                        
+                        <a href="https://datasandbox.netlify.app/tags/nlp">NLP</a> |
+                        
+                        <a href="https://datasandbox.netlify.app/tags/r">R</a> |
+                        
+                    </div>
+                    
+                </div>
+            </aside>
+            <hr class="my-2">
+            
+            <img class="py-4" src="https://datasandbox.netlify.app/img/harvest.jpg">
+            
+            <div class="content mt-5">
+
+
+<p>Web scraping has become an incredibly important tool in data science, as an easy way to generate new data. The main advantage is the automation of some pretty repetitive tasks. Web scrapping can also be a good way of keeping up with new data on a website, assuming it doesn’t have a big change in its HTML structure.</p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This project is inspired from a YouTube video created by <a href="https://www.youtube.com/watch?v=RuNolAh_4bU">Thu Vu</a> about at data scraping project about the Witcher books series. Her project utilizes <code>python</code> and <code>Selenium</code>. I love the book series and I loved the project idea. I’ve also had it on my backlog to learn the <code>Rvest</code> library for a while, so it seems like a great opportunity to combine these two interests.</p>
+<p>Rather than completing the project on the Witcher series, I thought it would be interesting to explore another book series that I love in the <strong>Stormlight Archive</strong> by Brandon Sanderson. If you are not familiar with the series, it is an epic fantasy story sprawling over four main books at the time of the publishing of this post. Sanderson is a fantastic author and I feel that the <strong>Stormlight Archive</strong> is his best work.</p>
+<p>For this project, I will scrap the Coppermind website for all the character names in the series. The Coppermind is a fan made Wiki site that covers the work of Brandon Sanderson. After retrieving all the character names, I will create a graph outlining the relationships between each character. This work will be done in a future post, so please look forward to it.</p>
+</div>
+<div id="inializaton" class="section level2">
+<h2>Inializaton</h2>
+<p>The first step is to download the <code>Rvest</code> library. This is done with the following code.</p>
+<pre class="r"><code>install.packages(&quot;rvest&quot;)</code></pre>
+<p>The <code>rvest</code> package is also installed if you have the <code>tidyverse</code> package installed. Loading the <code>tidyverse</code> package however will not load the <code>rvest</code> package, so they both need to be loaded separately.</p>
+<pre class="r"><code>library(&quot;tidyverse&quot;)
+library(&quot;rvest&quot;)</code></pre>
+</div>
+<div id="datascraping" class="section level2">
+<h2>Datascraping</h2>
+<p>To start the data scraping exercise, we need to save the URL of the website we would like to scrape. This is the URL for the character page for the Stormlight Archives series.</p>
+<pre class="r"><code>site &lt;- read_html(&quot;https://coppermind.net/wiki/Category:Rosharans&quot;)</code></pre>
+<p>While on the website in your own browser, you right-click on the specific element you’re interested in scrapping and select inspect. This is at least the method used for Firefox, but it should be similar to other browsers.</p>
+<p>From here, you have to do a little digging and a little experimentation to determine which HTML elements are important for the character list. It is pretty useful to have a strong understanding of HTML at this point. From my experimentation, I found that the list was contained within a div with the class “mw-category-group”. A div is a generic divider tag in HTML and can represent many things. I selected the elements with the following code:</p>
+<pre class="r"><code>names &lt;- site %&gt;% 
+        html_elements(&quot;div.mw-category-group&quot;)</code></pre>
+<p>You use the <code>html_elements</code> command to select the all the elements for a specific HTML tag you pass. The addition of the “.mw-category-group”, specifies the selection to only divs with the specific <code>class</code>. The <code>class</code> is an attribute of the HTML tags, used to identify and group HTML elements together. I have found that this notation is the best way to filter elements.</p>
+<p>Within the div elements, there is a further sub-structure for an element in the character list. The characters are contained within an <code>&lt;li&gt;</code> tag as a list item and as an <code>&lt;a&gt;</code> tag as a hyperlink within that list item. We can explore further into the HTML structure by selecting these elements. After the final structure is selected, we can use the <code>html_attr</code> function to return an attribute of the selected elements. The ‘title’ attribute stores the character name in the HTML. We could also the <code>html_text2</code> function to return the text of the hyperlink, but I’ve found that the ‘title’ attribute is better structured.</p>
+<pre class="r"><code>names &lt;- names %&gt;%
+        html_elements(&quot;li&quot;) %&gt;%
+        html_elements(&quot;a&quot;) %&gt;%
+        html_attr(&quot;title&quot;)</code></pre>
+</div>
+<div id="data-cleaning" class="section level2">
+<h2>Data Cleaning</h2>
+<p>We can start exploring the results of the scrapping</p>
+<pre class="r"><code>print(head(names))</code></pre>
+<pre><code>## [1] &quot;Category:Aimians&quot;    &quot;Category:Alethi&quot;     &quot;Category:Azish&quot;     
+## [4] &quot;Category:Emuli&quot;      &quot;Category:Herdazians&quot; &quot;Category:Iriali&quot;</code></pre>
+<p>Oops, the program has captured an additional list that precedes the character list. Through my testing, I have not found a way to distinguish between the two lists from the HTML structure. Thankfully, we can rely on Regular Expressions to complete the job. The unwanted list items all start with “Category:”, so with a single expression of the <code>str_starts</code> from the <code>stringr</code> package we can remove these elements.</p>
+<pre class="r"><code>names &lt;- names[!str_starts(names, &quot;Category:&quot;)]</code></pre>
+<p>The list still requires some additional work, as there are “()” used throughout the list to give additional context. These “()” will not appear in the text, so we need to remove them with a second Regular Expression. Although it is not clear to me, the “(” needs to be double escaped with two “\” rather than just one.</p>
+<pre class="r"><code>names &lt;- str_remove_all(names,&quot; \\(.*\\)&quot;)
+
+print(head(names, 10))</code></pre>
+<pre><code>##  [1] &quot;Abaray&quot;        &quot;Abiajan&quot;       &quot;Abrial&quot;        &quot;Abrobadar&quot;    
+##  [5] &quot;Abronai&quot;       &quot;Abry&quot;          &quot;Acis&quot;          &quot;Adin&quot;         
+##  [9] &quot;Adis&quot;          &quot;Adolin Kholin&quot;</code></pre>
+<p>We can see that the scrapped data is in much better condition. There is still additional work we can do, as the names will sometimes include first and last names. The last names are not particularly important, so we can drop them altogether.</p>
+<pre class="r"><code>names &lt;- str_remove_all(names,&quot; .*&quot;) 
+
+print(head(names, 10))</code></pre>
+<pre><code>##  [1] &quot;Abaray&quot;    &quot;Abiajan&quot;   &quot;Abrial&quot;    &quot;Abrobadar&quot; &quot;Abronai&quot;   &quot;Abry&quot;     
+##  [7] &quot;Acis&quot;      &quot;Adin&quot;      &quot;Adis&quot;      &quot;Adolin&quot;</code></pre>
+<pre class="r"><code>names &lt;- names[!names %in% c(&quot;Word&quot;,&quot;She&quot;, &quot;User:Thurin&quot;)]</code></pre>
+<p>Now we can see that the final list is in condition that we can use to better explore the relationships.</p>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>We have scraped the <strong>Stormlight Archive</strong> character wiki website with the <code>rvest</code> package. We loaded the website with <code>read_html</code> function. Furthermore, we were then able to sort through the different HTML elements with the <code>html_elements</code> to find where the character list is stored. We then obtained the actual names with the <code>html_attr</code> function. The data collected still contained some unwanted data. We were able to remove an additional list, data in parentheses and the last names of all characters. We can now move forward with scrapping the books to identify the strength of relationships between each character.</p>
+Photo by <a href="https://unsplash.com/@pazarando?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Paz Arando</a> on <a href="https://unsplash.com/s/photos/harvest?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+</div>
+</div>
+            <aside id="meta">
+                
+                <hr class="py-2">
+                <div id="categories">
+                    <span class="icon-folder text-xl mr-1"></span>
+                    
+                    <span
+                        class="inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-200 justify-center h-8 px-3 text-blue-500 duration-200 hover:text-black dark:bg-warmgray-800"><a
+                            href="https://datasandbox.netlify.app/categories/how-to">How-to</a></span>
+                    
+                    <span
+                        class="inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-200 justify-center h-8 px-3 text-blue-500 duration-200 hover:text-black dark:bg-warmgray-800"><a
+                            href="https://datasandbox.netlify.app/categories/projects">Projects</a></span>
+                    
+                </div>
+                
+            </aside>
+            </div>
+        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
+            <div class="grid grid-cols-2">
+                <div class="col-span-1">
+                    
+                    <a class="previous lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/">
+                        <div
+                            class="transition-colors duration-300 border border-gray-600 hover:border-black h-auto m-3 text-center py-3 lg:py-1">
+                            <span class="icon-keyboard_arrow_left"></span> Text Prediction Shiny App pt 2
+                        </div>
+                    </a>
+                    
+                </div>
+                
+                <a class="next lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-07-04-relationship-analysis-with-spacyr/">
+                    <div
+                        class="transition-colors duration-300 col-span-1 border border-gray-600 hover:border-black h-auto m-3 text-center py-3 lg:py-1">
+                        Relationship Extraction with Spacyr <span class="icon-keyboard_arrow_right"></span>
+                    </div>
+                </a>
+                
+            </div>
+        </div>
+        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
+            <div class="mb-3">
+                <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "data-sandbox" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="hidden lg:block lg:col-span-1">
+        <div class="mb-3">
+    <form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+        <label>
+            <input class="w-full p-3 focus:outline-none dark:bg-warmgray-900 dark:text-white placeholder-gray-700 dark:placeholder-gray-300" type="search"
+                placeholder="Search..." value="" name="q" aria-label="Search">
+        </label>
+        <input class="hidden" type="submit" value="Search">
+        <input type="hidden" name="sitesearch" value="https://datasandbox.netlify.app/" />
+    </form>
+</div>
+        <div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-3 px-3 dark:text-gray-300">Archives</p>
+    
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/01">2022/01 (2)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/02">2022/02 (5)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/03">2022/03 (5)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/04">2022/04 (4)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/05">2022/05 (4)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/06">2022/06 (2)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/07">2022/07 (1)</a>
+    
+    
+</div>
+        
+<div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Categories</p>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/general">General</a>
+
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/how-to">How to</a>
+
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/project">Project</a>
+
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/projects">Projects</a>
+
+    
+</div>
+
+        
+<div class="bg-white panel mb-3 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-3 pl-3 dark:text-gray-300">Tags</p>
+    <div class="panel-block p-2">
+        <a href="/tags/ggplot">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                ggplot
+            </span></a>
+        <a href="/tags/leaflet">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                leaflet
+            </span></a>
+        <a href="/tags/ml">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                ml
+            </span></a>
+        <a href="/tags/nlp">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                nlp
+            </span></a>
+        <a href="/tags/nn">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                nn
+            </span></a>
+        <a href="/tags/python">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                python
+            </span></a>
+        <a href="/tags/r">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                r
+            </span></a>
+        <a href="/tags/rmarkdown">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                rmarkdown
+            </span></a>
+        <a href="/tags/shiny-app">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                shiny-app
+            </span></a>
+    </div>
+</div>
+
+        
+
+<div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Recent Posts</p>
+    <div class="mx-6">
+        
+        <a href="/post/2022-02-08-professional-tables/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Professional Tables with Stargazer</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/02/08</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-05-01-level-up-your-progamming-skills/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Level up your programming skills</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/05/01</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-02-11-fancy-tables-in-r/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Fancy Tables in R</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/02/11</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-03-18-making-the-connection-with-crosstalk/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Making the Connection with Crosstalk</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/03/18</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-02-27-bike-shares-in-toronto/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Bike shares in Toronto</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/02/27</time>
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+    </div>
+    
+</div>
+
+            </div>
+        </div><footer class="bg-gray-800 text-white p-6">
+    
+    <div class="container max-w-screen-xl mr-auto ml-auto">
+        <p>&copy; 2022 <a href="https://datasandbox.netlify.app/" class="duration-200 hover:opacity-50">The Data Sandbox</a></p>
+        <p>Powered by <a href="https://gohugo.io/" class="duration-200 hover:opacity-50">Hugo</a>, Theme <a
+                href="https://github.com/opera7133/Blonde" class="duration-200 hover:opacity-50">Blonde</a>.</p>
+    </div>
+    <script>
+        var icon = document.getElementById("icon");
+        var icon2 = document.getElementById("icon2");
+        
+        if (document.documentElement.classList.contains("dark") || localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          icon.classList.remove("icon-moon");
+          icon.classList.add("icon-sun");
+          icon2.classList.remove("icon-moon");
+          icon2.classList.add("icon-sun");
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }
+        function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+            icon.classList.remove("icon-sun");
+            icon.classList.add("icon-moon");
+            icon2.classList.remove("icon-sun");
+            icon2.classList.add("icon-moon");
+            document.documentElement.classList.remove('dark')
+            localStorage.theme = 'light'
+        } else {
+            icon.classList.remove("icon-moon");
+            icon.classList.add("icon-sun");
+            icon2.classList.remove("icon-moon");
+            icon2.classList.add("icon-sun");
+            document.documentElement.classList.add('dark')
+            localStorage.theme = 'dark'
+        }
+    }
+    </script>
+</footer>
+</div>
+</body>
+
+</html>

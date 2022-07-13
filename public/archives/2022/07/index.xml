@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2022/07 on The Data Sandbox</title>
+    <link>https://datasandbox.netlify.app/archives/2022/07/</link>
+    <description>Recent content in 2022/07 on The Data Sandbox</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language><atom:link href="https://datasandbox.netlify.app/archives/2022/07/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Relationship Extraction with Spacyr</title>
+      <link>https://datasandbox.netlify.app/post/2022-07-04-relationship-analysis-with-spacyr/</link>
+      <pubDate>Mon, 04 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://datasandbox.netlify.app/post/2022-07-04-relationship-analysis-with-spacyr/</guid>
+      <description>This is the continuation of the previous project were we scrapped the Cooper Mind website with the rvest package. Please refer to that posting for the necessary steps to obtain the verified character names.
+As a reminder, this project was inspired by the work of Thu Vu were she created a network mapping of the characters in the Witcher series. I thought it would be interesting to do some recreation of this project but in R and with the Stormlight Archive book series.</description>
+    </item>
+    
+  </channel>
+</rss>

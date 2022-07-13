@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+
+<html lang="en" class="dark">
+<head>
+<meta name="google-site-verification" content="sgjxKXCEE0r0JJtUOqKZKg61BiyTGEclPAMsZnHhrJw" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4108863678822570"
+     crossorigin="anonymous"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VNSWDG9ZWF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VNSWDG9ZWF');
+</script>
+
+<title>The Data Sandbox | Text Prediction Shiny App pt 1</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <link rel="apple-touch-icon" sizes="180x180" href='/favicon/apple-touch-icon.png'>
+    <link rel="icon" type="image/png" sizes="32x32" href='/favicon/favicon-32x32.png'>
+    <link rel="icon" type="image/png" sizes="16x16" href='/favicon/favicon-16x16.png'>
+    <link rel="manifest" href='/favicon/site.webmanifest' />
+    <link rel="mask-icon" href=' /favicon/safari-pinned-tab.svg' color="#5bbad5" />
+    <link rel="shortcut icon" href='/favicon/favicon.ico' />
+    <meta name="theme-color" content="#ffffff">
+    <meta property="og:title" content="The Data Sandbox | Text Prediction Shiny App pt 1" />
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.min.8e7bcdffab6bbed366372e694f634ed1ccdeae445b32dfeaf0395832323641f0.css" />
+    
+    <link href=' /css/blonde.min.css' rel="stylesheet" type="text/css" media="print"
+        onload="this.media=' all'">
+    
+
+
+
+<meta name="description" content="A predictive Text Shiny Application">
+<meta property="og:site_name" content="The Data Sandbox">
+<meta property="og:description" content="A predictive Text Shiny Application">
+<meta property="og:url" content="https://datasandbox.netlify.app/post/2022-03-11-text-prediction-app/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="">
+
+<link rel="canonical" href="https://datasandbox.netlify.app/post/2022-03-11-text-prediction-app/">
+
+<meta name="twitter:description" content="A predictive Text Shiny Application">
+<meta property="article:published_time" content="2022-05-31T00:00:00&#43;00:00">
+<meta property="article:updated_time" content="2022-05-31T00:00:00&#43;00:00">
+
+
+
+
+
+    
+<meta property="og:image" content="https://datasandbox.netlify.app/img/predict_text.jpg">
+<meta property="og:image:url" content="https://datasandbox.netlify.app/img/predict_text.jpg">
+    
+
+    
+    <link rel="stylesheet" href='/css/custom.css'>
+            <i class="dark hidden"></i>
+</head><body class="font-sans">
+    <div class="min-h-screen flex flex-col bg-gray-100 dark:bg-warmgray-800"><div class="bg-gray-800">
+    <div class="container max-w-screen-xl mr-auto ml-auto">
+        <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6">
+            <div class="flex items-center flex-no-shrink bg-gray-800 text-white mr-6">
+                <a href="https://datasandbox.netlify.app/"><span class="font-semibold text-2xl tracking-tight">The Data Sandbox</span></a>
+            </div>
+            <div class="flex md:hidden">
+                <div class="py-2">
+                    <button onclick="toggleDarkMode()" class="focus:outline-none mr-1" aria-label="Darkmode Toggle Button"><i id="icon"
+                            class="icon-moon inline-flex align-middle leading-normal text-lg text-white"></i></button>
+                    <span class="text-white">|</span>
+                </div>
+                <button id="hamburgerbtn" class="flex items-center px-3 py-1 text-white hover:opacity-50" aria-label="Hamburger Button">
+                    <span class="icon-menu text-2xl"></span>
+                </button>
+            </div>
+            <div class="hidden w-full md:flex md:flex-row sm:items-center md:w-auto" id="mobileMenu">
+                <div class="text-sm lg:flex-grow">
+                </div>
+                <div class="navmenu">
+                    
+                    <a href="/"
+                        class="no-underline duration-200 block mt-4 sm:inline-block sm:mt-0 text-white hover:opacity-50 mr-4">
+                        Home
+                    </a>
+                    
+                    <a href="/about/"
+                        class="no-underline duration-200 block mt-4 sm:inline-block sm:mt-0 text-white hover:opacity-50 mr-4">
+                        About
+                    </a>
+                    
+                    <a href="/contact/"
+                        class="no-underline duration-200 block mt-4 sm:inline-block sm:mt-0 text-white hover:opacity-50 mr-4">
+                        Contact
+                    </a>
+                    
+                </div>
+                <div class="text-white invisible md:visible">
+                    <span>|</span>
+                    <button onclick="toggleDarkMode()" class="focus:outline-none" aria-label="Darkmode Toggle Button"><i id="icon2"
+                            class="icon-moon hover:opacity-50 duration-200 inline-flex align-middle leading-normal text-lg ml-2"></i></button>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<style>
+    .active {
+        display: block;
+    }
+</style>
+
+<script>
+    let hamburger = document.getElementById('hamburgerbtn');
+
+    let mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', function () {
+        mobileMenu.classList.toggle('active');
+    });
+</script>
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <div class="container max-w-screen-xl mx-auto mt-4 flex-grow px-5 lg:px-0" id="content">
+            <div class="lg:mx-5">
+<div class="grid grid-cols-3 gap-4">
+    
+    <div class="col-span-3 lg:col-span-2 dark:text-white">
+    
+        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
+            <h1 class="title text-4xl">Text Prediction Shiny App pt 1</h1>
+            <hr class="my-2">
+            <aside id="meta">
+                <div>
+                    <section>
+                        <h4 id="date"><span class="icon-access_time mr-2"></span>2022/05/31 </h4>
+                    </section>
+                    
+                    <div id="tags">
+                        <span class="icon-local_offer mr-1"></span>
+                        
+                        <a href="https://datasandbox.netlify.app/tags/shiny-app">Shiny App</a> |
+                        
+                        <a href="https://datasandbox.netlify.app/tags/nlp">NLP</a> |
+                        
+                        <a href="https://datasandbox.netlify.app/tags/r">R</a> |
+                        
+                    </div>
+                    
+                </div>
+            </aside>
+            <hr class="my-2">
+            
+            <img class="py-4" src="https://datasandbox.netlify.app/img/predict_text.jpg">
+            
+            <div class="content mt-5">
+
+
+<blockquote>
+<p>This Shiny App was first written in May of 2021</p>
+</blockquote>
+<div id="description" class="section level2">
+<h2>Description</h2>
+<p>The goal of this project was to create an N-gram based model to predict the word to follow the user’s input. This project was to complete the Capstone project for the Johns Hopkins University Data science program on Coursera. The data for this project was provided by Swiftkey.</p>
+<p>This project will be broken down to multiple parts as the entire project is quite large. The first part will deal with the creation of the corpus. This corpus will require additional filtering to remove words that are not English, contractions and words that are considered profanity.</p>
+</div>
+<div id="initialization" class="section level2">
+<h2>Initialization</h2>
+<p>The initial step that loads the required libraries and downloads the data sets if not all read on file.</p>
+<pre class="r"><code>library(tidyverse)
+library(tidytext)
+library(pryr)
+
+#downloads the corpus files, profanity filter and English dictionary
+
+url &lt;- &quot;https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip&quot;
+url2 &lt;- &quot;https://www.freewebheaders.com/download/files/facebook-bad-words-list_comma-separated-text-file_2021_01_18.zip&quot;
+url3 &lt;- &quot;https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt&quot;
+url4 &lt;- &quot;https://raw.githubusercontent.com/mark-edney/Capestone/1c143b40dd71f0564c3248df2a8638d08af10440/data/contractions.txt&quot;
+
+# I have added this if statement for testing, if the files are found than they will not be downloaded again
+if(dir.exists(&quot;~/R/Capestone/data/&quot;) == FALSE){
+       dir.create(&quot;~/R/Capestone/data/&quot;)}
+
+if(file.exists(&quot;~/R/Capestone/data/data.zip&quot;) == FALSE|
+   file.exists(&quot;~/R/Capestone/data/prof.zip&quot;)==FALSE|
+   file.exists(&quot;~/R/Capestone/data/diction.txt&quot;)==FALSE|
+    file.exists(&quot;~/R/Capestone/data/contractions.txt&quot;)==FALSE){
+        download.file(url,destfile = &quot;~/R/Capestone/data/data.zip&quot;)
+        download.file(url2,destfile = &quot;~/R/Capestone/data/prof.zip&quot;)
+        download.file(url3,destfile = &quot;~/R/Capestone/data/diction.txt&quot;)
+        download.file(url4,destfile = &quot;~/R/Capestone/data/contractions.txt&quot;)
+        setwd(&quot;~/R/Capestone/data/&quot;)
+        unzip(&quot;~/R/Capestone/data/prof.zip&quot;)
+        unzip(&quot;~/R/Capestone/data/data.zip&quot;)
+        setwd(&quot;~/R/Capestone&quot;)
+}</code></pre>
+</div>
+<div id="creating-a-corpus" class="section level2">
+<h2>Creating a Corpus</h2>
+<p>The project requires a Corpus, or a large body of text, to create models. At this stage, the files are opened and joined. The Corpus is so large and requires so much ram that a sample of 10% is taken.</p>
+<pre class="r"><code>blog &lt;- read_lines(&quot;~/R/Capestone/data/final/en_US/en_US.blogs.txt&quot;)
+news &lt;- read_lines(&quot;~/R/Capestone/data/final/en_US/en_US.news.txt&quot;)
+twitter &lt;- read_lines(&quot;~/R/Capestone/data/final/en_US/en_US.twitter.txt&quot;)
+blog &lt;- tibble(text = blog) 
+news &lt;- tibble(text = news)
+twitter &lt;- tibble(text = twitter)
+
+set.seed(90210)
+corpus &lt;- bind_rows(blog,twitter,news) %&gt;% 
+        slice_sample(prop = 0.10) %&gt;%
+        mutate(line = row_number())</code></pre>
+</div>
+<div id="corpus-filtering" class="section level2">
+<h2>Corpus filtering</h2>
+<p>Here, the corpus filter is created to remove profanity and any word that is not in the English dictionary.</p>
+<pre class="r"><code>prof &lt;- read_lines(&quot;~/R/Capestone/data/facebook-bad-words-list_comma-separated-text-file_2021_01_18.txt&quot;)[15]
+prof &lt;- prof %&gt;% 
+        str_split(&quot;, &quot;) %&gt;% 
+        flatten() %&gt;% 
+        unlist()
+prof &lt;- tibble(&quot;word&quot; = prof)
+
+english &lt;- read_lines(&quot;~/R/Capestone/data/diction.txt&quot;)
+english &lt;- tibble(&quot;word&quot; = english[!english==&quot;&quot;])
+
+contract &lt;- read_lines(&quot;~/R/Capestone/data/contractions.txt&quot;)
+contract &lt;- tibble(&quot;word&quot; = contract) %&gt;% unnest_tokens(word,word)</code></pre>
+</div>
+<div id="vocabulary" class="section level2">
+<h2>Vocabulary</h2>
+<p>A vocabulary of words is created from the unique words with the applied filters.</p>
+<pre class="r"><code>#clean up ram
+rm(blog,news,twitter)
+voc &lt;- bind_rows(english, contract) %&gt;% anti_join(prof)
+
+unigram &lt;- corpus %&gt;% unnest_tokens(ngram, text, token = &quot;ngrams&quot;, n = 1) %&gt;%
+        semi_join(voc, by = c(&quot;ngram&quot;=&quot;word&quot;)) 
+#decreases the voc size
+voc &lt;- tibble(word = unique(unigram$ngram))</code></pre>
+</div>
+<div id="corpus-exploration" class="section level2">
+<h2>Corpus Exploration</h2>
+<p>Now that the corpus is created, we can do some exploration into the text. There are some lines of text that have some odd behaviour, but on the whole it mostly makes sense.</p>
+<pre class="r"><code>corpus %&gt;% 
+        head()</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   text                                                                      line
+##   &lt;chr&gt;                                                                    &lt;int&gt;
+## 1 no we don&#39;t just kidding yes we do d                                         1
+## 2 it sounds like a man walking on snow but it&#39;s my heartbeat cara on how ~     2
+## 3 they thought about it but you&#39;re too short                                   3
+## 4 indeed dear to my heart want to go see                                       4
+## 5 i know its a tough world out there the secret to succeeding isn&#39;t stepp~     5
+## 6 we&#39;re wishing for the cure too good luck                                     6</code></pre>
+</div>
+<div id="vocabulary-exploration" class="section level2">
+<h2>Vocabulary Exploration</h2>
+<p>By using the <code>arrange</code> function, we can sort the unigrams by their counts. This provides some insight on which words come up the most frequently. It is not surprisingly that the most common word is “the”. These frequencies will play an important role in the test prediction, so it is important to consider them. It is very common to filter out “Stop Words” as they likely add little value to predictions.</p>
+<pre class="r"><code>unigram %&gt;%
+        arrange(desc(n)) %&gt;%
+        head()</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   ngram      n
+##   &lt;chr&gt;  &lt;int&gt;
+## 1 the   476750
+## 2 to    277081
+## 3 and   242032
+## 4 a     238301
+## 5 of    201539
+## 6 in    165645</code></pre>
+<blockquote>
+<p>Photo by <a href="https://unsplash.com/@sandym10?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Sandy Millar</a> on <a href="https://unsplash.com/s/photos/predictive-text?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+</blockquote>
+</div>
+</div>
+            <aside id="meta">
+                
+                <hr class="py-2">
+                <div id="categories">
+                    <span class="icon-folder text-xl mr-1"></span>
+                    
+                    <span
+                        class="inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-200 justify-center h-8 px-3 text-blue-500 duration-200 hover:text-black dark:bg-warmgray-800"><a
+                            href="https://datasandbox.netlify.app/categories/project">Project</a></span>
+                    
+                </div>
+                
+            </aside>
+            </div>
+        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
+            <div class="grid grid-cols-2">
+                <div class="col-span-1">
+                    
+                    <a class="previous lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-05-16-the-beauty-of-list-comprehensions-in-python/">
+                        <div
+                            class="transition-colors duration-300 border border-gray-600 hover:border-black h-auto m-3 text-center py-3 lg:py-1">
+                            <span class="icon-keyboard_arrow_left"></span> The beauty of List comprehensions in Python
+                        </div>
+                    </a>
+                    
+                </div>
+                
+                <a class="next lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/">
+                    <div
+                        class="transition-colors duration-300 col-span-1 border border-gray-600 hover:border-black h-auto m-3 text-center py-3 lg:py-1">
+                        Text Prediction Shiny App pt 2 <span class="icon-keyboard_arrow_right"></span>
+                    </div>
+                </a>
+                
+            </div>
+        </div>
+        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
+            <div class="mb-3">
+                <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "data-sandbox" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="hidden lg:block lg:col-span-1">
+        <div class="mb-3">
+    <form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+        <label>
+            <input class="w-full p-3 focus:outline-none dark:bg-warmgray-900 dark:text-white placeholder-gray-700 dark:placeholder-gray-300" type="search"
+                placeholder="Search..." value="" name="q" aria-label="Search">
+        </label>
+        <input class="hidden" type="submit" value="Search">
+        <input type="hidden" name="sitesearch" value="https://datasandbox.netlify.app/" />
+    </form>
+</div>
+        <div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-3 px-3 dark:text-gray-300">Archives</p>
+    
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/01">2022/01 (2)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/02">2022/02 (5)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/03">2022/03 (5)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/04">2022/04 (4)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/05">2022/05 (4)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/06">2022/06 (2)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/07">2022/07 (1)</a>
+    
+    
+</div>
+        
+<div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Categories</p>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/general">General</a>
+
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/how-to">How to</a>
+
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/project">Project</a>
+
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/projects">Projects</a>
+
+    
+</div>
+
+        
+<div class="bg-white panel mb-3 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-3 pl-3 dark:text-gray-300">Tags</p>
+    <div class="panel-block p-2">
+        <a href="/tags/ggplot">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                ggplot
+            </span></a>
+        <a href="/tags/leaflet">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                leaflet
+            </span></a>
+        <a href="/tags/ml">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                ml
+            </span></a>
+        <a href="/tags/nlp">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                nlp
+            </span></a>
+        <a href="/tags/nn">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                nn
+            </span></a>
+        <a href="/tags/python">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                python
+            </span></a>
+        <a href="/tags/r">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                r
+            </span></a>
+        <a href="/tags/rmarkdown">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                rmarkdown
+            </span></a>
+        <a href="/tags/shiny-app">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                shiny-app
+            </span></a>
+    </div>
+</div>
+
+        
+
+<div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Recent Posts</p>
+    <div class="mx-6">
+        
+        <a href="/post/2022-03-10-creating-dashboard-in-r/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Creating Dashboards in R</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/03/10</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-04-14-merging-pdfs-with-python/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Merging PDFs with Python</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/04/14</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-02-23-new-features-in-r/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">New features in R</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/02/23</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-03-31-underrated-cran-packages/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Underrated CRAN Packages</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/03/31</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-02-11-fancy-tables-in-r/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Fancy Tables in R</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/02/11</time>
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+    </div>
+    
+</div>
+
+            </div>
+        </div><footer class="bg-gray-800 text-white p-6">
+    
+    <div class="container max-w-screen-xl mr-auto ml-auto">
+        <p>&copy; 2022 <a href="https://datasandbox.netlify.app/" class="duration-200 hover:opacity-50">The Data Sandbox</a></p>
+        <p>Powered by <a href="https://gohugo.io/" class="duration-200 hover:opacity-50">Hugo</a>, Theme <a
+                href="https://github.com/opera7133/Blonde" class="duration-200 hover:opacity-50">Blonde</a>.</p>
+    </div>
+    <script>
+        var icon = document.getElementById("icon");
+        var icon2 = document.getElementById("icon2");
+        
+        if (document.documentElement.classList.contains("dark") || localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          icon.classList.remove("icon-moon");
+          icon.classList.add("icon-sun");
+          icon2.classList.remove("icon-moon");
+          icon2.classList.add("icon-sun");
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }
+        function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+            icon.classList.remove("icon-sun");
+            icon.classList.add("icon-moon");
+            icon2.classList.remove("icon-sun");
+            icon2.classList.add("icon-moon");
+            document.documentElement.classList.remove('dark')
+            localStorage.theme = 'light'
+        } else {
+            icon.classList.remove("icon-moon");
+            icon.classList.add("icon-sun");
+            icon2.classList.remove("icon-moon");
+            icon2.classList.add("icon-sun");
+            document.documentElement.classList.add('dark')
+            localStorage.theme = 'dark'
+        }
+    }
+    </script>
+</footer>
+</div>
+</body>
+
+</html>

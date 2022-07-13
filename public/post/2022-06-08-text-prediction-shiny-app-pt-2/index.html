@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+
+<html lang="en" class="dark">
+<head>
+<meta name="google-site-verification" content="sgjxKXCEE0r0JJtUOqKZKg61BiyTGEclPAMsZnHhrJw" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4108863678822570"
+     crossorigin="anonymous"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VNSWDG9ZWF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VNSWDG9ZWF');
+</script>
+
+<title>The Data Sandbox | Text Prediction Shiny App pt 2</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <link rel="apple-touch-icon" sizes="180x180" href='/favicon/apple-touch-icon.png'>
+    <link rel="icon" type="image/png" sizes="32x32" href='/favicon/favicon-32x32.png'>
+    <link rel="icon" type="image/png" sizes="16x16" href='/favicon/favicon-16x16.png'>
+    <link rel="manifest" href='/favicon/site.webmanifest' />
+    <link rel="mask-icon" href=' /favicon/safari-pinned-tab.svg' color="#5bbad5" />
+    <link rel="shortcut icon" href='/favicon/favicon.ico' />
+    <meta name="theme-color" content="#ffffff">
+    <meta property="og:title" content="The Data Sandbox | Text Prediction Shiny App pt 2" />
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.min.8e7bcdffab6bbed366372e694f634ed1ccdeae445b32dfeaf0395832323641f0.css" />
+    
+    <link href=' /css/blonde.min.css' rel="stylesheet" type="text/css" media="print"
+        onload="this.media=' all'">
+    
+
+
+
+<meta name="description" content="The second part of the creation of a test prediction shiny app.">
+<meta property="og:site_name" content="The Data Sandbox">
+<meta property="og:description" content="The second part of the creation of a test prediction shiny app.">
+<meta property="og:url" content="https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="">
+
+<link rel="canonical" href="https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/">
+
+<meta name="twitter:description" content="The second part of the creation of a test prediction shiny app.">
+<meta property="article:published_time" content="2022-06-08T00:00:00&#43;00:00">
+<meta property="article:updated_time" content="2022-06-08T00:00:00&#43;00:00">
+
+
+
+
+
+    
+<meta property="og:image" content="https://datasandbox.netlify.app/img/books.jpg">
+<meta property="og:image:url" content="https://datasandbox.netlify.app/img/books.jpg">
+    
+
+    
+    <link rel="stylesheet" href='/css/custom.css'>
+            <i class="dark hidden"></i>
+</head><body class="font-sans">
+    <div class="min-h-screen flex flex-col bg-gray-100 dark:bg-warmgray-800"><div class="bg-gray-800">
+    <div class="container max-w-screen-xl mr-auto ml-auto">
+        <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6">
+            <div class="flex items-center flex-no-shrink bg-gray-800 text-white mr-6">
+                <a href="https://datasandbox.netlify.app/"><span class="font-semibold text-2xl tracking-tight">The Data Sandbox</span></a>
+            </div>
+            <div class="flex md:hidden">
+                <div class="py-2">
+                    <button onclick="toggleDarkMode()" class="focus:outline-none mr-1" aria-label="Darkmode Toggle Button"><i id="icon"
+                            class="icon-moon inline-flex align-middle leading-normal text-lg text-white"></i></button>
+                    <span class="text-white">|</span>
+                </div>
+                <button id="hamburgerbtn" class="flex items-center px-3 py-1 text-white hover:opacity-50" aria-label="Hamburger Button">
+                    <span class="icon-menu text-2xl"></span>
+                </button>
+            </div>
+            <div class="hidden w-full md:flex md:flex-row sm:items-center md:w-auto" id="mobileMenu">
+                <div class="text-sm lg:flex-grow">
+                </div>
+                <div class="navmenu">
+                    
+                    <a href="/"
+                        class="no-underline duration-200 block mt-4 sm:inline-block sm:mt-0 text-white hover:opacity-50 mr-4">
+                        Home
+                    </a>
+                    
+                    <a href="/about/"
+                        class="no-underline duration-200 block mt-4 sm:inline-block sm:mt-0 text-white hover:opacity-50 mr-4">
+                        About
+                    </a>
+                    
+                    <a href="/contact/"
+                        class="no-underline duration-200 block mt-4 sm:inline-block sm:mt-0 text-white hover:opacity-50 mr-4">
+                        Contact
+                    </a>
+                    
+                </div>
+                <div class="text-white invisible md:visible">
+                    <span>|</span>
+                    <button onclick="toggleDarkMode()" class="focus:outline-none" aria-label="Darkmode Toggle Button"><i id="icon2"
+                            class="icon-moon hover:opacity-50 duration-200 inline-flex align-middle leading-normal text-lg ml-2"></i></button>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<style>
+    .active {
+        display: block;
+    }
+</style>
+
+<script>
+    let hamburger = document.getElementById('hamburgerbtn');
+
+    let mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', function () {
+        mobileMenu.classList.toggle('active');
+    });
+</script>
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <div class="container max-w-screen-xl mx-auto mt-4 flex-grow px-5 lg:px-0" id="content">
+            <div class="lg:mx-5">
+<div class="grid grid-cols-3 gap-4">
+    
+    <div class="col-span-3 lg:col-span-2 dark:text-white">
+    
+        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
+            <h1 class="title text-4xl">Text Prediction Shiny App pt 2</h1>
+            <hr class="my-2">
+            <aside id="meta">
+                <div>
+                    <section>
+                        <h4 id="date"><span class="icon-access_time mr-2"></span>2022/06/08 </h4>
+                    </section>
+                    
+                    <div id="tags">
+                        <span class="icon-local_offer mr-1"></span>
+                        
+                        <a href="https://datasandbox.netlify.app/tags/r">R</a> |
+                        
+                        <a href="https://datasandbox.netlify.app/tags/nlp">NLP</a> |
+                        
+                        <a href="https://datasandbox.netlify.app/tags/shiny-app">Shiny App</a> |
+                        
+                    </div>
+                    
+                </div>
+            </aside>
+            <hr class="my-2">
+            
+            <img class="py-4" src="https://datasandbox.netlify.app/img/books.jpg">
+            
+            <div class="content mt-5">
+
+
+<div id="description" class="section level2">
+<h2>Description</h2>
+<p>This is the second part for the creation of a text prediction Shiny Application. From the previous post, we have developed and Corpus of text to start creating text prediction applications.</p>
+<p>We have also explored the corpus, looking at the frequency of words in the vocabulary. It is now time to start to develop ngram models.</p>
+</div>
+<div id="n-gram-models" class="section level2">
+<h2>N-gram models</h2>
+<p>A ngram is a continuous sequence of tokens, where the order is determined by how many tokens are in the sequence. For our purpose, a token is created for each word in a sentence. Other tokens can be created, such as sentence in a paragraph or letters in a word. It really depends on your application needs.</p>
+<p>A line of text can be broken down into ngrams in many ways. For example, the following text:</p>
+<p>“The quick brown fox”</p>
+<p>can be broken down to the following unigrams:</p>
+<blockquote>
+<p>(“the”)(“quick”)(“brown”)(“fox”)</p>
+</blockquote>
+<p>or to the following bigrams:</p>
+<blockquote>
+<p>(“the quick”)(“quick brown”)(“brown fox”)</p>
+</blockquote>
+<p>or to the following trigrams:</p>
+<blockquote>
+<p>(“the quick brown”)(“quick brown fox”)</p>
+</blockquote>
+<p>or to the single tetragram:</p>
+<blockquote>
+<p>(“the quick brown fox”)</p>
+</blockquote>
+<p>The process for creating tokens from text, tokenization, drops the text to lower case and removes all punctuation. For this application, I would recommend the <code>unnest_tokens</code> function from the <code>tidytext</code> package.</p>
+<p>Ngrams can be used for predictive text by reserving the last word in the ngram as the predicted word.</p>
+</div>
+<div id="models" class="section level2">
+<h2>Models</h2>
+<div id="stupid-back-off" class="section level3">
+<h3>Stupid Back-off</h3>
+<p>A higher level of n-gram should provide a better predictive quality for our models. However, these higher n-grams have lower levels of occurrences. Each additional word included in the created n-grams, reduce the different possible solutions but should have a higher level of accuracy as there is more context provided to the model.</p>
+<p>We need to create some shiny functions to help use determine the highest possible ngram model that we can use. The first function, turns the user input in unigram tokens, which does a lot of pre-processing for us. For words not in the vocabulary, we change the values to the ‘<unk>’ token, which the models already have included in the ngrams.</p>
+<p>The final function simply finds the minimum between the length of the user input and the highest level of ngram models. The result will be the highest degree of ngram that we can use. This is often refereed to as the “Stupid Back-off” method, as a higher order ngram is “backed-offed” to a lower level ngram.</p>
+<pre class="r"><code>truetext &lt;- reactive({
+        truetext &lt;- input$text %&gt;%
+                tibble(text=.) %&gt;%
+                unnest_tokens(word, text, token=&quot;ngrams&quot;, n=1)
+        
+        truetext[!truetext$word %in% voc$word,] &lt;- &quot;unk&quot;
+        truetext})
+        
+        maxuse &lt;- reactive({
+                min(nrow(truetext()) + 1,maxn)
+                })</code></pre>
+</div>
+<div id="maximum-likelihood-estimation" class="section level3">
+<h3>Maximum Likelihood Estimation</h3>
+<p>The maximum likelihood estimation (MLE) is the simplest model to examine. We simply count all the occurrence where the all values from the user input match with the ngrams to the final word in the n-gram. The final for in the ngram is reserved for the predicted estimation.</p>
+<p><span class="math display">\[p_x = \frac{C_x}{C}
+\]</span>
+Where <span class="math inline">\(p_x\)</span> is the probability that the word x will be predicted, <span class="math inline">\(C_x\)</span> is the count of the word x occurring, and <span class="math inline">\(C\)</span> is the count of all words.</p>
+<p>The MLE model produces an unbalanced model, where there a many values from the vocabulary that have zero probability of being predicted. We would like to address this issue by developing more complicated models.</p>
+<p>The following plot is a sample distribution created with the MLE model. The predicted values are sorted into bins based on the first letter of the predicted value. Some bins/letters have no value and therefore will have no probability assigned to them.</p>
+<pre class="r"><code>df &lt;- ngrams$three %&gt;%
+        filter(word1 ==&quot;what&quot;, word2 == &quot;is&quot;) %&gt;%
+        select(word3, n) %&gt;% 
+        right_join(voc, by = c(&quot;word3&quot; = &quot;word&quot;)) %&gt;%
+        mutate(bin = substr(word3,1,1)) %&gt;% 
+        group_by(bin)
+
+df$n[is.na(df$n)] &lt;- 0
+
+df %&gt;%
+        ggplot(aes(x = bin, y = n)) +
+        geom_bar(stat = &quot;identity&quot;)</code></pre>
+<p><img src="https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/index.en_files/figure-html/mleplot-1.png" width="672" /></p>
+</div>
+<div id="add-one-smoothing" class="section level3">
+<h3>Add One Smoothing</h3>
+<p>The simplest way to deal with the issue of zero probability values is to add one to all unseen counts. This is also referred to as Laplace Smoothing.
+<span class="math display">\[p_x = \begin{cases}
+\frac{C_x}{C} &amp; C_x &gt; 0 \\
+\frac{1}{C} &amp; C_x = 0
+\end{cases}
+\]</span></p>
+<p>The plot for the add one model is pretty easy to create from the previous sample. It is clear that there are some values now in each bin, so there is some probability to every word in the vocabulary. The heights of the bins are also increased, as there previously were words in each bin that had 0 occurrences now occurring once.</p>
+<pre class="r"><code>df &lt;- ngrams$three %&gt;%
+        filter(word1 ==&quot;what&quot;, word2 == &quot;is&quot;) %&gt;%
+        select(word3, n) %&gt;% 
+        right_join(voc, by = c(&quot;word3&quot; = &quot;word&quot;)) %&gt;%
+        mutate(bin = substr(word3,1,1)) %&gt;% 
+        group_by(bin)
+
+df$n[is.na(df$n)] &lt;- 1
+
+df %&gt;%
+        ggplot(aes(x = bin, y = n)) +
+        geom_bar(stat = &quot;identity&quot;)</code></pre>
+<p><img src="https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/index.en_files/figure-html/addplot-1.png" width="672" /></p>
+</div>
+<div id="good-turing" class="section level3">
+<h3>Good Turing</h3>
+<p>In order to understand the Good Turing Smoothing, we need to introduce some new notation, <span class="math inline">\(N_C\)</span>, to represent the frequency of frequencies. The frequency of frequencies represents how often a number of occurrences will happen in or distribution. For example, <span class="math inline">\(N_0\)</span> represents the word count in our vocabulary where there are no occurrences of that word in the distribution. <span class="math inline">\(N_1\)</span> then represents the count of the words that have one occurrence. The frequency of frequencies is a one layer of abstraction from our counts. It is helpful to consider our previous plots where we created bins based on the first letter of the predicted word, but instead we are creating bins one how often our predicted words occur.</p>
+<p>To create these <span class="math inline">\(N_C\)</span> values, we can use the count function. The original values for ‘n’ were created with the count function, we can repeat it over the values of ‘n’ to create a count of counts which I have called ‘nn’. The plot is as expected, there are many words with a low number of counts and a few high count values.</p>
+<pre class="r"><code>df &lt;- ngrams$three %&gt;%
+        filter(word1 ==&quot;what&quot;, word2 == &quot;is&quot;) %&gt;%
+        select(word3, n) %&gt;% 
+        right_join(voc, by = c(&quot;word3&quot; = &quot;word&quot;))
+
+df$n[is.na(df$n)] &lt;- 0
+
+Nr &lt;- count(df, n, name = &quot;nn&quot;)
+
+
+Nr %&gt;%
+        head()</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##       n    nn
+##   &lt;dbl&gt; &lt;int&gt;
+## 1     0 64330
+## 2     2    51
+## 3     3    28
+## 4     4    13
+## 5     5     2
+## 6     6     7</code></pre>
+<p>The first intuition of the Good Turing is that the probability of something new, a word with a count of zero, should be assigned the probability for an event that occurred once. For this example, we have the very unlikely event that there are no counts of words that appear once, so we use the next available count(X). This will give the probability of all words with zero count, we will later divide it by the number of words with the count 0.</p>
+<p><span class="math display">\[P_0 = \frac{C_1}{C} = \frac{C_x\cdot N_x}{\Sigma C_N\cdot N_N}
+\]</span>
+Since we have grouped the words by frequencies, we can use the product of all frequency of the frequencies by their count.</p>
+<pre class="r"><code>total &lt;- sum(Nr$nn*Nr$n)
+total</code></pre>
+<pre><code>## [1] 1449</code></pre>
+<p>Good Turing requires some additional calculations, so it is beneficial to add some columns to the dataframe at this point.</p>
+<pre class="r"><code>Nr &lt;- Nr %&gt;%
+        arrange(n) %&gt;% 
+        mutate(c= 0) %&gt;%
+        mutate(sc = 0) %&gt;%
+        mutate(GT = 0)</code></pre>
+<p>This snippet of code is used to determine the probability for a word with zero count.</p>
+<pre class="r"><code>#the probability for unseen matches is set to the next value probability
+Nr$GT[Nr$n==0] &lt;- Nr$nn[2]*Nr$n[2]/total</code></pre>
+<p>All other counts are to be adjusted. The Good Turing Smoothing is defined by the following equation:
+<span class="math display">\[C^*=\frac{(C+1)N_{C+1}}{N_C}\]</span>
+Where <span class="math inline">\(C^*\)</span> is the adjusted count number. Since the general trend is that the frequencies decrease as the count increases, the term <span class="math inline">\(\frac{N_{C+1}}{N_C}\)</span> will decrease the value for the count. This is the desired behaviour, as we want that probability to be distributed to zero counts.</p>
+<p>One major issue that need to be addressed is that the frequency table is not continuous. There are holes as not all counts exist. To overcome this obstacle, we can create a regression model to fill in the missing values. A logistics regression model fits the values much better than a linear model.</p>
+<pre class="r"><code>Zn &lt;- Nr[-1,] %&gt;% add_row(n=Nr$n[nrow(Nr)]+1)
+Zr &lt;- Nr[-1,] %&gt;% lm(log(nn)~log(n), data=.) %&gt;% predict(newdata=Zn)
+Zr &lt;- exp(Zr)</code></pre>
+<p>The next code chunk can look quite complicated. In this chunk, the corrected count, <span class="math inline">\(C^*\)</span>, are calculated. The variable j is used to control whether the regression model is used to substitute the value for <span class="math inline">\(N_{C+1}\)</span>.</p>
+<pre class="r"><code>#creates the new adjusted counts
+j &lt;- 0 
+for (i in 2:nrow(Nr)) {
+        Nr$c[i] &lt;-  (Nr$n[i]+1)*Nr$nn[i+1]/Nr$nn[i]
+        Nr$c[i][is.na(Nr$c[i])] &lt;- 0
+        Nr$sc[i] &lt;-  (Nr$n[i]+1)*Zr[i]/Zr[i-1]
+        if(Nr$n[i+1]-Nr$n[i] &gt; 1 | i == nrow(Nr)){
+                j &lt;- 1}
+        Nr$GT[i] &lt;-  Nr$c[i]*(1-j) + Nr$sc[i]*j
+        }</code></pre>
+<p>The probabilities at this time need two additional modifications, they need to be normalized as the regression model skews the overall probability and the probabilities need to be divided by the frequency counts to get a word specific probability.</p>
+<pre class="r"><code>#the specific prop from words with the same count
+Nr$GT[Nr$GT &lt; 0] &lt;- Nr$nn[2]/total
+Nr$GT &lt;- Nr$GT/sum(Nr$GT)
+Nr$GT2 &lt;- Nr$GT/Nr$nn</code></pre>
+<p>We can now plot the completed ngram prediction for the Good Turing Smoothing. The plot looks similar to previous plots, but we plot the probabilities rather than the count values ‘n’.</p>
+<pre class="r"><code>df &lt;- ngrams$three %&gt;%
+        filter(word1 ==&quot;what&quot;, word2 == &quot;is&quot;) %&gt;%
+        select(word3, n) %&gt;% 
+        right_join(voc, by = c(&quot;word3&quot; = &quot;word&quot;)) %&gt;%
+        mutate(bin = substr(word3,1,1)) %&gt;% 
+        group_by(bin)
+
+df$n[is.na(df$n)] &lt;- 0
+
+df %&gt;%
+        left_join(select(Nr,n,GT2), by = &quot;n&quot;) %&gt;%
+        ggplot(aes(x = bin, y = GT2)) +
+        geom_bar(stat = &quot;identity&quot;)</code></pre>
+<p><img src="https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/index.en_files/figure-html/gtplot-1.png" width="672" /></p>
+</div>
+<div id="absolute-discounting" class="section level3">
+<h3>Absolute Discounting</h3>
+<p>Good Turing Smoothing is an effective model, but man can it be complicated. One observation that you can make when looking at the values for <span class="math inline">\(C\)</span> and <span class="math inline">\(C^*\)</span> is that there is nearly constant discounting. The distribution in our example is skewed, but we can see that the most common value is between 0 and 1.</p>
+<pre class="r"><code>Nr %&gt;%
+        select(c,sc) %&gt;%
+        mutate(diff = c-sc) %&gt;%
+        ggplot(aes(x=diff)) +
+        geom_histogram()</code></pre>
+<p><img src="https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/index.en_files/figure-html/adinsight-1.png" width="672" />
+This would suggest that we could significantly simplify the adjusted counts calculations by subtracting a constant value. The algorithm is described by the following equation:</p>
+<p><span class="math display">\[p_x = \frac{C_x - d}{C} + \lambda \cdot p_{unigram}
+\]</span>
+where ‘d’ is the discounting amount, <span class="math inline">\(\lambda\)</span> is the Interpolation rate and <span class="math inline">\(p_{unigram}\)</span> is the unigram probability based on the MLE.</p>
+<pre class="r"><code>discount &lt;- 0.75
+ADI &lt;- df %&gt;%
+        ungroup() %&gt;%
+        select(word3, n) %&gt;%
+        mutate(ADI = (n - discount)/sum(n))
+                
+ADI$ADI[ADI$ADI &lt; 0 ] &lt;- 0</code></pre>
+<p>As previously mentioned, the unigram probability is calculated by applying the MLE to the unigram counts.</p>
+<pre class="r"><code>unigram.prop &lt;- ngrams$one %&gt;%
+        mutate(prop = n / sum(n))</code></pre>
+<p>The interpolated weight (<span class="math inline">\(\lambda\)</span>) can be found by finding the probability that was discounted.</p>
+<pre class="r"><code>uni.wt &lt;- 1 - sum(ADI$ADI)
+
+ADI &lt;- ADI %&gt;% 
+        add_column(uni = unigram.prop$prop*uni.wt) %&gt;% 
+        mutate(ADI = ADI + uni, .keep = &quot;unused&quot;)</code></pre>
+<p>We can see that the plot of the probabilities for the absolute discounting is very similar to the Good Turing plot, but it was much easier to understand and calculate.</p>
+<pre class="r"><code>ADI %&gt;%
+        mutate(bin = substr(word3,1,1)) %&gt;% 
+        group_by(bin) %&gt;%
+        ggplot(aes(x = bin, y = ADI)) +
+        geom_bar(stat = &quot;identity&quot;)</code></pre>
+<p><img src="https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/index.en_files/figure-html/adiplot-1.png" width="672" /></p>
+</div>
+<div id="kneser-ney" class="section level3">
+<h3>Kneser-Ney</h3>
+<p>The issue with Absolute Discounting is the reliance on the unigram probabilities. The unigram probability doesn’t provide any contextual information. We would rather rely on the continuation probability. Rather than looking at how often the word occurs, the continuation probability looks at how many bigrams the word completes. The Kneser-Ney model follows this equation:
+<span class="math display">\[p_x = \frac{max(C_x - d, 0)}{C} + \lambda \cdot p_{continuation}
+\]</span></p>
+<p>The next chunk of code is very similar to the code used in the absolute discounting model.</p>
+<pre class="r"><code>KNS &lt;- df %&gt;%
+        ungroup %&gt;%
+        select(word3, n) %&gt;%
+        mutate(KNS = (n - discount)/sum(n))
+
+KNS$KNS[KNS$KNS &lt; 0 ] &lt;- 0
+cont.wt &lt;- 1 - sum(KNS$KNS)</code></pre>
+<div id="continuation-probabilities" class="section level4">
+<h4>Continuation Probabilities</h4>
+<p>The following code is used to determine the continuation probabilities. Since the highest order ngram is six, the continuation probability needs to be calculated for six different ngram series.</p>
+<pre class="r"><code>cont.prop.func &lt;- function(word, ngrams){
+        out &lt;- ngrams %&gt;% 
+                filter(.[,ncol(ngrams)-1] == word) %&gt;%
+                nrow() 
+        out / nrow(ngrams)
+}
+cont.prop &lt;- list()
+cont.prop$one &lt;- tibble(word=voc$word, prop = ngrams$one$n/sum(ngrams$one$n))
+cont.prop$two &lt;- tibble(word=voc$word, prop = map_dbl(word, cont.prop.func, ngrams=ngrams$two))
+cont.prop$three &lt;- tibble(word=voc$word, prop = map_dbl(word, cont.prop.func, ngrams=ngrams$three))
+cont.prop$four &lt;- tibble(word=voc$word, prop = map_dbl(word, cont.prop.func, ngrams=ngrams$four))
+cont.prop$five &lt;- tibble(word=voc$word, prop = map_dbl(word, cont.prop.func, ngrams=ngrams$five))
+cont.prop$six &lt;- tibble(word=voc$word, prop = map_dbl(word, cont.prop.func, ngrams=ngrams$six))
+saveRDS(cont.prop, &quot;cont.prop.rds&quot;)</code></pre>
+<p>The difficulty is with finding the continuation probability. After they are found, it is pretty easy to add them to the model.</p>
+<pre class="r"><code>KNS$KNS &lt;- KNS$KNS + cont.prop$three$prop*cont.wt
+
+KNS %&gt;%
+        mutate(bin = substr(word3,1,1)) %&gt;% 
+        group_by(bin) %&gt;%
+        ggplot(aes(x = bin, y = KNS)) +
+        geom_bar(stat = &quot;identity&quot;)</code></pre>
+<p><img src="https://datasandbox.netlify.app/post/2022-06-08-text-prediction-shiny-app-pt-2/index.en_files/figure-html/kn2-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="shiny-app" class="section level2">
+<h2>Shiny App</h2>
+<p>With all the models created, we can bundle it together in a single Shiny Application. This Shiny Application retrieves the user’s input and attempts to predict the next word. A table is generated to summarize the most highly predicted word. Since there are five different models, there are five different rows. A plot is generated for each model where the predicted words are in bins with other words with the same first letter.</p>
+<p><iframe title="Text Prediction" width="100%" height="500" src="https://m2edney.shinyapps.io/Text_Predictive_Model/?_ga=2.265904783.1867833987.1655568288-1341333380.1645206372"></iframe>
+Photo by <a href="https://unsplash.com/@jareddc?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Jaredd Craig</a> on <a href="https://unsplash.com/s/photos/book?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+</div>
+</div>
+            <aside id="meta">
+                
+                <hr class="py-2">
+                <div id="categories">
+                    <span class="icon-folder text-xl mr-1"></span>
+                    
+                    <span
+                        class="inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-200 justify-center h-8 px-3 text-blue-500 duration-200 hover:text-black dark:bg-warmgray-800"><a
+                            href="https://datasandbox.netlify.app/categories/project">Project</a></span>
+                    
+                </div>
+                
+            </aside>
+            </div>
+        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
+            <div class="grid grid-cols-2">
+                <div class="col-span-1">
+                    
+                    <a class="previous lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-03-11-text-prediction-app/">
+                        <div
+                            class="transition-colors duration-300 border border-gray-600 hover:border-black h-auto m-3 text-center py-3 lg:py-1">
+                            <span class="icon-keyboard_arrow_left"></span> Text Prediction Shiny App pt 1
+                        </div>
+                    </a>
+                    
+                </div>
+                
+                <a class="next lg:text-2xl" href="https://datasandbox.netlify.app/post/2022-06-22-webscraping-in-r-with-rvest/">
+                    <div
+                        class="transition-colors duration-300 col-span-1 border border-gray-600 hover:border-black h-auto m-3 text-center py-3 lg:py-1">
+                        Webscraping in R with Rvest <span class="icon-keyboard_arrow_right"></span>
+                    </div>
+                </a>
+                
+            </div>
+        </div>
+        <div class="bg-white dark:bg-warmgray-900 p-5 my-4">
+            <div class="mb-3">
+                <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "data-sandbox" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="hidden lg:block lg:col-span-1">
+        <div class="mb-3">
+    <form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+        <label>
+            <input class="w-full p-3 focus:outline-none dark:bg-warmgray-900 dark:text-white placeholder-gray-700 dark:placeholder-gray-300" type="search"
+                placeholder="Search..." value="" name="q" aria-label="Search">
+        </label>
+        <input class="hidden" type="submit" value="Search">
+        <input type="hidden" name="sitesearch" value="https://datasandbox.netlify.app/" />
+    </form>
+</div>
+        <div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-3 px-3 dark:text-gray-300">Archives</p>
+    
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/01">2022/01 (2)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/02">2022/02 (5)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/03">2022/03 (5)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/04">2022/04 (4)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/05">2022/05 (4)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/06">2022/06 (2)</a>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//archives/2022/07">2022/07 (1)</a>
+    
+    
+</div>
+        
+<div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Categories</p>
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/general">General</a>
+
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/how-to">How to</a>
+
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/project">Project</a>
+
+    
+    <a class="text-center block duration-100 py-2 px-4 mx-4 hover:bg-gray-100 text-gray-800 dark:text-gray-200 dark:hover:bg-warmgray-800"
+        href="https://datasandbox.netlify.app//categories/projects">Projects</a>
+
+    
+</div>
+
+        
+<div class="bg-white panel mb-3 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-3 pl-3 dark:text-gray-300">Tags</p>
+    <div class="panel-block p-2">
+        <a href="/tags/ggplot">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                ggplot
+            </span></a>
+        <a href="/tags/leaflet">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                leaflet
+            </span></a>
+        <a href="/tags/ml">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                ml
+            </span></a>
+        <a href="/tags/nlp">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                nlp
+            </span></a>
+        <a href="/tags/nn">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                nn
+            </span></a>
+        <a href="/tags/python">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                python
+            </span></a>
+        <a href="/tags/r">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                r
+            </span></a>
+        <a href="/tags/rmarkdown">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                rmarkdown
+            </span></a>
+        <a href="/tags/shiny-app">
+            <span
+                class="duration-100 inline-flex py-2 leading-4 mr-2 mb-2 content-center bg-gray-100 justify-center h-8 px-3 text-blue-500 hover:text-blue-900 dark:bg-warmgray-800">
+                shiny-app
+            </span></a>
+    </div>
+</div>
+
+        
+
+<div class="bg-white panel mb-3 pb-5 dark:bg-warmgray-900">
+    <p class="text-xl text-center text-gray-700 py-5 dark:text-gray-300">Recent Posts</p>
+    <div class="mx-6">
+        
+        <a href="/post/2022-04-08-benchmarking-data-tables/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Benchmarking Data Tables</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/04/13</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-03-20-simple-neural-networks-in-python/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Simple Neural Networks in Python</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/03/20</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-07-04-relationship-analysis-with-spacyr/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Relationship Extraction with Spacyr</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/07/04</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-03-03-python-in-r-markdown/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Python in R Markdown</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/03/03</time>
+                    </p>
+                </div>
+            </div>
+        <a href="/post/2022-06-08-text-prediction-shiny-app-pt-2/" class="">
+            <div class="w-full block mt-3 bg-white hover:bg-gray-100 duration-200 dark:bg-warmgray-900 dark:text-gray-200 dark:hover:bg-warmgray-800">
+                <div class="px-2">
+                    <div class="text-gray-900 font-bold text-xl dark:text-white">Text Prediction Shiny App pt 2</div>
+                    <p class="text-sm text-gray-600 flex items-center pb-1 dark:text-gray-400">
+                        <time><span class="icon-access_time mr-1"></span>2022/06/08</time>
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+    </div>
+    
+</div>
+
+            </div>
+        </div><footer class="bg-gray-800 text-white p-6">
+    
+    <div class="container max-w-screen-xl mr-auto ml-auto">
+        <p>&copy; 2022 <a href="https://datasandbox.netlify.app/" class="duration-200 hover:opacity-50">The Data Sandbox</a></p>
+        <p>Powered by <a href="https://gohugo.io/" class="duration-200 hover:opacity-50">Hugo</a>, Theme <a
+                href="https://github.com/opera7133/Blonde" class="duration-200 hover:opacity-50">Blonde</a>.</p>
+    </div>
+    <script>
+        var icon = document.getElementById("icon");
+        var icon2 = document.getElementById("icon2");
+        
+        if (document.documentElement.classList.contains("dark") || localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          icon.classList.remove("icon-moon");
+          icon.classList.add("icon-sun");
+          icon2.classList.remove("icon-moon");
+          icon2.classList.add("icon-sun");
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }
+        function toggleDarkMode() {
+        if (document.documentElement.classList.contains('dark')) {
+            icon.classList.remove("icon-sun");
+            icon.classList.add("icon-moon");
+            icon2.classList.remove("icon-sun");
+            icon2.classList.add("icon-moon");
+            document.documentElement.classList.remove('dark')
+            localStorage.theme = 'light'
+        } else {
+            icon.classList.remove("icon-moon");
+            icon.classList.add("icon-sun");
+            icon2.classList.remove("icon-moon");
+            icon2.classList.add("icon-sun");
+            document.documentElement.classList.add('dark')
+            localStorage.theme = 'dark'
+        }
+    }
+    </script>
+</footer>
+</div>
+</body>
+
+</html>
