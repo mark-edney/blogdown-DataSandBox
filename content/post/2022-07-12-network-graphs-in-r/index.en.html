@@ -11,8 +11,8 @@ tags:
 - r
 - GGplot
 draft: no
-description: A look at the diffrent options for exploring network graphs in R.
-image: img/storm_graph.png
+description: 'A look at the diffrent options for exploring network graphs in R.'
+image: 'img/storm_graph.png'
 archives: 2022/07
 ---
 
@@ -23,47 +23,47 @@ archives: 2022/07
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>Network graphs are an important tool for network analysis. They illistrate points, referred to as nodes, with connecting lines, referred to as edges. Since network graphs are such usefull tools, there are many different options for graph generation. In this posting, I will demonstrate three different techniques for developing network graphs in <code>r</code>.</p>
+<p>Network graphs are an important tool for network analysis. They illustrate points, referred to as nodes, with connecting lines, referred to as edges. Since network graphs are such useful tools, there are many options for graph generation. In this posting, I will demonstrate three different techniques for developing network graphs in <code>r</code>.</p>
 <p>This is part 3 of a series which is based on the <strong>Stormlight Archive</strong> by Brandon Sanderson. This project was originally inspired by the work of <a href="https://www.youtube.com/watch?v=RuNolAh_4bU">Thu Vu</a> where she created a network mapping of the characters in the Witcher series.</p>
-<p>In the first part of the project, we scrapped the Coopermind website to created a verified character name list. This scrapping was performed with the <code>rvest</code> package. The list was then cleaned up and saved for further use.</p>
-<p>For the second part of the project, we read through and analysed the four books that make up the <strong>Stormlight Archive</strong> series. The books were read into memory <code>readtext</code> package which fed nicely into the <code>quanteda</code> to create the body of text called a Corpus. Unfortunately, the body of text was so big that we were unable to model all the text so we divided the Corpus up into smaller documents with the <code>rainette</code> package.</p>
-<p>With the corpus finally preped, we feed it into the <code>spacyr</code> package, a frontend for the <code>spaCy</code> <code>python</code> library, to identify the entities. We were able to create a table identifying the entities that were people and filter it by the verified character list. We created a moving window model that would created a connection between two named characters if they were both mentioned within the same window. By aggregating the results of this model, we developed the foundation for a network graph.</p>
+<p>In the first part of the project, we scrapped the Coopermind website to create a verified character name list. This scrapping was performed with the <code>rvest</code> package. The list was then cleaned up and saved for further use.</p>
+<p>For the second part of the project, we read through and analyzed the four books that make up the <strong>Stormlight Archive</strong> series. The books were read into memory with the <code>readtext</code> package, which fed nicely into the <code>quanteda</code> to create the body of text called a Corpus. Unfortunately, the body of text was so big that we were unable to model all the text, so we divided the Corpus up into smaller documents with the <code>rainette</code> package.</p>
+<p>With the corpus finally prepped, we feed it into the <code>spacyr</code> package, a frontend for the <code>spaCy</code> <code>python</code> library, to identify the entities. We were able to create a table identifying the entities that were people and filter it by the verified character list. We created a moving window model that would create a connection between two named characters if they were both mentioned within the same window. By aggregating the results of this model, we developed the foundation for a network graph.</p>
 </div>
-<div id="inialization" class="section level2">
-<h2>Inialization</h2>
+<div id="initialization" class="section level2">
+<h2>Initialization</h2>
 <p>The first step of this process is to load in the necessary packages for the graph generation. The <code>Tidyverse</code> package is always useful for analysis, so I’ve loaded it too. I have read that the different graph packages can interrupt each other, requiring one of them to be loaded at a time. I have not found this to be an issue.</p>
 <pre class="r"><code>library(tidyverse)
 library(igraph)
 library(ggraph)
 library(networkD3)</code></pre>
-<p>The next step is to load in the data that we created in part two of the project. This data represents that relationship between all the verified characters as read through the series of books. Saving and loading data in RDS format is much more convienent than the CSV format as RDS files are compressed and seem to load faster.</p>
+<p>The next step is to load in the data that we created in part two of the project. This data represents that relationship between all the verified characters as read through the series of books. Saving and loading data in RDS format is much more convenient than the CSV format, as RDS files are compressed and seem to load faster.</p>
 <pre class="r"><code>data &lt;- read_rds(&quot;StormGraph.RDS&quot;)</code></pre>
 </div>
 <div id="igraph" class="section level2">
 <h2>IGraph</h2>
-<p>The first package to explore is the <code>igraph</code> package. This package is not only for plotting graphs but also includes many tools for network analysis. For our data, we can create a simple network graph with the <code>graph_from_data_frame</code> function. The relationships are not directional, so we pass this information to the function. The graph can then be plotted with the <code>plot</code> function.</p>
+<p>The first package to explore is the <code>igraph</code> package. This package is not only for plotting graphs, but also includes many tools for network analysis. For our data, we can create a simple network graph with the <code>graph_from_data_frame</code> function. The relationships are not directional, so we pass this information to the function. The graph can then be plotted with the <code>plot</code> function.</p>
 <pre class="r"><code>graph &lt;- graph_from_data_frame(data, directed = FALSE)
 plot(graph)</code></pre>
 <p><img src="{{< blogdown/postref >}}index.en_files/figure-html/graph-1.png" width="672" /></p>
-<p>The graph created is a mess. There are way to many character nodes and way to many relationships created. We need to create a smaller dataset to reduce the amount of information. I reduced the size of the data by taking only the top 98% quantile in relationships. Since the data is stored as a data table, the data table notation is used to create a subset.</p>
+<p>The graph created is a mess. There are way too many character nodes and way too many relationships created. We need to create a smaller dataset to reduce the amount of information. I reduced the size of the data by taking only the top 98% quantile in relationships. Since the data is stored as a data table, the data table notation is used to create a subset.</p>
 <pre class="r"><code>data2 &lt;- data[data$N &gt;= quantile(data$N, p = 0.98),,]
 data2 %&gt;%
         graph_from_data_frame(directed = FALSE) %&gt;%
         plot(layout = layout_with_graphopt)</code></pre>
 <p><img src="{{< blogdown/postref >}}index.en_files/figure-html/smaller-1.png" width="672" /></p>
-<p>The plot created is still difficult to understand but it much more reasonable. I feel the <code>igraph</code> package is best for graph analysis and exploratory plots. For a more attractive plot, we need to move on to the next package.</p>
+<p>The plot created is still difficult to understand, but it much more reasonable. I feel the <code>igraph</code> package is best for graph analysis and exploratory plots. For a more attractive plot, we need to move on to the next package.</p>
 </div>
 <div id="tidygraph-and-ggraph" class="section level2">
 <h2>Tidygraph and GGraph</h2>
 <p>The <code>tidygraph</code> and <code>ggraph</code> packages seek to create graphs in the tidyverse-like environment.</p>
 <pre class="r"><code>library(tidygraph)</code></pre>
 <p>Creating a graph with <code>ggraph</code> requires more structure than the previous <code>igraph</code>. The graph requires two data frames, one for nodes and one for edges.</p>
-<p>For the nodes dataframe, we need a list of all the node names and an id number for each node. This is achieved by finding the unique values within both columns of data. These values are then passed to the tibble function to create a tibble, a data structure similar to data frames, and then a column for ids is created with the <code>rowid_to_column</code> function.</p>
+<p>For the nodes dataframe, we need a list of all the node names and an ID number for each node. This is achieved by finding the unique values within both columns of data. These values are then passed to the tibble function to create a tibble, a data structure similar to data frames, and then a column for IDs is created with the <code>rowid_to_column</code> function.</p>
 <pre class="r"><code>nodes &lt;- c(data2$Person1, data2$Person2) %&gt;% 
         unique() %&gt;%
         tibble(label = .) %&gt;%
         rowid_to_column(&quot;id&quot;)</code></pre>
-<p>For the edges dataframe, we need some additional steps. As a reminder, in our subset of data we have rows with two names and a number to represent the strength of their bond. The character names need to in the form of the node ids rather then the names. This task is completed with two merges with the node dataframe. The graph can then be created with the <code>tbl_graph</code> function.</p>
+<p>For the edges dataframe, we need some additional steps. As a reminder, in our subset of data, we have rows with two names and a number to represent the strength of their bond. The character names need to in the form of the node IDs rather than the names. This task is completed with two merges with the node dataframe. The graph can then be created with the <code>tbl_graph</code> function.</p>
 <pre class="r"><code>edges &lt;- data2 %&gt;%
         left_join(nodes, by = c(&quot;Person1&quot;=&quot;label&quot;)) %&gt;%
         rename(from = &quot;id&quot;) %&gt;%
@@ -72,7 +72,7 @@ data2 %&gt;%
         select(from, to, N)
 
 graph_tidy &lt;- tbl_graph(nodes = nodes, edges = edges, directed = FALSE)</code></pre>
-<p>For the plotting of the graph we use the <code>ggraph</code> library. With this package, the graph can act as any other <code>ggplot</code> geom. With an extra step, we can create centrality feature in our graph. There are a bunch of different centrality measures but they all represent the level of importance of a node.</p>
+<p>For the plotting of the graph, we use the <code>ggraph</code> library. With this package, the graph can act as any other <code>ggplot</code> geom. With an extra step, we can create a centrality feature in our graph. There are a bunch of different centrality measures, but they all represent the level of importance of a node.</p>
 <pre class="r"><code>graph_tidy %&gt;%
         mutate(Centrality = centrality_authority()) %&gt;%
         ggraph(layout = &quot;graphopt&quot;) + 
@@ -82,9 +82,9 @@ graph_tidy &lt;- tbl_graph(nodes = nodes, edges = edges, directed = FALSE)</code
         geom_node_text(aes(label = label), repel = TRUE)</code></pre>
 <p><img src="{{< blogdown/postref >}}index.en_files/figure-html/ggraph-1.png" width="672" />
 ## Network D3</p>
-<p>The <code>ggraph</code> has created a better looking plot with a much higher level of customization. It is however a static plot with no level of interaction. I have tried using the <code>ggplotly</code> function from the <code>plotly</code> package it make it more interactive but many of the <code>ggraph</code> features are not supported.</p>
-<p>To create an interactive plot, we move to the <code>networkD3</code> package. This package is based on the <code>D3</code> javascript library to create interactive plots. We can use the same nodes and edges data frames from the <code>ggraph</code> plot. This process does require one adjustment to the node ids as the package requires an initial id of 0 rather then the default <code>r</code> index of 1.</p>
-<p>The function from the <code>tidygraph</code>, <code>centrality_authority</code>, is only supported for the tidygraph data structure so we need an alternative function to use with our data frame. This is achieved with the <code>authority.score</code> function from the <code>igraph</code> package. Besides that we normalize the edge width values and set all the parameters for the <code>forceNetwork</code> function.</p>
+<p>The <code>ggraph</code> has created a better looking plot with a much higher level of customization. It is however a static plot with no level of interaction. I have tried using the <code>ggplotly</code> function from the <code>plotly</code> package it make it more interactive, but many of the <code>ggraph</code> features are not supported.</p>
+<p>To create an interactive plot, we move to the <code>networkD3</code> package. This package is based on the <code>D3</code> JavaScript library to create interactive plots. We can use the same nodes and edges data frames from the <code>ggraph</code> plot. This process does require one adjustment to the node IDs, as the package requires an initial ID of 0 rather than the default <code>r</code> index of 1.</p>
+<p>The function from the <code>tidygraph</code>, <code>centrality_authority</code>, is only supported for the tidygraph data structure, so we need an alternative function to use with our data frame. This is achieved with the <code>authority.score</code> function from the <code>igraph</code> package. Besides that, we normalize the edge width values, node sizes and set all the parameters for the <code>forceNetwork</code> function.</p>
 <pre class="r"><code>edges &lt;- edges %&gt;%
         mutate(from = from -1, to = to - 1) %&gt;%
         mutate(N = N / 200)
