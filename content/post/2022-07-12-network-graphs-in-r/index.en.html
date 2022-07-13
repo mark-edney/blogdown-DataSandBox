@@ -80,8 +80,10 @@ graph_tidy &lt;- tbl_graph(nodes = nodes, edges = edges, directed = FALSE)</code
         geom_edge_link(aes(width = N), alpha = 0.8, show.legend = FALSE) + 
         scale_edge_width(range = c(0.2, 2)) +
         geom_node_text(aes(label = label), repel = TRUE)</code></pre>
-<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/ggraph-1.png" width="672" />
-## Network D3</p>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/ggraph-1.png" width="672" /></p>
+</div>
+<div id="network-d3" class="section level2">
+<h2>Network D3</h2>
 <p>The <code>ggraph</code> has created a better looking plot with a much higher level of customization. It is however a static plot with no level of interaction. I have tried using the <code>ggplotly</code> function from the <code>plotly</code> package it make it more interactive, but many of the <code>ggraph</code> features are not supported.</p>
 <p>To create an interactive plot, we move to the <code>networkD3</code> package. This package is based on the <code>D3</code> JavaScript library to create interactive plots. We can use the same nodes and edges data frames from the <code>ggraph</code> plot. This process does require one adjustment to the node IDs, as the package requires an initial ID of 0 rather than the default <code>r</code> index of 1.</p>
 <p>The function from the <code>tidygraph</code>, <code>centrality_authority</code>, is only supported for the tidygraph data structure, so we need an alternative function to use with our data frame. This is achieved with the <code>authority.score</code> function from the <code>igraph</code> package. Besides that, we normalize the edge width values, node sizes and set all the parameters for the <code>forceNetwork</code> function.</p>

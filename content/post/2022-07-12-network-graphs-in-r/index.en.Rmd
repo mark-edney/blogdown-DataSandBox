@@ -99,6 +99,7 @@ graph_tidy %>%
         scale_edge_width(range = c(0.2, 2)) +
         geom_node_text(aes(label = label), repel = TRUE)
 ```
+
 ## Network D3
 
 The `ggraph` has created a better looking plot with a much higher level of customization. It is however a static plot with no level of interaction. I have tried using the `ggplotly` function from the `plotly` package it make it more interactive, but many of the `ggraph` features are not supported. 
